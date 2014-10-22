@@ -1,6 +1,6 @@
 VelvetSpider
 ===========
-VelvetSpider is a web application that provides a common query interface and single API to multiple APIs across different services.
+VelvetSpider is a web application that provides a common query interface and single API to multiple APIs across different services. Services are configured via drop-in schemas in JSON format.
 
 Why the name?
 -------------
@@ -14,22 +14,22 @@ Framework
 
 Installation
 --------------
-1. Download and install [node.js](http://nodejs.org)
-1. Clone the repo, run npm install and bower install 
+* Download and install [node.js](http://nodejs.org)
+* Clone the repo, run npm install and bower install 
 ```sh
 git clone https://github.com/binoculars/VelvetSpider.git VelvetSpider
 cd VelvetSpider
 npm install
 bower install
 ```
-1. Configure tokens
+* Configure tokens
 ```sh
 cp config/auth.js config/authLocal.js
 cp config/userTokens.js config/userTokensLocal.js
 ```
-1. Fill out the token information in the local config files.
-1. Start the server
+* Fill out the token information in the local config files.
+* Start the server
 ```sh
 ./bin/www
 ```
-1. Open [Chrome](https://www.google.com/chrome/browser/) and browse to http://localhost:3000/
+* Open [Chrome](https://www.google.com/chrome/browser/) and browse to http://localhost:3000/
