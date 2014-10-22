@@ -67,7 +67,10 @@ var oauths = {};
 var services = {};
 var servicesInfo = [];
 
-fs.readdir('public/javascripts/services/', function(err, files) {
+fs.readdir(__dirname + '/../public/javascripts/services', function(err, files) {
+    if (err)
+        console.log(err);
+    
     files.map(function (file) {
         var service = require('../public/javascripts/services/' + file);
 

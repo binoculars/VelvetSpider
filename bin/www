@@ -8,19 +8,19 @@ var server = app.listen(app.get('port'), function() {
   debug('Express server listening on port ' + server.address().port);
 });
 
-var https      = require("https");
-var fs         = require("fs");
-var key_file   = "test/file.pem";
-var cert_file  = "test/file.crt";
+// var https      = require("https");
+// var fs         = require("fs");
+// var key_file   = "test/file.pem";
+// var cert_file  = "test/file.crt";
 //var passphrase = "";
-var config     = {
-    key: fs.readFileSync(key_file),
-    cert: fs.readFileSync(cert_file)
-};
+// var config     = {
+//     key: fs.readFileSync(key_file),
+//     cert: fs.readFileSync(cert_file)
+// };
 //if(passphrase) {
 //    config.passphrase = passphrase;
 //}
 
-https.createServer(config, app).listen(8443, function () {
-    debug('Express server listening on port ' + 8443);
-});
+// https.createServer(config, app).listen(8443, function () {
+//     debug('Express server listening on port ' + 8443);
+// });

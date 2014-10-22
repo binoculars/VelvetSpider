@@ -18,6 +18,10 @@
 # .idea/gradle.xml
 # .idea/libraries
 
+
+#c9
+.c9/
+
 ## File-based project format
 *.ipr
 *.iws
