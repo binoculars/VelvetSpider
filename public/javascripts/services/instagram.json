@@ -1,0 +1,639 @@
+{
+    "name": "Instagram",
+    "id": "instagram",
+    "icon": "social:post-instagram",
+    "auth": {
+        "type": "oauth",
+        "version": "2.0",
+        "baseSite": "https://api.instagram.com/",
+        "authorizePath": "oauth/authorize",
+        "accessTokenPath": "oauth/access_token"
+    },
+    "endpoints": {
+        "users/user-id": {
+            "name": "users/user-id",
+            "method": "GET",
+            "resourceURL": "https://api.instagram.com/v1/users/:user-id",
+            "description": ["Get basic information about a user."],
+            "urlVariables": [
+                {
+                    "name": "user-id",
+                    "replaces": ":user-id",
+                    "description": "User ID",
+                    "data": {
+                        "type": "Integer",
+                        "regex": "^\\d+$"
+                    }
+                }
+            ],
+            "parameters": []
+        },
+        "users/self/feed": {
+            "name": "users/self/feed",
+            "method": "GET",
+            "resourceURL": "https://api.instagram.com/v1/users/self/feed",
+            "description": ["See the authenticated user's feed. May return a mix of both image and video types."],
+            "parameters": [
+                {
+                    "name": "count",
+                    "description": "Count of media to return.",
+                    "optional": true,
+                    "data": {
+                        "type": "Integer",
+                        "regex": "^\\d+$"
+                    }
+                },
+                {
+                    "name": "min_id",
+                    "description": "Return media later than this min_id.",
+                    "optional": true
+                },
+                {
+                    "name": "max_id",
+                    "description": "Return media earlier than this max_id.",
+                    "optional": true
+                }
+            ]
+        },
+        "users/user-id/media/recent": {
+            "name": "users/user-id/media/recent",
+            "method": "GET",
+            "resourceURL": "https://api.instagram.com/v1/users/:user-id/media/recent",
+            "description": ["Get the most recent media published by a user. May return a mix of both image and video types."],
+            "urlVariables": [
+                {
+                    "name": "user-id",
+                    "replaces": ":user-id",
+                    "description": "User ID"
+                }
+            ],
+            "parameters": [
+                {
+                    "name": "count",
+                    "description": "Count of media to return.",
+                    "optional": true
+                },
+                {
+                    "name": "min_id",
+                    "description": "Return media later than this min_id.",
+                    "optional": true
+                },
+                {
+                    "name": "max_id",
+                    "description": "Return media earlier than this max_id.",
+                    "optional": true
+                },
+                {
+                    "name": "min_timestamp",
+                    "description": "Return media after this UNIX timestamp.",
+                    "optional": true
+                },
+                {
+                    "name": "max_timestamp",
+                    "description": "Return media before this UNIX timestamp.",
+                    "optional": true
+                }
+            ]
+        },
+        "users/self/media/liked": {
+            "name": "users/self/media/liked",
+            "method": "GET",
+            "resourceURL": "https://api.instagram.com/v1/users/self/media/liked",
+            "description": ["See the authenticated user's list of liked media."],
+            "parameters": [
+                {
+                    "name": "count",
+                    "description": "Count of media to return.",
+                    "optional": true
+                },
+                {
+                    "name": "max_like_id",
+                    "description": "Return media liked before this id.",
+                    "optional": true
+                }
+            ]
+        },
+        "users/search": {
+            "name": "users/search",
+            "method": "GET",
+            "resourceURL": "https://api.instagram.com/v1/users/search",
+            "description": ["Search for a user by name."],
+            "parameters": [
+                {
+                    "name": "q",
+                    "description": "A query string.",
+                    "optional": true
+                },
+                {
+                    "name": "count",
+                    "description": "Count of users to return.",
+                    "optional": true
+                }
+            ]
+        },
+        "users/user-id/follows": {
+            "name": "users/user-id/follows",
+            "method": "GET",
+            "resourceURL": "https://api.instagram.com/v1/users/:user-id/follows",
+            "description": ["Get the list of users this user follows."],
+            "docURL": "http://instagram.com/developer/endpoints/relationships/#get_users_follows",
+            "urlVariables": [
+                {
+                    "name": "user-id",
+                    "replaces": ":user-id",
+                    "description": "User ID"
+                }
+            ],
+            "parameters": []
+        },
+        "users/user-id/followed-by": {
+            "name": "users/user-id/followed-by",
+            "method": "GET",
+            "resourceURL": "https://api.instagram.com/v1/users/:user-id/followed-by",
+            "description": ["Get the list of users this user is followed by."],
+            "docURL": "http://instagram.com/developer/endpoints/relationships/#get_users_followed_by",
+            "urlVariables": [
+                {
+                    "name": "user-id",
+                    "replaces": ":user-id",
+                    "description": "User ID"
+                }
+            ],
+            "parameters": []
+        },
+        "users/self/requested-by": {
+            "name": "users/self/requested-by",
+            "method": "GET",
+            "resourceURL": "https://api.instagram.com/v1/users/self/requested-by",
+            "description": ["List the users who have requested to follow."],
+            "docURL": "http://instagram.com/developer/endpoints/relationships/#get_incoming_requests",
+            "parameters": []
+        },
+        "users/user-id/relationship (GET)": {
+            "name": "users/user-id/relationship",
+            "method": "GET",
+            "resourceURL": "https://api.instagram.com/v1/users/:user-id/relationship",
+            "description": ["Get information about a relationship to another user."],
+            "docURL": "http://instagram.com/developer/endpoints/relationships/#get_relationship",
+            "urlVariables": [
+                {
+                    "name": "user-id",
+                    "replaces": ":user-id",
+                    "description": "User ID"
+                }
+            ],
+            "parameters": []
+        },
+        "users/user-id/relationship (POST)": {
+            "name": "users/user-id/relationship",
+            "method": "POST",
+            "resourceURL": "https://api.instagram.com/v1/users/:user-id/relationship",
+            "description": ["Modify the relationship with target user."],
+            "docURL": "http://instagram.com/developer/endpoints/relationships/#post_relationship",
+            "urlVariables": [
+                {
+                    "name": "user-id",
+                    "replaces": ":user-id",
+                    "description": "User ID"
+                }
+            ],
+            "parameters": [
+                {
+                    "name": "action",
+                    "description": "One of follow/unfollow/block/unblock/approve/ignore.",
+                    "optional": false
+                }
+            ]
+        },
+        "media/media-id": {
+            "name": "media/media-id",
+            "method": "GET",
+            "resourceURL": "https://api.instagram.com/v1/media/:media-id",
+            "description": [
+                "Get information about a media object. The returned type key will allow you to differentiate between image and video media.",
+                "Note: if you authenticate with an OAuth Token, you will receive the user_has_liked key which quickly tells you whether the current user has liked this media item."
+            ],
+            "docURL": "http://instagram.com/developer/endpoints/media/#get_media",
+            "urlVariables": [
+                {
+                    "name": "media-id",
+                    "replaces": ":media-id",
+                    "description": "Media ID"
+                }
+            ],
+            "parameters": []
+        },
+        "media/shortcode/shortcode": {
+            "name": "media/shortcode/shortcode",
+            "method": "GET",
+            "resourceURL": "https://api.instagram.com/v1/media/shortcode/:shortcode",
+            "description": [
+                "This endpoint returns the same response as GET /media/media-id.",
+                "A media object's shortcode can be found in its shortlink URL.",
+                "An example shortlink is http://instagram.com/p/D/",
+                "Its corresponding shortcode is D."
+            ],
+            "docURL": "http://instagram.com/developer/endpoints/media/#get_media_by_shortcode",
+            "urlVariables": [
+                {
+                    "name": "shortcode",
+                    "replaces": ":shortcode",
+                    "description": "Shortcode"
+                }
+            ],
+            "parameters": []
+        },
+        "media/search": {
+            "name": "media/search",
+            "method": "GET",
+            "resourceURL": "https://api.instagram.com/v1/media/search",
+            "description": ["Search for media in a given area. The default time span is set to 5 days. The time span must not exceed 7 days. Defaults time stamps cover the last 5 days. Can return mix of image and video types."],
+            "docURL": "http://instagram.com/developer/endpoints/media/#get_media_search",
+            "urlVariables": [
+
+            ],
+            "parameters": [
+                {
+                    "name": "lat",
+                    "description": "Latitude of the center search coordinate. If used, lng is required.",
+                    "optional": true
+                },
+                {
+                    "name": "lng",
+                    "description": "Longitude of the center search coordinate. If used, lat is required.",
+                    "optional": true
+                },
+                {
+                    "name": "min_timestamp",
+                    "description": "A unix timestamp. All media returned will be taken later than this timestamp.",
+                    "optional": true
+                },
+                {
+                    "name": "max_timestamp",
+                    "description": "A unix timestamp. All media returned will be taken earlier than this timestamp.",
+                    "optional": true
+                },
+                {
+                    "name": "distance",
+                    "description": "Default is 1km (distance=1000), max distance is 5km.",
+                    "optional": true
+                }
+            ]
+        },
+        "media/popular": {
+            "name": "media/popular",
+            "method": "GET",
+            "resourceURL": "https://api.instagram.com/v1/media/popular",
+            "description": ["Get a list of what media is most popular at the moment. Can return mix of image and video types."],
+            "docURL": "http://instagram.com/developer/endpoints/media/#get_media_popular",
+            "urlVariables": [],
+            "parameters": []
+        },
+        "media/media-id/comments (GET)": {
+            "name": "media/media-id/comments",
+            "method": "GET",
+            "resourceURL": "https://api.instagram.com/v1/media/:media-id/comments",
+            "description": ["Get a full list of comments on a media object."],
+            "docURL": "http://instagram.com/developer/endpoints/comments/#get_media_comments",
+            "urlVariables": [
+                {
+                    "name": "media-id",
+                    "replaces": ":media-id",
+                    "description": "Media ID"
+                }
+            ],
+            "parameters": []
+        },
+        "media/media-id/comments (POST)": {
+            "name": "media/media-id/comments",
+            "method": "GET",
+            "resourceURL": "https://api.instagram.com/v1/media/:media-id/comments",
+            "description": [
+                "Create a comment on a media object.",
+                "This endpoint is restricted to the following use cases:",
+                "   * A business requesting rights to media objects from the Instagram Community in order for the media to be used for display outside of Instagram.",
+                "   * A business providing customer service to members of the Instagram Community by interacting through comments.",
+                "   * A business responding to members of the Instagram Community that participate in a specific reward or coupon campaign.",
+                "Use of this endpoint is subject to the following guidelines:",
+                "   * Comments must be written in the voice of the user account from which it is being generated.",
+                "   * Comments must not be automated.",
+                "   * The total length of the comment cannot exceeed 300 characters.",
+                "   * The comment cannot contain more than 4 hashtags.",
+                "   * The comment cannot contain more than 1 URL.",
+                "   * The comment cannot consist of all capital letters."
+            ],
+            "docURL": "http://instagram.com/developer/endpoints/comments/#post_media_comments",
+            "urlVariables": [
+                {
+                    "name": "media-id",
+                    "replaces": ":media-id",
+                    "description": "Media ID"
+                }
+            ],
+            "parameters": [
+                {
+                    "name": "text",
+                    "description": "Text to post as a comment on the media object as specified in media-id.",
+                    "optional": false
+                }
+            ]
+        },
+        "media/media-id/comments/comment-id (DEL)": {
+            "name": "media/media-id/comments/comment-id",
+            "method": "DELETE",
+            "resourceURL": "https://api.instagram.com/v1/media/:media-id/comments/:comment-id",
+            "description": ["Remove a comment either on the authenticated user's media object or authored by the authenticated user."],
+            "docURL": "http://instagram.com/developer/endpoints/comments/#delete_media_comments",
+            "urlVariables": [
+                {
+                    "name": "media-id",
+                    "replaces": ":media-id",
+                    "description": "Media ID"
+                },
+                {
+                    "name": "comment-id",
+                    "replaces": ":comment-id",
+                    "description": "Comment ID"
+                }
+            ],
+            "parameters": []
+        },
+        "media/media-id/likes (GET)": {
+            "name": "media/media-id/likes",
+            "method": "GET",
+            "resourceURL": "https://api.instagram.com/v1/media/:media-id/likes",
+            "description": ["Get a list of users who have liked this media."],
+            "docURL": "http://instagram.com/developer/endpoints/likes/#get_media_likes",
+            "urlVariables": [
+                {
+                    "name": "media-id",
+                    "replaces": ":media-id",
+                    "description": "Media ID"
+                }
+            ],
+            "parameters": []
+        },
+        "media/media-id/likes (POST)": {
+            "name": "media/media-id/likes",
+            "method": "POST",
+            "resourceURL": "https://api.instagram.com/v1/media/:media-id/likes",
+            "description": ["Set a like on this media by the currently authenticated user."],
+            "docURL": "http://instagram.com/developer/endpoints/likes/#post_likes",
+            "urlVariables": [
+                {
+                    "name": "media-id",
+                    "replaces": ":media-id",
+                    "description": "Media ID"
+                }
+            ],
+            "parameters": []
+        },
+        "media/media-id/likes (DEL)": {
+            "name": "media/media-id/likes",
+            "method": "DELETE",
+            "resourceURL": "https://api.instagram.com/v1/media/:media-id/likes",
+            "description": ["Remove a like on this media by the currently authenticated user."],
+            "docURL": "http://instagram.com/developer/endpoints/likes/#delete_likes",
+            "urlVariables": [
+                {
+                    "name": "media-id",
+                    "replaces": ":media-id",
+                    "description": "Media ID"
+                }
+            ],
+            "parameters": []
+        },
+        "tags/tag-name": {
+            "name": "tags/tag-name",
+            "method": "GET",
+            "resourceURL": "https://api.instagram.com/v1/tags/:tag-name",
+            "description": ["Get information about a tag object."],
+            "docURL": "http://instagram.com/developer/endpoints/tags/#get_tags",
+            "urlVariables": [
+                {
+                    "name": "tag-name",
+                    "replaces": ":tag-name",
+                    "description": "Tag Name"
+                }
+            ],
+            "parameters": []
+        },
+        "tags/tag-name/media/recent": {
+            "name": "tags/tag-name/media/recent",
+            "method": "GET",
+            "resourceURL": "https://api.instagram.com/v1/tags/:tag-name/media/recent",
+            "description": ["Get a list of recently tagged media. Note that this media is ordered by when the media was tagged with this tag, rather than the order it was posted. Use the max_tag_id and min_tag_id parameters in the pagination response to paginate through these objects. Can return a mix of image and video types."],
+            "docURL": "http://instagram.com/developer/endpoints/tags/#get_tags_media_recent",
+            "urlVariables": [
+                {
+                    "name": "tag-name",
+                    "replaces": ":tag-name",
+                    "description": "Tag Name"
+                }
+            ],
+            "parameters": [
+                {
+                    "name": "count",
+                    "description": "Count of tagged media to return.",
+                    "optional": true
+                },
+                {
+                    "name": "min_tag_id",
+                    "description": "Return media before this min_tag_id.",
+                    "optional": true
+                },
+                {
+                    "name": "max_tag_id",
+                    "description": "Return media after this max_tag_id.",
+                    "optional": true
+                }
+            ]
+        },
+        "tags/search": {
+            "name": "tags/search",
+            "method": "GET",
+            "resourceURL": "https://api.instagram.com/v1/tags/search",
+            "description": ["Search for tags by name. Results are ordered first as an exact match, then by popularity. Short tags will be treated as exact matches."],
+            "docURL": "http://instagram.com/developer/endpoints/tags/#get_tags_search",
+            "urlVariables": [
+
+            ],
+            "parameters": [
+                {
+                    "name": "q",
+                    "description": "A valid tag name without a leading #. (eg. snowy, nofilter)",
+                    "optional": false
+                }
+            ]
+        },
+        "locations/location-id": {
+            "name": "locations/location-id",
+            "method": "GET",
+            "resourceURL": "https://api.instagram.com/v1/locations/:location-id",
+            "description": ["Get information about a location."],
+            "docURL": "http://instagram.com/developer/endpoints/locations/#get_locations",
+            "urlVariables": [
+                {
+                    "name": "location-id",
+                    "replaces": ":location-id",
+                    "description": "Location ID"
+                }
+            ],
+            "parameters": []
+        },
+        "locations/location-id/media/recent": {
+            "name": "locations/location-id/media/recent",
+            "method": "GET",
+            "resourceURL": "https://api.instagram.com/v1/locations/:location-id/media/recent",
+            "description": ["Get a list of recent media objects from a given location. May return a mix of both image and video types."],
+            "docURL": "http://instagram.com/developer/endpoints/locations/#get_locations_media_recent",
+            "urlVariables": [
+                {
+                    "name": "location-id",
+                    "replaces": ":location-id",
+                    "description": "Location ID"
+                }
+            ],
+            "parameters": [
+                {
+                    "name": "min_timestamp",
+                    "description": "Return media after this UNIX timestamp",
+                    "optional": true
+                },
+                {
+                    "name": "max_timestamp",
+                    "description": "Return media before this UNIX timestamp",
+                    "optional": true
+                },
+                {
+                    "name": "min_id",
+                    "description": "Return media before this min_id.",
+                    "optional": true
+                },
+                {
+                    "name": "max_id",
+                    "description": "Return media after this max_id.",
+                    "optional": true
+                }
+            ]
+        },
+        "locations/search": {
+            "name": "locations/search",
+            "method": "GET",
+            "resourceURL": "https://api.instagram.com/v1/locations/search",
+            "description": ["Search for a location by geographic coordinate."],
+            "docURL": "http://instagram.com/developer/endpoints/locations/#get_locations_search",
+            "urlVariables": [
+
+            ],
+            "parameters": [
+                {
+                    "name": "lat",
+                    "description": "Latitude of the center search coordinate. If used, lng is required.",
+                    "optional": true
+                },
+                {
+                    "name": "lng",
+                    "description": "Longitude of the center search coordinate. If used, lat is required.",
+                    "optional": true
+                },
+                {
+                    "name": "distance",
+                    "description": "Default is 1000m (distance=1000), max distance is 5000.",
+                    "optional": true
+                },
+                {
+                    "name": "facebook_places_id",
+                    "description": "Returns a location mapped off of a Facebook places id. If used, a Foursquare id and lat, lng are not required.",
+                    "optional": true
+                },
+                {
+                    "name": "foursquare_id",
+                    "description": "Returns a location mapped off of a foursquare v1 api location id. If used, you are not required to use lat and lng. Note that this method is deprecated; you should use the new foursquare IDs with V2 of their API.",
+                    "optional": true
+                },
+                {
+                    "name": "foursquare_v2_id",
+                    "description": "Returns a location mapped off of a foursquare v2 api location id. If used, you are not required to use lat and lng.",
+                    "optional": true
+                }
+            ]
+        },
+        "geographies/geo-id/media/recent": {
+            "name": "geographies/geo-id/media/recent",
+            "method": "GET",
+            "resourceURL": "https://api.instagram.com/v1/geographies/:geo-id/media/recent",
+            "description": ["Get recent media from a geography subscription that you created. Note: You can only access Geographies that were explicitly created by your OAuth client. Check the Geography Subscriptions section of the real-time updates page. When you create a subscription to some geography that you define, you will be returned a unique geo-id that can be used in this query. To backfill photos from the location covered by this geography, use the media search endpoint."],
+            "docURL": "http://instagram.com/developer/endpoints/geographies/#get_geographies_media_recent",
+            "urlVariables": [
+                {
+                    "name": "geo-id",
+                    "replaces": ":geo-id",
+                    "description": "Geo ID"
+                }
+            ],
+            "parameters": [
+                {
+                    "name": "client_id",
+                    "description": "Client ID",
+                    "optional": false
+                },
+                {
+                    "name": "count",
+                    "description": "Max number of media to return.",
+                    "optional": true
+                }
+            ]
+        },
+        "oembed": {
+            "name": "oembed",
+            "method": "GET",
+            "resourceURL": "http://api.instagram.com/oembed",
+            "description": ["Given a short link, returns information about the media associated with that link."],
+            "docURL": "http://instagram.com/developer/embedding/#oembed",
+            "parameters": [
+                {
+                    "name": "url",
+                    "description": "A short link, like http://instagr.am/p/BUG/.",
+                    "optional": false
+                },
+                {
+                    "name": "callback",
+                    "description": "A JSON callback to be invoked.",
+                    "optional": true
+                },
+                {
+                    "name": "maxheight",
+                    "description": "Maximum height of returned media.",
+                    "optional": true
+                },
+                {
+                    "name": "maxwidth",
+                    "description": "Maximum width of returned media.",
+                    "optional": true
+                }
+            ]
+        },
+        "p/shortcode/media": {
+            "name": "p/shortcode/media",
+            "method": "GET",
+            "resourceURL": "http://api.instagram.com/p/:shortcode/media",
+            "description": ["Given a short link, issues a redirect to that media's JPG file."],
+            "docURL": "http://instagram.com/developer/embedding/#media_redirect",
+            "urlVariables": [
+                {
+                    "name": "shortcode",
+                    "replaces": ":shortcode",
+                    "description": "Shortcode"
+                }
+            ],
+            "parameters": [
+                {
+                    "name": "size",
+                    "description": "One of t (thumbnail), m (medium), l (large). Defaults to m.",
+                    "optional": true
+                }
+            ]
+        }
+    }
+}

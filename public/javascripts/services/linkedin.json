@@ -1,0 +1,209 @@
+{
+    "name": "LinkedIn",
+    "id": "linkedin",
+    "icon": "social:post-linkedin",
+    "auth": {
+        "type": "oauth",
+        "version": "1.0A",
+        "requestTokenURL": "https://api.linkedin.com/uas/oauth/requestToken",
+        "accessTokenURL": "https://api.linkedin.com/uas/oauth/accessToken",
+        "signatureMethod": "HMAC-SHA1"
+    },
+    "endpoints": {
+        "people/~": {
+            "resourceURL": "https://api.linkedin.com/v1/people/~",
+            "name": "people/~",
+            "parameters": [],
+            "docURL": "https://developer.linkedin.com/documents/profile-api",
+            "method": "GET",
+            "description": [
+                "Use the tilde character to indicate that you want the profile of the current user. The access token will be used to determine the profile to return."
+            ],
+            "fieldSelectors": [
+                {
+                    "field": "id",
+                    "parentNode": "person",
+                    "description": "a unique identifier token for this member",
+                    "notes": "This field might return a value of private for users other than the currently logged-in user depending on the member's privacy settings"
+                },
+                {
+                    "field": "first-name",
+                    "parentNode": "person",
+                    "description": "",
+                    "notes": ""
+                },
+                {
+                    "field": "last-name",
+                    "parentNode": "person",
+                    "description": "",
+                    "notes": ""
+                },
+                {
+                    "field": "maiden-name",
+                    "parentNode": "person",
+                    "description": "",
+                    "notes": ""
+                },
+                {
+                    "field": "formatted-name",
+                    "parentNode": "person",
+                    "description": "",
+                    "notes": ""
+                },
+                {
+                    "field": "phonetic-first-name",
+                    "parentNode": "person",
+                    "description": "",
+                    "notes": ""
+                },
+                {
+                    "field": "phonetic-last-name",
+                    "parentNode": "person",
+                    "description": "",
+                    "notes": ""
+                },
+                {
+                    "field": "formatted-phonetic-name",
+                    "parentNode": "person",
+                    "description": "",
+                    "notes": ""
+                },
+                {
+                    "field": "headline",
+                    "parentNode": "person",
+                    "description": "",
+                    "notes": ""
+                },
+                {
+                    "field": "location:(name)",
+                    "parentNode": "person",
+                    "description": "",
+                    "notes": ""
+                },
+                {
+                    "field": "location:(country:(code))",
+                    "parentNode": "person",
+                    "description": "",
+                    "notes": ""
+                },
+                {
+                    "field": "relation-to-viewer:(distance)",
+                    "parentNode": "person",
+                    "description": "",
+                    "notes": ""
+                },
+                {
+                    "field": "relation-to-viewer:(related-connections)",
+                    "parentNode": "person",
+                    "description": "",
+                    "notes": ""
+                },
+                {
+                    "field": "current-share",
+                    "parentNode": "person",
+                    "description": "",
+                    "notes": ""
+                },
+                {
+                    "field": "num-connections",
+                    "parentNode": "person",
+                    "description": "",
+                    "notes": ""
+                },
+                {
+                    "field": "num-connections-capped",
+                    "parentNode": "person",
+                    "description": "",
+                    "notes": ""
+                },
+                {
+                    "field": "summary",
+                    "parentNode": "person",
+                    "description": "",
+                    "notes": ""
+                },
+                {
+                    "field": "specialties",
+                    "parentNode": "person",
+                    "description": "",
+                    "notes": ""
+                },
+                {
+                    "field": "positions",
+                    "parentNode": "person",
+                    "description": "",
+                    "notes": ""
+                },
+                {
+                    "field": "picture-url",
+                    "parentNode": "person",
+                    "description": "",
+                    "notes": ""
+                },
+                {
+                    "field": "site-standard-profile-request",
+                    "parentNode": "person",
+                    "description": "",
+                    "notes": ""
+                },
+                {
+                    "field": "api-standard-profile-request:(url)",
+                    "parentNode": "person",
+                    "description": "",
+                    "notes": ""
+                },
+                {
+                    "field": "api-standard-profile-request:(headers)",
+                    "parentNode": "person",
+                    "description": "",
+                    "notes": ""
+                },
+                {
+                    "field": "public-profile-url",
+                    "parentNode": "person",
+                    "description": "",
+                    "notes": ""
+                }
+
+            ]
+        },
+        "people/id": {
+            "resourceURL": "https://api.linkedin.com/v1/people/id=:member_id",
+            "name": "people/id",
+            "urlVariables": [
+                {
+                    "name": "member_id",
+                    "replaces": ":member_id",
+                    "description": "If you know the member token of the profile you want to display, you can use it as the key value for this API call. You should include id= to indicate that you are using a member token. Requesting by member token only returns a profile from the logged in person's three degree network and doesn't return any out-of-network profiles. You cannot use a member token to get a public profile."
+                }
+            ],
+            "parameters": [],
+            "docURL": "https://developer.linkedin.com/documents/profile-api",
+            "method": "GET",
+            "description": [
+                "Use the tilde character to indicate that you want the profile of the current user. The access token will be used to determine the profile to return."
+            ]
+        },
+        "people/url": {
+            "resourceURL": "https://api.linkedin.com/v1/people/url=:public-profile-url",
+            "name": "people/url",
+            "urlVariables": [
+                {
+                    "name": "Public Profile URL",
+                    "replaces": ":public-profile-url",
+                    "description": "Using the Public Profile URL will return a profile from inside or outside the logged in member's three degree network. The Public Profile URL must be URL escaped.",
+                    "data": {
+                        "type": "linkedin-url",
+                        "regex": "^http[s]?\\:[\/]{2}www\\.linkedin\\.com\/.*$"
+                    }
+                }
+            ],
+            "parameters": [],
+            "docURL": "https://developer.linkedin.com/documents/profile-api",
+            "method": "GET",
+            "description": [
+                "Use the tilde character to indicate that you want the profile of the current user. The access token will be used to determine the profile to return."
+            ]
+        }
+    }
+}
