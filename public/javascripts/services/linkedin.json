@@ -204,6 +204,65 @@
             "description": [
                 "Use the tilde character to indicate that you want the profile of the current user. The access token will be used to determine the profile to return."
             ]
+        },
+        "groups/id": {
+            "resourceURL": "https://api.linkedin.com/v1/groups/:group_id",
+            "name": "groups/id",
+            "urlVariables": [
+                {
+                    "name": "group_id",
+                    "replaces": ":group_id",
+                    "description": "The group ID",
+                    "data": {
+                        "type": "integer",
+                        "regex": "\\d+"
+                    }
+                }
+            ],
+            "parameters": [],
+            "docURL": "https://developer.linkedin.com/documents/groups-api",
+            "method": "GET",
+            "description": [
+                "Retrieve a group's profile details"
+            ]
+        },
+        "companies/id": {
+            "resourceURL": "https://api.linkedin.com/v1/companies/:company_id",
+            "name": "company/id",
+            "urlVariables": [
+                {
+                    "name": "company_id",
+                    "replaces": ":company_id",
+                    "description": "The company ID",
+                    "data": {
+                        "type": "integer",
+                        "regex": "\\d+"
+                    }
+                }
+            ],
+            "parameters": [],
+            "docURL": "https://developer.linkedin.com/documents/company-lookup-api-and-fields",
+            "method": "GET",
+            "description": [
+                "Retrieves and displays one or more company profiles based on the company ID"
+            ]
+        },
+        "companies/universal-name": {
+            "resourceURL": "https://api.linkedin.com/v1/companies/universal-name=:universal_name",
+            "name": "company/universal-name",
+            "urlVariables": [
+                {
+                    "name": "universal_name",
+                    "replaces": ":universal_name",
+                    "description": "The company's universal name"
+                }
+            ],
+            "parameters": [],
+            "docURL": "https://developer.linkedin.com/documents/company-lookup-api-and-fields",
+            "method": "GET",
+            "description": [
+                "Retrieve a company by universal-name"
+            ]
         }
     }
 }
