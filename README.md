@@ -15,15 +15,14 @@ Framework
 Installation
 --------------
 1. Download and install [node.js](http://nodejs.org)
-1. 
+1. Clone the repo, run npm install and bower install 
 ```sh
 git clone https://github.com/binoculars/VelvetSpider.git VelvetSpider
 cd VelvetSpider
 npm install
 bower install
 ```
-1. 
-##### Configure tokens
+1. Configure tokens
 ```sh
 cp config/auth.js config/authLocal.js
 cp config/userTokens.js config/userTokensLocal.js
