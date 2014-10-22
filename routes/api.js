@@ -10,6 +10,8 @@ var OAuth = require('oauth');
 var querystring = require('querystring');
 
 // Wrap node-oauth
+// TODO make this its own module
+// TODO add post, put, and delete to rest objects
 function setupOAuth(service) {
     var authObj = {};
 
