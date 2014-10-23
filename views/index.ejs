@@ -37,7 +37,7 @@
 
         <link href="//fonts.googleapis.com/css?family=Varela+Round|Playball" rel="stylesheet" type="text/css">
 
-        <style>
+        <style shim-shadowdom>
             body {
                 font-family: 'Varela Round', sans-serif;
             }
@@ -82,7 +82,7 @@
                 <core-toolbar style="background-color: #fff; color: #7D25AC;"><!--<img src="/images/spider.png" style="max-height: 64px; max-width: 64px;">--> <span style="font-family: 'Playball', cursive; font-size: xx-large; font-weight: bold; stroke-width: 0.2; text-align: center; width: 100%;">VelvetSpider</span></core-toolbar>
 				<core-menu class="services">
 					<template repeat="{{response}}">
-                        <style>
+                        <style shim-shadowdom>
                             .services paper-item::shadow core-icon {
                                 fill: #7D25AC;
                                 stroke: #000;
@@ -137,7 +137,7 @@
 				</core-menu>
 			</core-header-panel>
 
-            <style>
+            <style shim-shadowdom>
                 #table > div {
                     padding: 5px;
                 }
@@ -331,7 +331,7 @@
 
                         <div>
                             <h1>Response</h1>
-                            <style>
+                            <style shim-shadowdom>
                                 #resp::shadow pre {
                                     overflow-x: scroll;
                                 }
