@@ -20,6 +20,8 @@ var app = express();
 
 mongoose.connect(require('./config/databaseLocal').url); // `cp config/database.js config/databaseLocal.js` and edit
 
+require('./config/passport')(passport); // pass passport for configuration
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -50,10 +52,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/bower_components', express.static(path.join(__dirname, 'bower_components')));
 
 app.use('/', routes);
-app.use('/users', users);
+//app.use('/users', users);
 app.use('/api', api);
 //app.use('/oauth_redirect', oauth_redirect);
-app.use('/login', login);
+//app.use('/login', login);
+
+require('./routes/local-auth')(app, passport); // load our routes and pass in our app and fully configured passport
+
+// TODO need to route to query console after authentication
 
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {

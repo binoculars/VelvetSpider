@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%= title %></title>
+
+        <script src="/bower_components/platform/platform.js"></script>
+
+        <link rel="import" href="/bower_components/polymer/polymer.html">
+
+        <link rel="import" href="/bower_components/core-ajax/core-ajax.html">
+
+        <link rel="import" href="/bower_components/core-icon/core-icon.html">
+        <link rel="import" href="/bower_components/core-icons/core-icons.html">
+
+        <link rel="import" href="/bower_components/core-icons/social-icons.html">
+
+        <link rel="import" href="/bower_components/paper-button/paper-button.html">
+
+        <link href="//fonts.googleapis.com/css?family=Varela+Round|Playball" rel="stylesheet" type="text/css">
+
+        <style>
+            body {
+                background-color: #efefef;
+                font-family: 'Varela Round', sans-serif;
+            }
+
+            paper-button::shadow core-icon {
+                fill: #7D25AC;
+                stroke: #000;
+                stroke-width: 0.2;
+                height: 40px;
+                width: 40px;
+            }
+
+            paper-button {
+                color: #7D25AC;
+            }
+        </style>
+    </head>
+    <body fullbleed>
+        <core-ajax auto
+                   url="/api/listServices"
+                   params=""
+                   handleAs="json"
+                   class="services">
+        </core-ajax>
+
+        <div style="width: 50%; height: 100%; margin-left: auto; margin-right: auto; background-color: white; padding-top: 10px;">
+            <h1 style="text-align: center;">Link Accounts</h1>
+
+            <div horizontal layout center center-justified wrap style="">
+
+                <style>
+                    paper-button {
+                        text-transform: initial;
+                        margin: 0.5em;
+                    }
+
+                    paper-button::shadow #icon {
+                        margin: inherit;
+                    }
+
+                    paper-button::shadow #content span {
+                        margin: 0;
+                    }
+                </style>
+                <template id="sign-in-buttons" repeat="[[response]]">
+                    <paper-button><core-icon icon="[[icon]]"></core-icon> [[name]]</paper-button>
+                    <!-- TODO implement login -->
+                </template>
+            </div>
+        </div>
+
+        <script>
+            document.addEventListener('polymer-ready', function() {
+                document.querySelector("core-ajax.services").addEventListener("core-response",
+                    function (e) {
+                        var template = document.querySelector('#sign-in-buttons');
+                        console.log(template);
+                        template.bindingDelegate = new PolymerExpressions();
+                        template.model = {
+                            response: e.detail.response
+                        };
+                    }
+                );
+            });
+        </script>
+    </body>
+</html>
