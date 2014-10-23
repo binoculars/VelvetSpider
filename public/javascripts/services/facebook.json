@@ -1,0 +1,41 @@
+{
+    "name": "Facebook",
+    "id": "facebook",
+    "icon": "social:post-facebook",
+    "auth": {
+        "type": "oauth",
+        "version": "2.0",
+        "baseSite": "https://graph.facebook.com/v2.1/",
+        "authorizePath": "dialog/oauth",
+        "accessTokenPath": "oauth/access_token"
+    },
+    "endpoints": {
+        "user": {
+            "name": "user",
+            "method": "GET",
+            "resourceURL": "https://graph.facebook.com/v2.1/:user",
+            "description": ["Get basic information about a user."],
+            "urlVariables": [
+                {
+                    "name": "user",
+                    "replaces": ":user",
+                    "description": "User ID or \"me\"",
+                    "data": {
+                        "type": "String"
+                    }
+                }
+            ],
+            "parameters": [
+                {
+                    "name": "fields",
+                    "description": "comma separated list of fields",
+                    "optional": true,
+                    "data": {
+                        "type": "String",
+                        "regex": "^.*$"
+                    }
+                }
+            ]
+        }
+    }
+}
