@@ -2,15 +2,14 @@
 <html>
 	<head>
 		<title><%= title %></title>
+
+        <!-- 1. Load platform.js for polyfill support. -->
+        <script src="/bower_components/platform/platform.js"></script>
+
         <script src="/bower_components/x2js/xml2json.min.js"></script>
         <script src="/bower_components/vkbeautify-wrapper/dist/vkbeautify.0.99.00.beta.js"></script>
 
-		<!-- 1. Load platform.js for polyfill support. -->
-		<script src="/bower_components/platform/platform.js"></script>
-
-
 		<!-- 2. Use an HTML Import to bring in the element. -->
-
 		<link rel="import" href="/bower_components/polymer/polymer.html">
 
 		<link rel="import" href="/bower_components/core-ajax/core-ajax.html">
@@ -76,7 +75,6 @@
 				   class="services">
         </core-ajax>
 
-
 		<core-scaffold id="core_scaffold">
 			<core-header-panel mode="seamed" id="core_header_panel" navigation flex>
                 <core-toolbar style="background-color: #fff; color: #7D25AC;"><!--<img src="/images/spider.png" style="max-height: 64px; max-width: 64px;">--> <span style="font-family: 'Playball', cursive; font-size: xx-large; font-weight: bold; stroke-width: 0.2; text-align: center; width: 100%;">VelvetSpider</span></core-toolbar>
@@ -108,7 +106,7 @@
 						           class="[[id]]">
                         </core-ajax>
 						<script>
-                            [].forEach.call(document.querySelectorAll('core-menu.services core-ajax'), function(el) {
+                            [].map.call(document.querySelectorAll('core-menu.services core-ajax'), function(el) {
                                 el.addEventListener("core-response", function (e) {
                                     APIs[e.target.attributes['class'].value] = e.detail.response['endpoints'];
                                 });
@@ -127,7 +125,6 @@
 								console.log('JSON Schema not found!')
 							}
 
-                            //document.querySelector('#APIRequest').setAttribute('url', '/api/service/' + e.target.id);
                             document.querySelector('#div').innerText = e.target.label;
 							document.querySelector('core-selector').selected = null;
 							document.querySelector('#method').clear();
@@ -168,7 +165,7 @@
                     </style>
                     <core-selector class="endpoints">
                         <template repeat="{{method in methods}}">
-                            <paper-item label="{{method}}"></paper-item>
+                            <paper-item label="[[method]]"></paper-item>
                         </template>
                     </core-selector>
                 </div>
@@ -183,7 +180,7 @@
 
                         <h3>Query:</h3>
                         <div>
-                            {{method}} {{resourceURL}}{{fieldSelectorsURLString}}?<template repeat="{{param in parameters}}"><template if="{{param.val}}">{{param.name}}={{param.val | urlEncode}}&amp;</template></template>
+                            [[method]] {{resourceURL}}{{fieldSelectorsURLString}}?<template repeat="{{param in parameters}}"><template if="{{param.val}}">{{param.name}}={{param.val | urlEncode}}&amp;</template></template>
                         </div>
 
                         <template if="{{urlVariables.length > 0}}">
@@ -209,11 +206,11 @@
                                     var urlVarInputs = document.querySelectorAll('paper-input.urlVariable');
                                     var methodModel = document.querySelector('#method').model;
 
-                                    [].forEach.call(urlVarInputs, function(el) {
+                                    [].map.call(urlVarInputs, function(el) {
                                         el.addEventListener('input', function () {
                                             methodModel.resourceURL = methodModel.resourceURL_orig;
 
-                                            [].forEach.call(urlVarInputs, function(input) {
+                                            [].map.call(urlVarInputs, function(input) {
                                                 if (!input.invalid) {
                                                     methodModel.resourceURL = methodModel.resourceURL.replace(input.attributes['replaces'].value, encodeURIComponent(input.inputValue));
                                                 }
@@ -246,8 +243,7 @@
                                 var fieldSelectorCheckboxes = document.querySelectorAll('paper-checkbox.fieldSelector');
                                 var methodModel = document.querySelector('#method').model;
 
-
-                                [].forEach.call(fieldSelectorCheckboxes, function(el) {
+                                [].map.call(fieldSelectorCheckboxes, function(el) {
                                     el.addEventListener('change', function () {
                                         var fsString = "";
 
@@ -294,7 +290,7 @@
                                         var requestParams = {};
                                         var valid = true;
 
-                                        [].forEach.call(paramInputs, function(input) {
+                                        [].map.call(paramInputs, function(input) {
                                             if (!input.invalid) {
                                                 if (input.inputValue) {
                                                     requestParams[input.attributes['name'].value] = input.inputValue;
@@ -311,14 +307,6 @@
                                                 "url": methodModel.resourceURL + (methodModel.fieldSelectorsURLString ? methodModel.fieldSelectorsURLString : ""),
                                                 "req": JSON.stringify(requestParams)
                                             };
-
-                                            // TODO fix linkedin response by appending format=json to the get params.
-                                            // TODO Should not include the service name. Need to make it part of the schema.
-                                            if (document.querySelector('core-menu.services .core-selected').id == "linkedin") {
-                                                apiReq.handleAs = "text";
-                                            } else {
-                                                apiReq.handleAs = "json";
-                                            }
 
                                             apiReq.go();
                                         } else {
@@ -364,7 +352,7 @@
 
                             <core-ajax id="APIRequest"
                                        method="GET"
-                                       handleAs="text">
+                                       handleAs="json">
                             </core-ajax>
 
                             <script>
@@ -380,18 +368,9 @@
                                 document.querySelector('#APIRequest').addEventListener('core-response', function(e) {
                                     console.log(e.detail.response);
 
-                                    if (document.querySelector('core-menu.services .core-selected').id == "linkedin") {
-                                        respText.xml = vkbeautify.xml(e.detail.response, '\t');
-                                        respText.json = JSON.stringify(x2js.xml_str2json(e.detail.response), null, '\t');
-
-                                        document.querySelector('#responseFormat').selected = 1;
-                                    } else {
-                                        respText.json = JSON.stringify(e.detail.response, null, '\t');
-                                        respText.xml = vkbeautify.xml(x2js.json2xml_str(e.detail.response), '\t');
-
-                                        document.querySelector('#responseFormat').selected = 0;
-                                    }
-
+                                    respText.json = JSON.stringify(e.detail.response, null, '\t');
+                                    respText.xml = vkbeautify.xml(x2js.json2xml_str(e.detail.response), '\t');
+                                    document.querySelector('#responseFormat').selected = 0;
                                     document.querySelector('#responseFormat').dispatchEvent(new Event('core-select'));
                                 });
 

@@ -9,6 +9,9 @@
         "accessTokenURL": "https://api.linkedin.com/uas/oauth/accessToken",
         "signatureMethod": "HMAC-SHA1"
     },
+	"customParameters": {
+		"format": "json"
+	},
     "endpoints": {
         "people/~": {
             "resourceURL": "https://api.linkedin.com/v1/people/~",

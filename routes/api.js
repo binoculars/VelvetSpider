@@ -13,7 +13,9 @@ var querystring = require('querystring');
 // TODO make this its own module
 // TODO add post, put, and delete to rest objects
 function setupOAuth(service) {
-    var authObj = {};
+    var authObj = {
+	    customParameters: service.customParameters
+    };
 
     switch (service.auth.version) {
         case '1.0A':
@@ -93,9 +95,16 @@ fs.readdir(__dirname + '/../public/javascripts/services', function(err, files) {
 router.get('/service/:service', function(req, res) {
     console.log(req.query);
 
+	var oauth = oauths[req.params.service];
     var params = JSON.parse(req.query.req);
 
-    oauths[req.params.service].rest.get(
+	if (oauth.customParameters) {
+		Object.keys(oauth.customParameters).map(function (key) {
+			params[key] = oauth.customParameters[key];
+		});
+	}
+
+	oauth.rest.get(
         req.query.url + '?' + querystring.stringify(params),
         function (e, data, resp) {
             if (e) console.error(e);
