@@ -36,6 +36,23 @@
                     }
                 }
             ]
+        },
+        "user/friends": {
+            "name": "user",
+            "method": "GET",
+            "resourceURL": "https://graph.facebook.com/v2.1/:user/friends",
+            "description": ["Get user's friends list"],
+            "urlVariables": [
+                {
+                    "name": "user",
+                    "replaces": ":user",
+                    "description": "User ID or \"me\"",
+                    "data": {
+                        "type": "String"
+                    }
+                }
+            ],
+            "parameters": []
         }
     }
 }
