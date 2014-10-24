@@ -18,9 +18,13 @@ var login = require ('./routes/login');
 
 var app = express();
 
+app.set('hostname', process.env.C9_HOSTNAME || 'localhost');
+app.set('port', process.env.PORT || 3000);
+app.set('baseURL', process.env.baseURL || 'http://' + app.get('hostname') + ':' + app.get('port'));
+
 mongoose.connect(require('./config/databaseLocal').url); // `cp config/database.js config/databaseLocal.js` and edit
 
-require('./config/passport')(passport); // pass passport for configuration
+require('./config/passport')(app, passport); // pass passport for configuration
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -58,6 +62,7 @@ app.use('/api', api);
 //app.use('/login', login);
 
 require('./routes/local-auth')(app, passport); // load our routes and pass in our app and fully configured passport
+require('./routes/connect_account')(app, passport);
 
 // TODO need to route to query console after authentication
 

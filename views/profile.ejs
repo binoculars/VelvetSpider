@@ -14,6 +14,7 @@
 	<div class="page-header text-center">
 		<h1><span class="fa fa-anchor"></span> Profile Page</h1>
 		<a href="/logout" class="btn btn-default btn-sm">Logout</a>
+		<h3><a href="/query_console">Query Console</a></h3>
 	</div>
 
 	<div class="row">
@@ -104,11 +105,48 @@
 			</div>
 		</div>
 	</div>
+	
+	<div class="row">
 
-	<div class="text-center">
-		<p>A demo by <a href="http://scotch.io">Scotch</a>.</p>
-		<p>Visit the <a href="http://scotch.io/tutorials/javascript/easy-node-authentication-setup-and-local">tutorial</a>.</p>
+		<!-- INSTAGRAM INFORMATION -->
+		<div class="col-sm-6">
+			<div class="well">
+				<h3 class="text-primary"><span class="fa fa-instagram"></span> Instagram</h3>
+
+				<% if (user.instagram.token) { %>
+					<p>
+						<strong>id</strong>: <%= user.instagram.id %><br>
+						<strong>token</strong>: <%= user.instagram.token %>
+					</p>
+
+					<a href="/unlink/instagram" class="btn btn-primary">Unlink</a>
+				<% } else { %>
+					<a href="/connect/instagram" class="btn btn-primary">Connect Instagram</a>
+				<% } %>
+
+			</div>
+		</div>
+
+		<!-- LINKEDIN INFORMATION -->
+		<div class="col-sm-6">
+			<div class="well">
+				<h3 class="text-info"><span class="fa fa-linkedin"></span> LinkedIn</h3>
+
+				<% if (user.linkedin.token) { %>
+					<p>
+						<strong>id</strong>: <%= user.linkedin.id %><br>
+						<strong>token</strong>: <%= user.linkedin.token %>
+					</p>
+
+					<a href="/unlink/linkedin" class="btn btn-info">Unlink</a>
+				<% } else { %>
+					<a href="/connect/linkedin" class="btn btn-info">Connect LinkedIn</a>
+				<% } %>
+
+			</div>
+		</div>
 	</div>
+
 
 </div>
 </body>
