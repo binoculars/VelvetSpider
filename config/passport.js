@@ -142,8 +142,7 @@ module.exports = function(app, passport) {
         service.config = configAuth[service.name];
         
         service.config.callbackURL = app.get('baseURL') + '/auth/' + service.name + '/callback';
-        console.log(service.config.callbackURL);
-        
+
         service.config.passReqToCallback = true;
 
         passport.use(new service.strategy(service.config,
@@ -153,6 +152,7 @@ module.exports = function(app, passport) {
                 function save(user) {
                     user[service.name].id    = profile.id;
                     user[service.name].token = token;
+                    user[service.name].refreshTokenOrTokenSecret = refreshTokenOrTokenSecret;
 
                     user.save(function(err) {
                         if (err)

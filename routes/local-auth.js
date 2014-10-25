@@ -8,10 +8,21 @@ module.exports = function(app, passport) {
 // 	});
 
 	// PROFILE SECTION =========================
-	app.get('/profile', isLoggedIn, function(req, res) {
+	app.get('/profile2', isLoggedIn, function(req, res) {
 		res.render('profile.ejs', {
 			user : req.user
 		});
+	});
+	
+	app.get('/profile', isLoggedIn, function(req, res) {
+		res.render('connect_account.ejs', {
+			title: 'VelvetSpider',
+			user : req.user
+		});
+	});
+	
+	app.get('/user', isLoggedIn, function(req, res) {
+		res.json(req.user);
 	});
 
 	// LOGOUT ==============================

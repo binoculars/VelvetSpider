@@ -31,7 +31,7 @@
 						<strong>password</strong>: <%= user.local.password %>
 					</p>
 					
-					<a href="/unlink/local" class="btn btn-default">Unlink</a>
+					<!--<a href="/unlink/local" class="btn btn-default">Unlink</a>-->
 				<% } else { %>
 					<a href="/connect/local" class="btn btn-default">Connect Local</a>
 				<% } %>
@@ -49,8 +49,9 @@
 					<p>
 						<strong>id</strong>: <%= user.facebook.id %><br>
 						<strong>token</strong>: <%= user.facebook.token %><br>
+						<strong>refreshTokenOrTokenSecret</strong>: <%= user.facebook.refreshTokenOrTokenSecret %><br>
 						<strong>email</strong>: <%= user.facebook.email %><br>
-						<strong>name</strong>: <%= user.facebook.name %><br>
+						<strong>name</strong>: <%= user.facebook.name %>
 					</p>
 
 					<a href="/unlink/facebook" class="btn btn-primary">Unlink</a>
@@ -72,6 +73,7 @@
 					<p>
 						<strong>id</strong>: <%= user.twitter.id %><br>
 						<strong>token</strong>: <%= user.twitter.token %><br>
+						<strong>refreshTokenOrTokenSecret</strong>: <%= user.twitter.refreshTokenOrTokenSecret %><br>
 						<strong>display name</strong>: <%= user.twitter.displayName %><br>
 						<strong>username</strong>: <%= user.twitter.username %>
 					</p>
@@ -93,6 +95,7 @@
 					<p>
 						<strong>id</strong>: <%= user.google.id %><br>
 						<strong>token</strong>: <%= user.google.token %><br>
+						<strong>refreshTokenOrTokenSecret</strong>: <%= user.google.refreshTokenOrTokenSecret %><br>
 						<strong>email</strong>: <%= user.google.email %><br>
 						<strong>name</strong>: <%= user.google.name %>
 					</p>
@@ -116,7 +119,8 @@
 				<% if (user.instagram.token) { %>
 					<p>
 						<strong>id</strong>: <%= user.instagram.id %><br>
-						<strong>token</strong>: <%= user.instagram.token %>
+						<strong>token</strong>: <%= user.instagram.token %><br>
+						<strong>refreshTokenOrTokenSecret</strong>: <%= user.instagram.refreshTokenOrTokenSecret %>
 					</p>
 
 					<a href="/unlink/instagram" class="btn btn-primary">Unlink</a>
@@ -135,7 +139,8 @@
 				<% if (user.linkedin.token) { %>
 					<p>
 						<strong>id</strong>: <%= user.linkedin.id %><br>
-						<strong>token</strong>: <%= user.linkedin.token %>
+						<strong>token</strong>: <%= user.linkedin.token %><br>
+						<strong>refreshTokenOrTokenSecret</strong>: <%= user.linkedin.refreshTokenOrTokenSecret %>
 					</p>
 
 					<a href="/unlink/linkedin" class="btn btn-info">Unlink</a>
