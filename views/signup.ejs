@@ -1,48 +1,114 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-<head>
-	<title>Node Authentication</title>
-	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
-	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
-	<style>
-		body 		{ padding-top:80px; }
-	</style>
-</head>
-<body>
-<div class="container">
-<div class="col-sm-6 col-sm-offset-3">
+    <head>
+        <title></title>
 
-	<h1><span class="fa fa-sign-in"></span> Signup</h1>
+        <script src="/bower_components/platform/platform.js"></script>
 
-	<% if (message.length > 0) { %>
-		<div class="alert alert-danger"><%= message %></div>
-	<% } %>
+        <link rel="import" href="/bower_components/polymer/polymer.html">
 
-	<!-- LOGIN FORM -->
-	<form action="/signup" method="post">
-		<div class="form-group">
-			<label>Username</label>
-			<input type="text" class="form-control" name="username">
-		</div>
-		<div class="form-group">
-			<label>Password</label>
-			<input type="password" class="form-control" name="password">
-		</div>
+        <link rel="import" href="/bower_components/core-ajax/core-ajax.html">
 
-		<button type="submit" class="btn btn-warning btn-lg">Signup</button>
-	</form>
+        <link rel="import" href="/bower_components/core-icon/core-icon.html">
+        <link rel="import" href="/bower_components/core-icons/core-icons.html">
 
-	<hr>
+        <link rel="import" href="/bower_components/core-icons/social-icons.html">
 
-	<p>Already have an account? <a href="/login">Login</a></p>
-	<p>Or go <a href="/">home</a>.</p>
+        <link rel="import" href="/bower_components/paper-input/paper-input.html">
+        <link rel="import" href="/bower_components/paper-button/paper-button.html">
 
-	<div class="text-center">
-		<p>A demo by <a href="http://scotch.io">Scotch</a>.</p>
-		<p>Visit the <a href="http://scotch.io/tutorials/javascript/easy-node-authentication-setup-and-local">tutorial</a>.</p>
-	</div>
+        <link href="//fonts.googleapis.com/css?family=Varela+Round|Playball" rel="stylesheet" type="text/css">
 
-</div>
-</div>
-</body>
+        <style>
+            body {
+                background-color: #efefef;
+                font-family: 'Varela Round', sans-serif;
+            }
+
+            .serviceName core-icon {
+                fill: #7D25AC;
+                stroke: #000;
+                stroke-width: 0.2;
+                height: 40px;
+                width: 40px;
+            }
+
+            .serviceName {
+                color: #7D25AC;
+            }
+
+            paper-button {
+                color: #7D25AC;
+            }
+
+            paper-button.inverted {
+                background: #7D25AC;
+                color: #fff;
+            }
+
+            a {
+                color: #7D25AC;
+                text-decoration: none;
+            }
+
+            a:hover {
+                text-decoration: underline;
+            }
+        </style>
+    </head>
+    <body fullbleed>
+
+        <div style="width: 70%; height: 100%; margin-left: auto; margin-right: auto; background-color: white; padding-top: 10px;" vertical layout center>
+            <h1 style="text-align: center;"><core-icon icon="input"></core-icon> Signup</h1>
+
+            <% if (message.length > 0) { %>
+            <div class="alert alert-danger"><%= message %></div>
+            <% } %>
+
+            <!-- LOGIN FORM -->
+            <div style="margin-left: auto; margin-right: auto; width: 100%;" vertical layout center flex>
+                <template bind="{{}}">
+                    <div vertical layout>
+                        <div>
+                            <paper-input label="Username" type="text" name="username" inputValue="{{ username }}">{{ username }}</paper-input>
+                        </div>
+                        <div>
+                            <paper-input label="Password" type="password" name="password" inputValue="{{ password }}"></paper-input>
+                        </div>
+                        <div horizontal end-justified layout>
+                            <paper-button id="submit" raised class="inverted">Signup</paper-button>
+                        </div>
+                    </div>
+
+                    <form id="signupform" action="/signup" method="post" style="display: none;">
+                        <input name="username" value="{{ username }}" type="text">
+                        <input name="password" value="{{ password }}" type="password">
+                    </form>
+
+                    <script>
+                        document.querySelector('#submit').addEventListener('click', function(e) {
+
+                            console.log(e);
+                            document.getElementById('signupform').submit();
+                        });
+                    </script>
+                </template>
+                <script>
+                    document.addEventListener('polymer-ready', function() {
+                        document.querySelector('template').model = {};
+                        CoreStyle.g.paperInput.focusedColor = '#7D25AC';
+                        CoreStyle.g.paperInput.invalidColor = '#AC2598';
+                    });
+                </script>
+            </div>
+
+            <div style="width: 90%">
+                <hr>
+            </div>
+            <div end>
+                <p>Already have an account? <a href="/login">Login</a></p>
+                <p>Or go <a href="/">home</a>.</p>
+            </div>
+        </div>
+    </body>
 </html>

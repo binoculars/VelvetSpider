@@ -78,7 +78,7 @@
             <div horizontal layout center center-justified wrap>
                 <div vertical layout style="width: 80%;">
                 
-                    <template id="sign-in-buttons" repeat="[[service in services]]">
+                    <template id="accounts" repeat="[[service in services]]">
                         <div style="margin: 10px;">
                             <div class="serviceName"><core-icon icon="[[service.icon]]"></core-icon> [[service.name]]</div>
                             <hr>
@@ -111,28 +111,18 @@
 
         <script>
             document.addEventListener('polymer-ready', function() {
-                var template = document.querySelector('#sign-in-buttons');
+                var template = document.querySelector('#accounts');
                 template.bindingDelegate = new PolymerExpressions();
-                
-                template.model = {
-                    services: {},
-                    user: {}
-                };
-                
-                document.querySelector("core-ajax.services").addEventListener("core-response",
-                    function (e) {
-                        template.model.services = e.detail.response;
-                        template.model = template.model; // workaround for now. TODO: figure out how to automate this.
-                    }
-                );
-                
-                document.querySelector("core-ajax.user").addEventListener("core-response",
-                    function (e) {
-                        template.model.user = e.detail.response;
-                        template.model = template.model; // workaround for now. TODO: figure out how to automate this.
-                        console.log(template.model);
-                    }
-                );
+                template.model = {};
+
+                ['services', 'user'].map(function(data) {
+                    document.querySelector('core-ajax.' + data).addEventListener("core-response",
+                        function (e) {
+                            template.model[data] = e.detail.response;
+                            template.model = template.model; // workaround for now. TODO: figure out how to automate this.
+                        }
+                    );
+                });
             });
         </script>
     </body>

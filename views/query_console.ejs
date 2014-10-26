@@ -395,6 +395,9 @@
 			var APIs = [];
 
 			document.addEventListener('polymer-ready', function() {
+                CoreStyle.g.paperInput.focusedColor = '#7D25AC';
+                CoreStyle.g.paperInput.invalidColor = '#AC2598';
+
 				document.querySelector("core-ajax.services").addEventListener("core-response",
 					function(e) {
 						var servicesTemplate = document.querySelector('core-menu.services template');
