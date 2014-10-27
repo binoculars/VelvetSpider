@@ -22,10 +22,9 @@ cd VelvetSpider
 npm install
 bower install
 ```
-* Configure tokens
+* Configure tokens and database
 ```sh
 cp config/auth.js config/authLocal.js
-cp config/userTokens.js config/userTokensLocal.js
 cp config/database.js config/databaseLocal.js
 ```
 * Fill out the token information in the local config files.

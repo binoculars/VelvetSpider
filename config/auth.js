@@ -25,3 +25,5 @@ module.exports = {
         'consumerSecret' 	: 'your_client_secret_here'
     }
 };
+
+// TODO: Move this to the database and provide an admin console to manage them
