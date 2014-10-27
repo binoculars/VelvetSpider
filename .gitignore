@@ -41,6 +41,5 @@ com_crashlytics_export_strings.xml
 node_modules/
 bower_components/
 test/
-config/authLocal.js
-config/userTokensLocal.js
 npm-debug.log
+config/*Local.js
