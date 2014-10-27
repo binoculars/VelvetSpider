@@ -15,7 +15,6 @@ var api = require('./routes/api');
 //var oauth_redirect = require ('./test/oauth_redirect');
 var login = require ('./routes/login');
 
-
 var app = express();
 
 app.set('hostname', process.env.C9_HOSTNAME || 'localhost');
@@ -54,6 +53,7 @@ app.use(cookieParser());
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/bower_components', express.static(path.join(__dirname, 'bower_components')));
+app.use('/test', express.static(path.join(__dirname, 'test', 'static')));
 
 app.use('/', routes);
 //app.use('/users', users);
