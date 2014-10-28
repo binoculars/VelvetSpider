@@ -4,7 +4,6 @@ var router = express.Router();
 var fs = require('fs');
 
 var auth = require('../config/authLocal'); // run `cp config/auth.js config/authLocal.js` and fill out the info.
-var userTokens = require('../config/userTokensLocal'); // run `cp config/userTokens.js config/userTokensLocal.js` and fill out the info.
 
 var OAuth = require('oauth');
 var querystring = require('querystring');
@@ -32,11 +31,11 @@ function setupOAuth(service) {
             );
 
             authObj.rest = {
-                get: function(url, callback) {
+                get: function(url, credentials, callback) {
                     authObj.auth.get(
                         url,
-                        userTokens[service.id].token,
-                        userTokens[service.id].tokenSecret,
+                        credentials.token,
+                        credentials.tokenSecret,
                         callback
                     );
                 }
@@ -53,10 +52,10 @@ function setupOAuth(service) {
             );
 
             authObj.rest = {
-                get: function(url, callback) {
+                get: function(url, credentials, callback) {
                     authObj.auth.get(
                         url,
-                        userTokens[service.id].access_token,
+                        credentials.access_token,
                         callback
                     );
                 }
@@ -92,20 +91,40 @@ fs.readdir(__dirname + '/../public/javascripts/services', function(err, files) {
     });
 });
 
-router.get('/service/:service', function(req, res) {
+ // TODO: require user to be logged in
+ // TODO: error handling for bad requests
+ // TODO: error handling for bad/no user credentials
+ router.get('/service/:service', function(req, res) {
     console.log(req.query);
 
-	var oauth = oauths[req.params.service];
+    var serviceID = req.params.service;
+    var user = req.user;
+	var oauth = oauths[serviceID];
     var params = JSON.parse(req.query.req);
-
+    var credentials = {};
+    
 	if (oauth.customParameters) {
 		Object.keys(oauth.customParameters).map(function (key) {
 			params[key] = oauth.customParameters[key];
 		});
 	}
+	
+	if (user) {
+	    if (services[serviceID].auth.version == '1.0A') {
+	        credentials = {
+	            token: user[serviceID].token,
+	            tokenSecret: user[serviceID].refreshTokenOrTokenSecret
+	        };
+	    } else if (services[serviceID].auth.version == '2.0') {
+	        credentials = {
+	            access_token: user[serviceID].token
+	        }
+	    }
+	}
 
 	oauth.rest.get(
         req.query.url + '?' + querystring.stringify(params),
+        credentials,
         function (e, data, resp) {
             if (e) console.error(e);
 

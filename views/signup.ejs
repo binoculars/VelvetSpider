@@ -18,18 +18,17 @@
         <link rel="import" href="/bower_components/paper-button/paper-button.html">
 
         <link href="//fonts.googleapis.com/css?family=Varela+Round|Playball" rel="stylesheet" type="text/css">
-		<link href="/stylesheets/style.css" rel="stylesheet" type="text/css">
+        <link href="/stylesheets/style.css" rel="stylesheet" type="text/css">
     </head>
     <body fullbleed>
 
         <div style="width: 70%; height: 100%; margin-left: auto; margin-right: auto; background-color: white; padding-top: 10px;" vertical layout center>
-            <h1 style="text-align: center;"><core-icon icon="input"></core-icon> Login</h1>
+            <h1 style="text-align: center;"><core-icon icon="input"></core-icon> Signup</h1>
 
             <% if (message.length > 0) { %>
-            <div class="alert alert-danger"><%= message %></div>
+            <div><%= message %></div>
             <% } %>
 
-            <!-- LOGIN FORM -->
             <div style="margin-left: auto; margin-right: auto; width: 100%;" vertical layout center flex>
                 <template bind="{{}}">
                     <div vertical layout>
@@ -40,11 +39,11 @@
                             <paper-input label="Password" type="password" name="password" inputValue="{{ password }}"></paper-input>
                         </div>
                         <div horizontal end-justified layout>
-                            <paper-button id="submit" raised class="inverted">Login</paper-button>
+                            <paper-button id="submit" raised class="inverted">Signup</paper-button>
                         </div>
                     </div>
 
-                    <form id="signupform" action="/login" method="post" style="display: none;">
+                    <form id="signupform" action="/signup" method="post" style="display: none;">
                         <input name="username" value="{{ username }}" type="text">
                         <input name="password" value="{{ password }}" type="password">
                     </form>
@@ -70,8 +69,8 @@
                 <hr>
             </div>
             <div end>
-                <p>Need an account? <a href="/signup">Signup</a></p>
-				<p>Or go <a href="/">home</a>.</p>
+                <p>Already have an account? <a href="/login">Login</a></p>
+                <p>Or go <a href="/">home</a>.</p>
             </div>
         </div>
     </body>
