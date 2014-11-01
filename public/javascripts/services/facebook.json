@@ -13,12 +13,12 @@
         "user": {
             "name": "user",
             "method": "GET",
-            "resourceURL": "https://graph.facebook.com/v2.1/:user",
+            "resourceURL": "https://graph.facebook.com/v2.1/{user-id}",
             "description": ["Get basic information about a user."],
             "urlVariables": [
                 {
-                    "name": "user",
-                    "replaces": ":user",
+                    "name": "user-id",
+                    "replaces": "{user-id}",
                     "description": "User ID or \"me\"",
                     "data": {
                         "type": "String"
@@ -40,12 +40,12 @@
         "user/friends": {
             "name": "user",
             "method": "GET",
-            "resourceURL": "https://graph.facebook.com/v2.1/:user/friends",
+            "resourceURL": "https://graph.facebook.com/v2.1/{user-id}/friends",
             "description": ["Get user's friends list"],
             "urlVariables": [
                 {
-                    "name": "user",
-                    "replaces": ":user",
+                    "name": "user-id",
+                    "replaces": "{user-id}",
                     "description": "User ID or \"me\"",
                     "data": {
                         "type": "String"
