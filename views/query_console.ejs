@@ -13,8 +13,6 @@
 		<link rel="import" href="/bower_components/polymer/polymer.html">
 
 		<link rel="import" href="/bower_components/core-ajax/core-ajax.html">
-		<link rel="import" href="/bower_components/core-scaffold/core-scaffold.html">
-		<link rel="import" href="/bower_components/core-header-panel/core-header-panel.html">
 		<link rel="import" href="/bower_components/core-menu/core-menu.html">
 		<link rel="import" href="/bower_components/core-icon/core-icon.html">
 		<link rel="import" href="/bower_components/core-icons/core-icons.html">
@@ -23,8 +21,11 @@
 		<link rel="import" href="/bower_components/core-selector/core-selector.html">
 		<link rel="import" href="/bower_components/core-icon-button/core-icon-button.html">
 		<link rel="import" href="/bower_components/core-toolbar/core-toolbar.html">
-		<link rel="import" href="/bower_components/core-drawer-panel/core-drawer-panel.html">
         <link rel="import" href="/bower_components/core-splitter/core-splitter.html">
+        
+        <link rel="import" href="/bower_components/core-dropdown/core-dropdown.html">
+        
+        <link rel="import" href="/bower_components/core-menu-button/core-menu-button.html">
 
 		<link rel="import" href="/bower_components/paper-item/paper-item.html">
 		<link rel="import" href="/bower_components/paper-input/paper-input.html">
@@ -49,13 +50,6 @@
             a {
                 color: #7D25AC;
             }
-
-			body > polymer-ui-menu {
-				width: 300px;
-			}
-
-			#services {
-			}
 
 			.hidden {
 				display: none;
@@ -86,9 +80,13 @@
             #resp::shadow pre {
                 overflow-x: scroll;
             }
+            
+            core-menu-button::shadow #button span {
+                margin: 0; /* <span> inside <core-menu-button> has a margin-left: 4px; set. This negates it so the button doesn't get pushed up. */
+            }
 		</style>
 	</head>
-    <body fullbleed vertical layout>
+    <body unresolved fullbleed vertical layout>
         <core-ajax auto
                    url="/user"
                    params=""
@@ -102,10 +100,17 @@
 				   class="services">
         </core-ajax>
 
-        <core-toolbar style="background-color: #fff; color: #7D25AC; box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.2);">
+        <core-toolbar style="background-color: #fff; color: #7D25AC; box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.2);" >
             <core-icon-button icon="menu"></core-icon-button>
             <span class="logo" style="font-size: 48px; text-align: center; width: 100%;">VelvetSpider</span>
-            <core-icon-button icon="settings"></core-icon-button>
+            <core-menu-button icon="settings" halign="right">
+                <paper-item icon="account-box" label="Profile">
+                   <a href="/profile"></a>
+                </paper-item>
+                <paper-item icon="exit-to-app" label="Log out">
+                    <a href="/logout"></a>
+                </paper-item>
+            </core-menu-button>
         </core-toolbar>
         
         <div horizontal layout flex style="background-color: #fff;">
@@ -169,9 +174,6 @@
                 #table > div {
                     padding: 5px;
                     overflow-y: scroll !important;
-                }
-                #core_scaffold::shadow core-toolbar {
-                    background-color: #7D25AC;
                 }
             </style>
 
