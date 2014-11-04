@@ -1,0 +1,67 @@
+<link rel="import" href="/bower_components/polymer/polymer.html">
+<link rel="import" href="/bower_components/core-icon-button/core-icon.html">
+<link rel="import" href="/bower_components/paper-button/paper-button.html">
+<link rel="import" href="/bower_components/paper-input/paper-input.html">
+
+<polymer-element name="eresidae-user-form">
+    <template>
+        <link rel="stylesheet" href="/stylesheets/style.css">
+        
+        <div style="width: 70%; height: 100%; margin-left: auto; margin-right: auto; background-color: white; padding-top: 10px;" vertical layout center>
+            <h1 style="text-align: center;"><core-icon icon="input"></core-icon> [[banner]]</h1>
+            
+            <template if="{{message.length}}">
+                <h3>{{message}}</h3>
+            </template>
+
+            <div vertical layout center flex>
+                <div vertical layout>
+                    <template repeat="{{fields}}">
+                        <div>
+                            <paper-input label="[[label]]" type="[[type]]" name="[[name]]" inputValue="{{value}}"></paper-input>
+                        </div>
+                    </template>
+                    <div horizontal end-justified layout>
+                        <paper-button id="submit" raised class="inverted" on-tap="{{submit}}" on-click="{{submit}}">{{banner}}</paper-button>
+                    </div>
+                </div>
+
+                <form id="form" action="{{action}}" method="post" style="display: none;">
+                    <template repeat="{{fields}}">
+                        <input name="[[name]]" value="{{value}}" type="[[type]]">
+                    </template>
+                </form>
+            </div>
+
+            <div style="width: 90%">
+                <hr>
+            </div>
+            <div end>
+                <p>Already have an account? <a href="/login">Login</a></p>
+                <p>Or go <a href="/">home</a>.</p>
+            </div>
+        </div>
+    </template>
+    <script>
+        Polymer({
+            publish: {
+                banner: '',
+                action: '',
+                fields: [{
+                    name: 'username',
+                    label: 'Username',
+                    type: 'text',
+                    value: ''
+                }, {
+                    name: 'password',
+                    label: 'Password',
+                    type: 'password',
+                    value: ''
+                }]
+            },
+            submit: function() {
+                this.$.form.submit();
+            }
+        });
+    </script>
+</polymer-element>
