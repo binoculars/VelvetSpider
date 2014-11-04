@@ -15,30 +15,36 @@
         <link rel="import" href="/bower_components/core-icons/social-icons.html">
 
         <link rel="import" href="/bower_components/paper-button/paper-button.html">
+        
+        <link rel="import" href="/elements/eresidae-navbar.html">
 
         <link href="//fonts.googleapis.com/css?family=Varela+Round|Playball" rel="stylesheet" type="text/css">
         <link href="/stylesheets/style.css" rel="stylesheet" type="text/css">
+        
+        <style>
+            html, body {
+                height: 100%;
+            }
+        </style>
     </head>
-    <body fullbleed>
+    <body unresolved fullbleed vertical layout>
         <core-ajax auto
                    url="/api/listServices"
                    params=""
                    handleAs="json"
                    class="services">
         </core-ajax>
-        
         <core-ajax auto
                    url="/user"
                    params=""
                    handleAs="json"
                    class="user">
         </core-ajax>
-
-        <div style="width: 70%; height: 100%; margin-left: auto; margin-right: auto; background-color: white; padding-top: 10px;">
+        
+        <eresidae-navbar></eresidae-navbar>
+        <div style="background-color: white; margin-left: 10%; margin-right: 10%;" flex vertical layout>
             <h1 style="text-align: center;">Link Accounts</h1>
-
             <h3 style="text-align: center;"><a href="/query_console">Query Console</a></h3>
-
             <div horizontal layout center center-justified wrap>
                 <div vertical layout style="width: 80%;">
                 

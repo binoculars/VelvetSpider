@@ -33,6 +33,8 @@
         <link rel="import" href="/bower_components/paper-checkbox/paper-checkbox.html">
         <link rel="import" href="/bower_components/paper-tabs/paper-tabs.html">
 
+        <link rel="import" href="/elements/eresidae-navbar.html">
+        
         <link rel="import" href="/bower_components/prettify-element/prettify-element.html">
 
         <link href="//fonts.googleapis.com/css?family=Varela+Round|Playball" rel="stylesheet" type="text/css">
@@ -80,10 +82,6 @@
             #resp::shadow pre {
                 overflow-x: scroll;
             }
-            
-            core-menu-button::shadow #button span {
-                margin: 0; /* <span> inside <core-menu-button> has a margin-left: 4px; set. This negates it so the button doesn't get pushed up. */
-            }
 		</style>
 	</head>
     <body unresolved fullbleed vertical layout>
@@ -100,18 +98,7 @@
 				   class="services">
         </core-ajax>
 
-        <core-toolbar style="background-color: #fff; color: #7D25AC; box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.2);" >
-            <core-icon-button icon="menu"></core-icon-button>
-            <span class="logo" style="font-size: 48px; text-align: center; width: 100%;">VelvetSpider</span>
-            <core-menu-button icon="settings" halign="right">
-                <paper-item icon="account-box" label="Profile">
-                   <a href="/profile"></a>
-                </paper-item>
-                <paper-item icon="exit-to-app" label="Log out">
-                    <a href="/logout"></a>
-                </paper-item>
-            </core-menu-button>
-        </core-toolbar>
+        <eresidae-navbar></eresidae-navbar>
         
         <div horizontal layout flex style="background-color: #fff;">
             <div class="services" style="min-width: 150px; background-color: #fff; box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.2);">
