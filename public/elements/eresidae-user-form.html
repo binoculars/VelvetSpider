@@ -6,14 +6,11 @@
 <polymer-element name="eresidae-user-form">
     <template>
         <link rel="stylesheet" href="/stylesheets/style.css">
-        
         <div style="width: 70%; height: 100%; margin-left: auto; margin-right: auto; background-color: white; padding-top: 10px;" vertical layout center>
             <h1 style="text-align: center;"><core-icon icon="input"></core-icon> [[banner]]</h1>
-            
             <template if="{{message.length}}">
                 <h3>{{message}}</h3>
             </template>
-
             <div vertical layout center flex>
                 <div vertical layout>
                     <template repeat="{{fields}}">
@@ -25,19 +22,15 @@
                         <paper-button id="submit" raised class="inverted" on-tap="{{submit}}" on-click="{{submit}}">{{banner}}</paper-button>
                     </div>
                 </div>
-
                 <form id="form" action="{{action}}" method="post" style="display: none;">
                     <template repeat="{{fields}}">
                         <input name="[[name]]" value="{{value}}" type="[[type]]">
                     </template>
                 </form>
             </div>
-
-            <div style="width: 90%">
-                <hr>
-            </div>
+            <hr style="width: 90%;">
             <div end>
-                <p>Already have an account? <a href="/login">Login</a></p>
+                <p>{{altMsg}} <a href="{{altHref}}">{{altLink}}</a></p>
                 <p>Or go <a href="/">home</a>.</p>
             </div>
         </div>
@@ -57,7 +50,11 @@
                     label: 'Password',
                     type: 'password',
                     value: ''
-                }]
+                }],
+                message: '',
+                altMsg: '',
+                altHref: '',
+                altLink: ''
             },
             submit: function() {
                 this.$.form.submit();

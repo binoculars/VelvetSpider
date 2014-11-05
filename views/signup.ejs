@@ -12,6 +12,13 @@
         <link href="/stylesheets/style.css" rel="stylesheet" type="text/css">
     </head>
     <body unresolved fullbleed>
-        <eresidae-user-form banner="Signup" action="/signup" message="<%= message.length ? message : '' %>"></eresidae-user-form>
+        <eresidae-user-form
+                banner="Signup"
+                action="/signup"
+                message="<%= message.length ? message : '' %>"
+                altMsg="Alredy have an account?"
+                altHref="/login"
+                altLink="Login">
+        </eresidae-user-form>
     </body>
 </html>
