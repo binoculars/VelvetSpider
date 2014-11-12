@@ -1,26 +1,21 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title></title>
-    
+        <title>VelvetSpider</title>
         <script src="/bower_components/platform/platform.js"></script>
         <link rel="import" href="/bower_components/polymer/polymer.html">
-
         <link rel="import" href="/bower_components/app-router/app-router.html">
-
         <link rel="import" href="/bower_components/paper-button/paper-button.html">
-
         <link rel="import" href="/elements/eresidae-layout-default.html">
         <link rel="import" href="/elements/eresidae-layout-toolbar.html">
+        <link rel="import" href="/elements/eresidae-profile.html">
         <link rel="import" href="/elements/eresidae-query-console.html">
         <link rel="import" href="/elements/eresidae-user-form.html">
-
         <link href="//fonts.googleapis.com/css?family=Varela+Round|Playball" rel="stylesheet" type="text/css">
         <link href="/stylesheets/style.css" rel="stylesheet" type="text/css">
         <script src="/javascripts/core-style.js"></script>
     </head>
     <body unresolved fullbleed>
-
         <app-router>
             <app-route path="/">
                 <template>
@@ -38,13 +33,6 @@
                     </eresidae-layout-default>
                 </template>
             </app-route>
-
-            <app-route path="/testing">
-                <template>
-                    <div>test</div>
-                </template>
-            </app-route>
-
             <app-route path="/login">
                 <template>
                     <eresidae-user-form
@@ -56,7 +44,6 @@
                     </eresidae-user-form>
                 </template>
             </app-route>
-
             <app-route path="/signup">
                 <template>
                     <eresidae-user-form
@@ -68,13 +55,15 @@
                     </eresidae-user-form>
                 </template>
             </app-route>
-
             <app-route path="/profile">
                 <template>
-
+                    <eresidae-layout-toolbar>
+                        <eresidae-layout-default flex>
+                            <eresidae-profile></eresidae-profile>
+                        </eresidae-layout-default>
+                    </eresidae-layout-toolbar>
                 </template>
             </app-route>
-
             <app-route path="/query_console">
                 <template>
                     <eresidae-layout-toolbar>
@@ -83,6 +72,5 @@
                 </template>
             </app-route>
         </app-router>
-
     </body>
 </html>
