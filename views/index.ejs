@@ -4,34 +4,85 @@
         <title></title>
     
         <script src="/bower_components/platform/platform.js"></script>
-    
         <link rel="import" href="/bower_components/polymer/polymer.html">
-    
-        <link rel="import" href="/bower_components/core-ajax/core-ajax.html">
-    
-        <link rel="import" href="/bower_components/core-icon/core-icon.html">
-        <link rel="import" href="/bower_components/core-icons/core-icons.html">
-    
-        <link rel="import" href="/bower_components/core-icons/social-icons.html">
-    
-        <link rel="import" href="/bower_components/paper-input/paper-input.html">
+
+        <link rel="import" href="/bower_components/app-router/app-router.html">
+
         <link rel="import" href="/bower_components/paper-button/paper-button.html">
-    
+
+        <link rel="import" href="/elements/eresidae-layout-default.html">
+        <link rel="import" href="/elements/eresidae-layout-toolbar.html">
+        <link rel="import" href="/elements/eresidae-query-console.html">
+        <link rel="import" href="/elements/eresidae-user-form.html">
+
         <link href="//fonts.googleapis.com/css?family=Varela+Round|Playball" rel="stylesheet" type="text/css">
         <link href="/stylesheets/style.css" rel="stylesheet" type="text/css">
+        <script src="/javascripts/core-style.js"></script>
     </head>
     <body unresolved fullbleed>
-        <div style="width: 70%; height: 100%; margin-left: auto; margin-right: auto; background-color: white; padding-top: 10px;" vertical layout center>
-            <div style="margin-left: auto; margin-right: auto; width: 100%;" vertical layout center flex>
-                <div start flex>
-                    <span class="logo" style="font-size: 72px;">VelvetSpider</span>
-                </div>
-                <div center>
-                    <a href="/login"><paper-button class="inverted" raised>Login</paper-button></a>
-                    <a href="/signup"><paper-button class="inverted" raised>Signup</paper-button></a> </div>
-                </div>
-                <div end flex>&nbsp;</div>
-            </div>
-        </div>
+
+        <app-router>
+            <app-route path="/">
+                <template>
+                    <eresidae-layout-default>
+                        <div vertical layout center flex>
+                            <div start flex>
+                                <span class="logo" style="font-size: 72px;">VelvetSpider</span>
+                            </div>
+                            <div center>
+                                <a is="pushstate-anchor" href="/login"><paper-button class="inverted" raised>Login</paper-button></a>
+                                <a is="pushstate-anchor" href="/signup"><paper-button class="inverted" raised>Signup</paper-button></a>
+                            </div>
+                            <div end flex>&nbsp;</div>
+                        </div>
+                    </eresidae-layout-default>
+                </template>
+            </app-route>
+
+            <app-route path="/testing">
+                <template>
+                    <div>test</div>
+                </template>
+            </app-route>
+
+            <app-route path="/login">
+                <template>
+                    <eresidae-user-form
+                            banner="Login"
+                            action="/login"
+                            altMsg="Need an account?"
+                            altHref="/signup"
+                            altLink="Sign up">
+                    </eresidae-user-form>
+                </template>
+            </app-route>
+
+            <app-route path="/signup">
+                <template>
+                    <eresidae-user-form
+                            banner="Signup"
+                            action="/signup"
+                            altMsg="Alredy have an account?"
+                            altHref="/login"
+                            altLink="Login">
+                    </eresidae-user-form>
+                </template>
+            </app-route>
+
+            <app-route path="/profile">
+                <template>
+
+                </template>
+            </app-route>
+
+            <app-route path="/query_console">
+                <template>
+                    <eresidae-layout-toolbar>
+                        <eresidae-query-console flex></eresidae-query-console>
+                    </eresidae-layout-toolbar>
+                </template>
+            </app-route>
+        </app-router>
+
     </body>
 </html>

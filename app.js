@@ -10,10 +10,10 @@ var passport = require('passport');
 var flash = require('connect-flash');
 
 var routes = require('./routes/index');
-var users = require('./routes/users');
+//var users = require('./routes/users');
 var api = require('./routes/api');
 //var oauth_redirect = require ('./test/oauth_redirect');
-var login = require ('./routes/login');
+//var login = require ('./routes/login');
 
 var app = express();
 
@@ -55,7 +55,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/bower_components', express.static(path.join(__dirname, 'bower_components')));
 app.use('/test', express.static(path.join(__dirname, 'test', 'static')));
 
-app.use('/', routes);
+
 //app.use('/users', users);
 app.use('/api', api);
 //app.use('/oauth_redirect', oauth_redirect);
@@ -63,6 +63,8 @@ app.use('/api', api);
 
 require('./routes/local-auth')(app, passport); // load our routes and pass in our app and fully configured passport
 require('./routes/connect_account')(app, passport);
+
+app.use('*', routes);
 
 // TODO need to route to query console after authentication
 

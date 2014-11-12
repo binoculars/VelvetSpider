@@ -38,9 +38,9 @@ module.exports = function(app, passport) {
 	// locally --------------------------------
 		// LOGIN ===============================
 		// show the login form
-		app.get('/login', function(req, res) {
-			res.render('login.ejs', { message: req.flash('loginMessage') });
-		});
+		//app.get('/login', function(req, res) {
+		//	res.render('login.ejs', { message: req.flash('loginMessage') });
+		//});
 
 		// process the login form
 		app.post('/login', passport.authenticate('local-login', {
@@ -51,9 +51,9 @@ module.exports = function(app, passport) {
 
 		// SIGNUP =================================
 		// show the signup form
-		app.get('/signup', function(req, res) {
-			res.render('signup.ejs', { message: req.flash('loginMessage') });
-		});
+		//app.get('/signup', function(req, res) {
+		//	res.render('signup.ejs', { message: req.flash('loginMessage') });
+		//});
 
 		// process the signup form
 		app.post('/signup', passport.authenticate('local-signup', {
@@ -94,11 +94,11 @@ module.exports = function(app, passport) {
 // 		});
 // 	});
 
-	app.get('/query_console', isLoggedIn, function(req, res) {
-		res.render('query_console.ejs', {
-			title : 'VelvetSpider'
-		});
-	});
+	//app.get('/query_console', isLoggedIn, function(req, res) {
+	//	res.render('query_console.ejs', {
+	//		title : 'VelvetSpider'
+	//	});
+	//});
 };
 
 // route middleware to ensure user is logged in

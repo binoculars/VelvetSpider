@@ -2,11 +2,11 @@
 <link rel="import" href="/bower_components/core-icon/core-icon.html">
 <link rel="import" href="/bower_components/paper-button/paper-button.html">
 <link rel="import" href="/bower_components/paper-input/paper-input.html">
+<link rel="import" href="/elements/eresidae-layout-default.html">
 
 <polymer-element name="eresidae-user-form">
     <template>
-        <link rel="stylesheet" href="/stylesheets/style.css">
-        <div style="width: 70%; height: 100%; margin-left: auto; margin-right: auto; background-color: white; padding-top: 10px;" vertical layout center>
+        <eresidae-layout-default>
             <h1 style="text-align: center;"><core-icon icon="input"></core-icon> [[banner]]</h1>
             <template if="{{message.length}}">
                 <h3>{{message}}</h3>
@@ -33,7 +33,7 @@
                 <p>{{altMsg}} <a href="{{altHref}}">{{altLink}}</a></p>
                 <p>Or go <a href="/">home</a>.</p>
             </div>
-        </div>
+        </eresidae-layout-default>
     </template>
     <script>
         Polymer({
