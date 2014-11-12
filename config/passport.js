@@ -121,6 +121,7 @@ module.exports = function(app, passport) {
 
     }));
 
+    // TODO read this from /public/javascripts/services
     var services = [{
         'name': 'facebook',
         'strategy': require('passport-facebook').Strategy

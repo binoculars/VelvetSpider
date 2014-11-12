@@ -1,0 +1,64 @@
+<link rel="import" href="/bower_components/polymer/polymer.html">
+<link rel="import" href="/bower_components/core-icon/core-icon.html">
+<link rel="import" href="/bower_components/paper-button/paper-button.html">
+<link rel="import" href="/bower_components/paper-input/paper-input.html">
+<link rel="import" href="/elements/eresidae-layout-default.html">
+
+<polymer-element name="eresidae-user-form">
+    <template>
+        <eresidae-layout-default>
+            <h1 style="text-align: center;"><core-icon icon="input"></core-icon> [[banner]]</h1>
+            <template if="{{message.length}}">
+                <h3>{{message}}</h3>
+            </template>
+            <div vertical layout center flex>
+                <div vertical layout>
+                    <template repeat="{{fields}}">
+                        <div>
+                            <paper-input label="[[label]]" type="[[type]]" name="[[name]]" inputValue="{{value}}"></paper-input>
+                        </div>
+                    </template>
+                    <div horizontal end-justified layout>
+                        <paper-button id="submit" raised class="inverted" on-tap="{{submit}}" on-click="{{submit}}">{{banner}}</paper-button>
+                    </div>
+                </div>
+                <form id="form" action="{{action}}" method="post" style="display: none;">
+                    <template repeat="{{fields}}">
+                        <input name="[[name]]" value="{{value}}" type="[[type]]">
+                    </template>
+                </form>
+            </div>
+            <hr style="width: 90%;">
+            <div end>
+                <p>{{altMsg}} <a href="{{altHref}}">{{altLink}}</a></p>
+                <p>Or go <a href="/">home</a>.</p>
+            </div>
+        </eresidae-layout-default>
+    </template>
+    <script>
+        Polymer({
+            publish: {
+                banner: '',
+                action: '',
+                fields: [{
+                    name: 'username',
+                    label: 'Username',
+                    type: 'text',
+                    value: ''
+                }, {
+                    name: 'password',
+                    label: 'Password',
+                    type: 'password',
+                    value: ''
+                }],
+                message: '',
+                altMsg: '',
+                altHref: '',
+                altLink: ''
+            },
+            submit: function() {
+                this.$.form.submit();
+            }
+        });
+    </script>
+</polymer-element>
