@@ -3,7 +3,7 @@ body {
     font-family: 'Varela Round', sans-serif;
 }
 
-.serviceName core-icon {
+* /deep/ .serviceName core-icon {
     fill: #7D25AC;
     stroke: #000;
     stroke-width: 0.2;
@@ -11,29 +11,29 @@ body {
     width: 40px;
 }
 
-.serviceName {
+* /deep/ .serviceName {
     color: #7D25AC;
 }
 
-paper-button {
+* /deep/ paper-button {
     color: #7D25AC;
 }
 
-paper-button.inverted {
+* /deep/ paper-button.inverted {
     background: #7D25AC;
     color: #fff;
 }
 
-a {
+* /deep/ a {
     color: #7D25AC;
     text-decoration: none;
 }
 
-a:hover {
+* /deep/ a:hover {
     text-decoration: underline;
 }
 
-.logo {
+* /deep/ .logo {
     font-family: 'Playball', cursive;
     
     font-weight: bold;
@@ -41,4 +41,31 @@ a:hover {
 
     color: #7D25AC;
     text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+}
+
+* /deep/ paper-checkbox::shadow #ink{
+    color: inherit;
+}
+
+* /deep/ paper-checkbox::shadow #checkbox.checked {
+    border-color: #7D25AC;
+}
+
+* /deep/ paper-tabs {
+    background-color: #7D25AC;
+    color: white;
+    box-shadow: 0px 3px 2px rgba(0, 0, 0, 0.2);
+}
+
+* /deep/ paper-tabs::shadow #selectionBar {
+    background-color: white;
+}
+
+* /deep/ paper-tabs paper-tab::shadow #ink {
+    color: inherit;
+}
+
+* /deep/ #resp::shadow pre {
+    overflow-x: scroll;
+    margin: 0;
 }

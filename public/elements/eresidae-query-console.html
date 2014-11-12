@@ -1,0 +1,210 @@
+<link rel="import" href="/bower_components/polymer/polymer.html">
+<link rel="import" href="/bower_components/core-ajax/core-ajax.html">
+<link rel="import" href="/bower_components/core-icon-button/core-icon-button.html">
+<link rel="import" href="/bower_components/core-icons/social-icons.html">
+<link rel="import" href="/bower_components/core-menu/core-menu.html">
+<link rel="import" href="/bower_components/core-menu-button/core-menu-button.html">
+<link rel="import" href="/bower_components/core-selector/core-selector.html">
+<link rel="import" href="/bower_components/core-splitter/core-splitter.html">
+<link rel="import" href="/bower_components/core-toolbar/core-toolbar.html">
+<link rel="import" href="/bower_components/paper-item/paper-item.html">
+<link rel="import" href="/elements/eresidae-endpoint-query-form.html">
+
+<polymer-element name="eresidae-query-console" horizontal layout>
+    <template>
+        <core-ajax auto
+                   url="/user"
+                   params=""
+                   handleAs="json"
+                   class="user"
+                   on-core-response="{{userCoreResponse}}">
+        </core-ajax>
+        <core-ajax auto
+                   url="/api/listServices"
+                   params=""
+                   handleAs="json"
+                   class="services"
+                   on-core-response="{{servicesCoreResponse}}">
+        </core-ajax>
+
+        <div class="services" style="background-color: #fff; box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.2);">
+            <style shim-shadowdom>
+                div.services paper-item::shadow core-icon {
+                    fill: #7D25AC;
+                    stroke: #000;
+                    stroke-width: 0.2;
+                    height: 40px;
+                    width: 40px;
+                }
+
+                div.services paper-item.core-selected::shadow  #label {
+                    text-decoration: underline;
+                }
+
+                div.services paper-item::shadow #label {
+                    color: #7D25AC;
+                }
+            </style>
+            <core-selector class="svcs" on-core-select="{{serviceSelected}}">
+                <template repeat="{{}}">
+                    <paper-item icon="[[icon]]" label="[[name]]" id="[[id]]"></paper-item>
+                    <core-ajax auto
+                               url="/javascripts/services/[[schema]]"
+                               params=""
+                               handleAs="json"
+                               class="[[id]]"
+                               on-core-response="{{serviceCoreResponse}}">
+                    </core-ajax>
+                </template>
+            </core-selector>
+        </div>
+
+        <style shim-shadowdom>
+            #table {
+                background-color: #efefef;
+            }
+
+            #table > div {
+                padding: 5px;
+                overflow-y: scroll !important;
+            }
+        </style>
+
+        <div id="table" class="container" horizontal layout flex>
+            <div>
+                <style>
+                    .endpoints > * {
+                        color: black;
+                        padding-left: 5px;
+                        padding-right: 5px;
+                        padding-top: 10px;
+                        padding-bottom: 10px;
+                        white-space: nowrap;
+                        overflow-wrap: normal;
+                        overflow: hidden;
+                        height: inherit;
+                    }
+                    .endpoints > *.core-selected {
+                        color: #ffffff;
+                        background-color: #7D25AC;
+                    }
+                </style>
+                <core-selector class="endpoints" on-core-select="{{endpointSelected}}">
+                    <template repeat="{{method in methods}}">
+                        <paper-item label="[[method]]"></paper-item>
+                    </template>
+                </core-selector>
+            </div>
+            <core-splitter direction="left" minSize="200px"></core-splitter>
+            <div flex style="overflow-y: scroll !important;">
+                <template id="queryForm" bind>
+                    <eresidae-endpoint-query-form model="{{endpoint}}"></eresidae-endpoint-query-form>
+                </template>
+            </div>
+        </div>
+    </template>
+    <script>
+        (function() {
+            var APIs = [];
+            var servicesCoreSelector;
+
+            var user;
+            var services;
+
+            var servicesTemplate;
+            var endpoints;
+            var endpointsTemplate;
+
+            function bindServices() {
+                if (user && services) {
+                    var availableServices = [];
+
+                    services.forEach(function(service) {
+                        if (user[service.id]) {
+                            if (user[service.id].token) {
+                                availableServices.push(service)
+                            }
+                        }
+                    });
+
+                    servicesTemplate.model = availableServices;
+                }
+            }
+
+            Polymer({
+                ready: function() {
+                    CoreStyle.g.paperInput.focusedColor = '#7D25AC';
+                    CoreStyle.g.paperInput.invalidColor = '#AC2555';
+
+                    servicesTemplate = this.shadowRoot.querySelector('.services template');
+                    endpoints = this.shadowRoot.querySelector('.endpoints');
+                    endpointsTemplate = this.shadowRoot.querySelector('.endpoints template');
+                    servicesCoreSelector = this.shadowRoot.querySelector('core-selector.svcs');
+
+                    PolymerExpressions.prototype.urlEncode = function(str) {
+                        return encodeURIComponent(str);
+                    };
+
+                    PolymerExpressions.prototype.paramString = function(parameters) {
+                        var str = '';
+                        var validCount = 0;
+
+                        for (var j = 0; j < parameters.length; j++) {
+                            //if (parameters[j].val) {
+                            str += (validCount++ > 0 ? '&' : '') + parameters[j].name + '=' + parameters[j].val;
+                            //}
+                        }
+
+                        return str;
+                    };
+                },
+                serviceSelected: function(e) {
+                    var API = APIs[e.detail.item.id];
+
+                    if (API) {
+                        endpointsTemplate.model = {
+                            serviceID: API.id,
+                            methods: Object.keys(API).sort()
+                        };
+                    } else {
+                        console.log('JSON Schema not found!');
+                    }
+
+                    if (e.detail.isSelected) {
+                        endpoints.selected = null;
+                        this.$.queryForm.clear();
+                    }
+                },
+                endpointSelected: function(e) {
+                    if (e.detail.isSelected) {
+                        var service = servicesCoreSelector.querySelector('.core-selected').id;
+
+                        this.$.queryForm.clear();
+                        this.$.queryForm.model = {
+                            endpoint: APIs[service][event.detail.item.label]
+                        };
+
+                        this.$.queryForm.model.endpoint.serviceID = service;
+                    }
+                },
+                userCoreResponse: function(e) {
+                    user = e.detail.response;
+                    bindServices();
+                },
+                servicesCoreResponse: function(e) {
+                    services = e.detail.response;
+                    bindServices();
+                },
+                serviceCoreResponse: function(e) {
+                    APIs[e.target.attributes['class'].value] = e.detail.response['endpoints'];
+
+                    var endpoints = APIs[e.target.attributes['class'].value];
+
+                    Object.keys(endpoints).map(function(endpoint) {
+                        endpoints[endpoint].resourceURL_orig = endpoints[endpoint].resourceURL;
+                    });
+                }
+            });
+        })();
+    </script>
+</polymer-element>

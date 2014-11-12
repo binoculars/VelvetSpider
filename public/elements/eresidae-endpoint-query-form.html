@@ -1,0 +1,204 @@
+<link rel="import" href="/bower_components/polymer/polymer.html">
+<link rel="import" href="/bower_components/core-ajax/core-ajax.html">
+<link rel="import" href="/bower_components/paper-input/paper-input.html">
+<link rel="import" href="/bower_components/paper-button/paper-button.html">
+<link rel="import" href="/bower_components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="/bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="/bower_components/prettify-element/prettify-element.html">
+<script src="/bower_components/x2js/xml2json.min.js"></script>
+<script src="/bower_components/vkbeautify-wrapper/dist/vkbeautify.0.99.00.beta.js"></script>
+
+<polymer-element name="eresidae-endpoint-query-form" attributes="model">
+    <template>
+        <template bind="{{model}}">
+            <h1>[[method]] <a href="[[docURL]]">[[name]]</a></h1>
+            <h3>Description:</h3>
+            <template repeat="[[description]]">
+                <p>[[]]</p>
+            </template>
+
+            <h3>Query:</h3>
+            <div>
+                [[method]] {{resourceURL}}{{fieldSelectorsURLString}}?<template repeat="{{param in parameters}}"><template if="{{param.val}}">{{param.name}}={{param.val | urlEncode}}&amp;</template></template>
+            </div>
+
+            <template if="{{urlVariables.length > 0}}">
+                <h3>URL Path Variables:</h3>
+                <div vertical layout>
+                    <template id="urlVars" repeat="{{var in urlVariables}}">
+                        <div horizontal layout style="padding: 3px;">
+                            <div flex>[[var.name]]:</div>
+                            <div flex two>
+                                <paper-input name="[[var.name]]"
+                                             replaces="[[var.replaces]]"
+                                             class="urlVariable"
+                                             floatinglabel="[[ var.exampleValues != null ]]"
+                                             label="[[ var.exampleValues ? 'E.g. ' + var.exampleValues : '']]"
+                                             inputValue="{{var.val}}"
+                                             required="true"
+                                             pattern="[[var.data.regex || '.*']]"
+                                             on-input="{{urlVariableInput}}">
+                                </paper-input>
+                            </div>
+                            <div flex two>Description: [[var.description]]</div>
+                        </div>
+                    </template>
+                </div>
+            </template>
+
+            <template if="{{fieldSelectors.length > 0}}">
+                <h3>Field Selectors:</h3>
+                <div vertical layout>
+                    <div horizontal layout style="padding: 3px; font-weight: bold;">
+                        <div flex>Field</div>
+                        <div flex></div>
+                        <div flex>Description</div>
+                        <div flex>Notes</div>
+                    </div>
+                    <template repeat="{{fieldSelectors}}">
+                        <div horizontal layout style="padding: 3px;">
+                            <div flex>[[field]]</div>
+                            <div flex>
+                                <paper-checkbox class="fieldSelector"
+                                                name="[[field]]"
+                                                on-change="{{fieldSelectorChange}}">
+                                </paper-checkbox>
+                            </div>
+                            <div flex>[[description]]</div>
+                            <div flex>[[notes]]</div>
+                        </div>
+                    </template>
+                </div>
+            </template>
+
+            <template if="{{parameters.length > 0}}" id="parameters">
+                <h3>Parameters:</h3>
+                <div vertical layout>
+                    <template repeat="{{parameters}}">
+                        <div horizontal layout style="padding: 3px;">
+                            <div flex>[[name]]:</div>
+                            <div flex two>
+                                <paper-input name="[[name]]"
+                                             class="parameter"
+                                             floatinglabel="[[ exampleValues != null ]]"
+                                             label="[[ exampleValues ? 'E.g. ' + exampleValues : '']]"
+                                             inputValue="{{val}}"
+                                             required="[[!optional]]">
+                                </paper-input>
+                            </div>
+                            <div flex two>Description: [[description]]</div>
+                        </div>
+                    </template>
+                </div>
+            </template>
+
+            <div horizontal end-justified layout>
+                <div>
+                    <paper-button id="submit" raised class="inverted" on-click="{{submitAPIRequest}}">Submit</paper-button>
+                </div>
+            </div>
+
+            <div>
+                <h1>Response</h1>
+
+                <paper-tabs id="responseFormat" selected="0" on-core-select="{{responseFormatCoreSelect}}">
+                    <paper-tab>JSON</paper-tab>
+                    <paper-tab>XML</paper-tab>
+                </paper-tabs>
+
+                <prettify-element id="resp"
+                                  style="tab-size: 2;"
+                                  text="{{responseTextFormatted}}">
+                </prettify-element>
+
+                <core-ajax id="APIRequest"
+                           method="[[method]]"
+                           handleAs="json"
+                           on-core-response="[[apiCoreResponse]]"
+                           url="/api/service/[[serviceID]]">
+                </core-ajax>
+            </div>
+        </template>
+    </template>
+    <script>
+        Polymer({
+            ready: function() {
+                this.respText = {
+                    json: '',
+                    xml: ''
+                };
+            },
+            urlVariableInput: function(e) {
+                var urlVariableInputs = this.shadowRoot.querySelectorAll('paper-input.urlVariable');
+                var resourceURL = this.model.resourceURL_orig;
+
+                [].map.call(urlVariableInputs, function(input) {
+                    if (!input.invalid) {
+                        resourceURL = resourceURL.replace(input.attributes['replaces'].value, encodeURIComponent(input.inputValue));
+                    }
+                });
+
+                this.model.resourceURL = resourceURL;
+            },
+            fieldSelectorChange: function(e) {
+                var fieldSelectorCheckboxes = this.shadowRoot.querySelectorAll('paper-checkbox.fieldSelector');
+                var fsString = '';
+
+                [].forEach.call(fieldSelectorCheckboxes, function(input) {
+                    if (input.checked) {
+                        fsString += ',' + input.attributes['name'].value;
+                    }
+                });
+
+                this.model.fieldSelectorsURLString = (fsString.length) ? ':(' + fsString.replace(/^,/, '') + ')' : '';
+            },
+            submitAPIRequest: function(e) {
+                var paramInputs = this.shadowRoot.querySelectorAll('paper-input.parameter');
+                var requestParams = {};
+                var valid = true;
+
+                [].map.call(paramInputs, function(input) {
+                    if (!input.invalid) {
+                        if (input.inputValue) {
+                            requestParams[input.attributes['name'].value] = input.inputValue;
+                        }
+                    } else {
+                        valid = false;
+                    }
+                });
+
+                if (valid) {
+                    var apiReq = this.shadowRoot.querySelector('#APIRequest');
+
+                    apiReq.params = {
+                        "url": this.model.resourceURL + (this.model.fieldSelectorsURLString ? this.model.fieldSelectorsURLString : ''),
+                        "req": JSON.stringify(requestParams)
+                    };
+
+                    apiReq.go();
+                } else {
+                    console.log('bad params');
+                }
+            },
+            apiCoreResponse: function(e) {
+                console.log(e.detail.response);
+
+                this.respText.json = JSON.stringify(e.detail.response, null, '\t');
+                this.respText.xml = vkbeautify.xml(this.x2js.json2xml_str(e.detail.response), '\t');
+                this.shadowRoot.querySelector('#responseFormat').selected = 0;
+                this.shadowRoot.querySelector('#responseFormat').dispatchEvent(new Event('core-select'));
+            },
+            responseFormatCoreSelect: function(e) {
+                if (e.target.selected == 0)
+                    this.model.responseTextFormatted = this.respText.json;
+                else if (e.target.selected == 1)
+                    this.model.responseTextFormatted = this.respText.xml;
+            },
+            respText: {
+                json: '',
+                xml: ''
+            },
+            x2js: new X2JS()
+        });
+    </script>
+</polymer-element>
