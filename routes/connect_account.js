@@ -1,24 +1,8 @@
 module.exports = function(app, passport, done) {
     
-    // TODO read this from /public/javascripts/services
-    var services = [{
-        'id': 'facebook',
-        'scope' : 'email'
-    }, {
-        'id': 'twitter',
-        'scope' : 'email'
-    }, {
-        'id': 'google',
-        'scope' : ['profile', 'email']
-    }, {
-        'id': 'instagram',
-        'scope': ''
-    }, {
-        'id': 'linkedin',
-        'scope': ''
-    }];
+    // TODO use path variables
     
-    //var services = require('../models/services').getScopes();
+    var services = require('../models/services').getScopes();
     
     services.forEach(function(service) {
         // =============================================================================
