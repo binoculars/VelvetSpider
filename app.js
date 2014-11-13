@@ -58,14 +58,8 @@ app.use('/test', express.static(path.join(__dirname, 'test', 'static')));
 
 app.use('/api', api);
 require('./routes/local-auth')(app, passport); // load our routes and pass in our app and fully configured passport
-require('./routes/connect_account')(app, passport, function() {
-    //app.use('*', routes);    
-});
+require('./routes/connect_account')(app, passport);
 app.use('*', routes);  
-
-
-
-// TODO need to route to query console after authentication
 
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {
