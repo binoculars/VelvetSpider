@@ -5,7 +5,7 @@
     "auth": {
         "type": "oauth",
         "version": "2.0",
-        "baseSite": "https://graph.facebook.com/v2.1/",
+        "baseSite": "https://graph.facebook.com/v2.2/",
         "authorizePath": "dialog/oauth",
         "accessTokenPath": "oauth/access_token",
         "scope": "email"
@@ -14,7 +14,7 @@
         "user": {
             "name": "user",
             "method": "GET",
-            "resourceURL": "https://graph.facebook.com/v2.1/{user-id}",
+            "resourceURL": "https://graph.facebook.com/v2.2/{user-id}",
             "description": ["Get basic information about a user."],
             "urlVariables": [
                 {
@@ -39,10 +39,27 @@
             ]
         },
         "user/friends": {
-            "name": "user",
+            "name": "user/friends",
             "method": "GET",
-            "resourceURL": "https://graph.facebook.com/v2.1/{user-id}/friends",
+            "resourceURL": "https://graph.facebook.com/v2.2/{user-id}/friends",
             "description": ["Get user's friends list"],
+            "urlVariables": [
+                {
+                    "name": "user-id",
+                    "replaces": "{user-id}",
+                    "description": "User ID or \"me\"",
+                    "data": {
+                        "type": "String"
+                    }
+                }
+            ],
+            "parameters": []
+        },
+        "user/permissions": {
+            "name": "user/permissions",
+            "method": "GET",
+            "resourceURL": "https://graph.facebook.com/v2.2/{user-id}/permissions",
+            "description": ["Get user's permissions for the API"],
             "urlVariables": [
                 {
                     "name": "user-id",
