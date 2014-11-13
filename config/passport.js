@@ -1,8 +1,5 @@
 // load all the things we need
 var LocalStrategy    = require('passport-local').Strategy;
-// var FacebookStrategy = require('passport-facebook').Strategy;
-// var TwitterStrategy  = require('passport-twitter').Strategy;
-// var GoogleStrategy   = require('passport-google-oauth').OAuth2Strategy;
 
 // load up the user model
 var User       = require('../models/user');
@@ -121,39 +118,23 @@ module.exports = function(app, passport) {
 
     }));
 
-    // TODO read this from /public/javascripts/services
-    var services = [{
-        'name': 'facebook',
-        'strategy': require('passport-facebook').Strategy
-    }, {
-        'name': 'twitter',
-        'strategy': require('passport-twitter').Strategy
-    }, {
-        'name': 'google',
-        'strategy': require('passport-google-oauth').OAuth2Strategy
-    }, {
-        'name': 'instagram',
-        'strategy': require('passport-instagram').Strategy
-    }, {
-        'name': 'linkedin',
-        'strategy': require('passport-linkedin').Strategy
-    }];
+    var services = require('../models/services').getAuthLibraries();
 
     services.forEach(function(service) {
-        service.config = configAuth[service.name];
+        service.config = configAuth[service.id];
         
-        service.config.callbackURL = app.get('baseURL') + '/auth/' + service.name + '/callback';
+        service.config.callbackURL = app.get('baseURL') + '/auth/' + service.id + '/callback';
 
         service.config.passReqToCallback = true;
 
         passport.use(new service.strategy(service.config,
             function(req, token, refreshTokenOrTokenSecret, profile, done) {
-                console.log(service.name, token, refreshTokenOrTokenSecret);
+                console.log(service.id, token, refreshTokenOrTokenSecret);
 
                 function save(user) {
-                    user[service.name].id    = profile.id;
-                    user[service.name].token = token;
-                    user[service.name].refreshTokenOrTokenSecret = refreshTokenOrTokenSecret;
+                    user[service.id].id    = profile.id;
+                    user[service.id].token = token;
+                    user[service.id].refreshTokenOrTokenSecret = refreshTokenOrTokenSecret;
 
                     user.save(function(err) {
                         if (err)
@@ -170,14 +151,14 @@ module.exports = function(app, passport) {
                     // check if the user is already logged in
                     if (!req.user) {
                         var findConfig = {};
-                        findConfig[service.name + '.id'] = profile.id;
+                        findConfig[service.id + '.id'] = profile.id;
 
                         User.findOne(findConfig, function(err, user) {
                             if (err)
                                 return done(err);
 
                             if (user) {
-                                if (user[service.name].token)
+                                if (user[service.id].token)
                                     return done(null, user); // user found, return that user
                             } else {
                                 user = new User();
@@ -194,5 +175,4 @@ module.exports = function(app, passport) {
             }
         ));
     });
-
 };

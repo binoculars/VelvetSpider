@@ -8,7 +8,12 @@
         "requestTokenURL": "https://api.linkedin.com/uas/oauth/requestToken",
         "accessTokenURL": "https://api.linkedin.com/uas/oauth/accessToken",
         "signatureMethod": "HMAC-SHA1",
-        "scope": ""
+        "scope": "",
+        "library": {
+            "type": "passport",
+            "name": "passport-linkedin",
+            "strategy": "Strategy"
+        }
     },
 	"customParameters": {
 		"format": "json"

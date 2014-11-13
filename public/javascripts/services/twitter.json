@@ -8,7 +8,12 @@
         "requestTokenURL": "https://api.twitter.com/oauth/request_token",
         "accessTokenURL": "https://api.twitter.com/oauth/access_token",
         "signatureMethod": "HMAC-SHA1",
-        "scope": "email"
+        "scope": "email",
+        "library": {
+            "type": "passport",
+            "name": "passport-twitter",
+            "strategy": "Strategy"
+        }
     },
     "endpoints": {
         "oauth/authenticate": {

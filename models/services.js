@@ -27,5 +27,18 @@ module.exports = {
         });
         
         return scopes;
+    },
+    
+    getAuthLibraries: function() {
+        var authLibs = [];
+        
+        Object.keys(services).forEach(function(key) {
+            authLibs.push({
+              id: key,
+              strategy: require(services[key].auth.library.name)[services[key].auth.library.strategy]
+            });
+        });
+        
+        return authLibs;
     }
 };
