@@ -73,7 +73,6 @@
 				this.$.accounts.model = {};
 			},
 			coreResponse: function(e) {
-				console.log(e.target.id);
 				this.$.accounts.model[e.target.id] = e.detail.response;
 				this.$.accounts.model = this.$.accounts.model;
 			}

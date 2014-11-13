@@ -1,10 +1,7 @@
-module.exports = function(app, passport, done) {
+module.exports = function(app, passport) {
+    var scopes = require('../models/services').getScopes();
     
-    // TODO use path variables
-    
-    var services = require('../models/services').getScopes();
-    
-    services.forEach(function(service) {
+    scopes.forEach(function(service) {
         // =============================================================================
         // AUTHENTICATE (FIRST LOGIN) ==================================================
         // =============================================================================
@@ -58,11 +55,6 @@ module.exports = function(app, passport, done) {
             });
         });
     });
-        
-    //    console.log(services);
-        
-    //     done();
-    // });
 };
 
 // route middleware to ensure user is logged in
