@@ -1,37 +1,39 @@
-module.exports = function(app, passport) {
+module.exports = function(app, passport, done) {
     
     // TODO read this from /public/javascripts/services
     var services = [{
-        'name': 'facebook',
+        'id': 'facebook',
         'scope' : 'email'
     }, {
-        'name': 'twitter',
+        'id': 'twitter',
         'scope' : 'email'
     }, {
-        'name': 'google',
+        'id': 'google',
         'scope' : ['profile', 'email']
     }, {
-        'name': 'instagram',
+        'id': 'instagram',
         'scope': ''
     }, {
-        'name': 'linkedin',
+        'id': 'linkedin',
         'scope': ''
     }];
-
+    
+    //var services = require('../models/services').getScopes();
+    
     services.forEach(function(service) {
         // =============================================================================
         // AUTHENTICATE (FIRST LOGIN) ==================================================
         // =============================================================================
 
-        app.get('/auth/' + service.name,
-            passport.authenticate(service.name, {
+        app.get('/auth/' + service.id,
+            passport.authenticate(service.id, {
                 scope : service.scope
             })
         );
 
-        // the callback after google has authenticated the user
-        app.get('/auth/' + service.name + '/callback',
-            passport.authenticate(service.name, {
+        // the callback after the service has authenticated the user
+        app.get('/auth/' + service.id + '/callback',
+            passport.authenticate(service.id, {
                 successRedirect : '/profile',
                 failureRedirect : '/'
             })
@@ -41,15 +43,15 @@ module.exports = function(app, passport) {
         // AUTHORIZE (ALREADY LOGGED IN / CONNECTING OTHER SOCIAL ACCOUNT) =============
         // =============================================================================
 
-        app.get('/connect/' + service.name,
+        app.get('/connect/' + service.id,
             passport.authorize(
-                service.name, {
+                service.id, {
                 scope : service.scope
             })
         );
 
-        app.get('/connect/' + service.name + '/callback',
-            passport.authorize(service.name, {
+        app.get('/connect/' + service.id + '/callback',
+            passport.authorize(service.id, {
                 successRedirect : '/profile',
                 failureRedirect : '/'
             })
@@ -63,7 +65,7 @@ module.exports = function(app, passport) {
         // user account will stay active in case they want to reconnect in the future
 
         app.get('/unlink/:service', isLoggedIn, function(req, res) {
-            var user            = req.user;
+            var user = req.user;
 
             user[req.params.service].token = undefined;
 
@@ -72,7 +74,11 @@ module.exports = function(app, passport) {
             });
         });
     });
-
+        
+    //    console.log(services);
+        
+    //     done();
+    // });
 };
 
 // route middleware to ensure user is logged in

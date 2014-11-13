@@ -7,7 +7,8 @@
         "version": "1.0A",
         "requestTokenURL": "https://api.twitter.com/oauth/request_token",
         "accessTokenURL": "https://api.twitter.com/oauth/access_token",
-        "signatureMethod": "HMAC-SHA1"
+        "signatureMethod": "HMAC-SHA1",
+        "scope": "email"
     },
     "endpoints": {
         "oauth/authenticate": {

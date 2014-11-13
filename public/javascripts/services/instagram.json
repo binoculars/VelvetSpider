@@ -7,7 +7,8 @@
         "version": "2.0",
         "baseSite": "https://api.instagram.com/",
         "authorizePath": "oauth/authorize",
-        "accessTokenPath": "oauth/access_token"
+        "accessTokenPath": "oauth/access_token",
+        "scope": ""
     },
     "endpoints": {
         "users/user-id": {

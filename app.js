@@ -56,15 +56,14 @@ app.use('/bower_components', express.static(path.join(__dirname, 'bower_componen
 app.use('/test', express.static(path.join(__dirname, 'test', 'static')));
 
 
-//app.use('/users', users);
 app.use('/api', api);
-//app.use('/oauth_redirect', oauth_redirect);
-//app.use('/login', login);
-
 require('./routes/local-auth')(app, passport); // load our routes and pass in our app and fully configured passport
-require('./routes/connect_account')(app, passport);
+require('./routes/connect_account')(app, passport, function() {
+    //app.use('*', routes);    
+});
+app.use('*', routes);  
 
-app.use('*', routes);
+
 
 // TODO need to route to query console after authentication
 

@@ -7,7 +7,8 @@
         "version": "2.0",
         "baseSite": "https://graph.facebook.com/v2.1/",
         "authorizePath": "dialog/oauth",
-        "accessTokenPath": "oauth/access_token"
+        "accessTokenPath": "oauth/access_token",
+        "scope": "email"
     },
     "endpoints": {
         "user": {
