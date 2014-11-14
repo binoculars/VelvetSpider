@@ -1,0 +1,126 @@
+body {
+    background-color: #101010;
+    color: #fff;
+    font-family: 'Varela Round', sans-serif;
+}
+
+* /deep/ div.services paper-item::shadow core-icon,
+* /deep/ .serviceName core-icon {
+    fill: #fff;
+    stroke: #7D25AC;
+    stroke-width: 0.2;
+    height: 40px;
+    width: 40px;
+}
+
+* /deep/ .serviceName {
+    color: #fff;
+}
+
+* /deep/ paper-button {
+    color: #fff;
+}
+
+* /deep/ paper-button.inverted {
+    background: #fff;
+    color: #7D25AC;
+}
+
+* /deep/ a {
+    color: #fff;
+    text-decoration: none;
+}
+
+* /deep/ a:hover {
+    text-decoration: underline;
+}
+
+* /deep/ .logo {
+    font-family: 'Playball', cursive;
+    
+    font-weight: bold;
+    stroke-width: 0.2;
+
+    color: #7D25AC;
+    text-shadow: 2px 2px 2px rgba(255, 255, 255, 0.5);
+}
+
+* /deep/ paper-checkbox::shadow #ink{
+    color: inherit;
+}
+
+* /deep/ paper-checkbox::shadow #checkbox.checked {
+    border-color: #7D25AC;
+}
+
+* /deep/ paper-tabs {
+    background-color: #7D25AC;
+    color: #000;
+    box-shadow: 0px 3px 2px rgba(255, 255, 255, 0.2);
+}
+
+* /deep/ paper-tabs::shadow #selectionBar {
+    background-color: #000;
+}
+
+* /deep/ paper-tabs paper-tab::shadow #ink {
+    color: inherit;
+}
+
+* /deep/ #resp::shadow pre {
+    overflow-x: scroll;
+    margin: 0;
+}
+
+* /deep/ .services {
+    background-color: #000;
+    box-shadow: 0px 0px 1px rgba(255, 255, 255, 0.2);
+}
+
+* /deep/ div.services paper-item.core-selected::shadow  #label {
+    text-decoration: underline;
+}
+
+* /deep/ div.services paper-item::shadow #label {
+    color: #7D25AC;
+}
+
+* /deep/ #table {
+    background-color: #000;
+}
+
+* /deep/ #table > div {
+    padding: 5px;
+    overflow-y: scroll !important;
+}
+
+* /deep/ .endpoints > * {
+    color: #fff;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    white-space: nowrap;
+    overflow-wrap: normal;
+    overflow: hidden;
+    height: inherit;
+}
+
+* /deep/ .endpoints > *.core-selected {
+    color: #fff;
+    background-color: #7D25AC;
+}
+
+* /deep/ core-toolbar {
+    background-color: #000;
+    color: #fff;
+    box-shadow: 0px 2px 0px rgba(255, 255, 255, 0.2);
+}
+
+* /deep/ core-menu-button::shadow #button span {
+    margin: 0; /* <span> inside <core-menu-button> has a margin-left: 4px; set. This negates it so the button doesn't get pushed up. */
+}
+
+* /deep/ eresidae-layout-default::shadow > div {
+	background-color: #000;
+}

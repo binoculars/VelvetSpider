@@ -8,11 +8,12 @@
         <link rel="import" href="/bower_components/paper-button/paper-button.html">
         <link rel="import" href="/elements/eresidae-layout-default.html">
         <link rel="import" href="/elements/eresidae-layout-toolbar.html">
+        <link rel="import" href="/elements/eresidae-mini-apps.html">
         <link rel="import" href="/elements/eresidae-profile.html">
         <link rel="import" href="/elements/eresidae-query-console.html">
         <link rel="import" href="/elements/eresidae-user-form.html">
         <link href="//fonts.googleapis.com/css?family=Varela+Round|Playball" rel="stylesheet" type="text/css">
-        <link href="/stylesheets/style.css" rel="stylesheet" type="text/css" shim-shadowdom>
+        <link href="/stylesheets/light.css" rel="stylesheet" type="text/css" shim-shadowdom>
         <script src="/javascripts/core-style.js"></script>
     </head>
     <body unresolved fullbleed>
@@ -66,6 +67,13 @@
                 <template>
                     <eresidae-layout-toolbar>
                         <eresidae-query-console flex></eresidae-query-console>
+                    </eresidae-layout-toolbar>
+                </template>
+            </app-route>
+            <app-route path="/mini_apps">
+                <template>
+                    <eresidae-layout-toolbar>
+                        <eresidae-mini-apps flex></eresidae-mini-apps>
                     </eresidae-layout-toolbar>
                 </template>
             </app-route>

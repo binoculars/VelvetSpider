@@ -1,0 +1,51 @@
+<link rel="import" href="/bower_components/polymer/polymer.html">
+<link rel="import" href="/bower_components/core-ajax/core-ajax.html">
+<script type="text/javascript" src="/bower_components/papaparse/papaparse.js"></script>
+
+<polymer-element name="eresidae-mini-apps">
+    <template>
+        <core-ajax id="APIRequest"
+                   method="GET"
+                   handleAs="json"
+                   on-core-response="[[apiCoreResponse]]"
+                   url="/api/service/twitter">
+        </core-ajax>
+        
+        <paper-input label="screen_name" id="screen_name"></paper-input>
+        <br />
+        <paper-button raised class="inverted" on-click="{{go}}">Go!</paper-button>
+        <br /><br />
+        <table>
+            <tr template repeat="{{table}}">
+                <td template repeat="{{}}" style="border: 1px solid black;">{{}}</td>
+            </tr>
+        </table>
+    </template>
+    <script>
+        Polymer({
+            // domReady: function() {
+            // },
+            go: function() {
+                this.$.APIRequest.params = {
+                    url: 'https://api.twitter.com/1.1/friends/list.json',
+                    req: JSON.stringify({
+                        'screen_name': this.$.screen_name.inputValue,
+                        'count': 10
+                    })
+                };
+                
+                console.log(this.$.APIRequest.params);
+                
+                this.$.APIRequest.go();
+            },
+            
+            apiCoreResponse: function(e) {
+                console.log(e.detail.response);
+                
+                var csv = Papa.unparse(e.detail.response.users);
+                
+                this.table = Papa.parse(csv).data;
+            }
+        });
+    </script>
+</polymer-element>
