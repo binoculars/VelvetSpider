@@ -118,9 +118,7 @@ module.exports = function(app, passport) {
 
     }));
 
-    var services = require('../models/services').getAuthLibraries();
-
-    services.forEach(function(service) {
+    require('../models/services').authLibs.forEach(function(service) {
         service.config = configAuth[service.id];
         
         service.config.callbackURL = app.get('baseURL') + '/auth/' + service.id + '/callback';
