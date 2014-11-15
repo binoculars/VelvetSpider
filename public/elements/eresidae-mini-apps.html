@@ -1,5 +1,9 @@
 <link rel="import" href="/bower_components/polymer/polymer.html">
 <link rel="import" href="/bower_components/core-ajax/core-ajax.html">
+<link rel="import" href="/bower_components/paper-input/paper-input.html">
+<link rel="import" href="/bower_components/paper-button/paper-button.html">
+<script src="/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="/bower_components/jquery.tablesorter/js/jquery.tablesorter.min.js"></script>
 <script type="text/javascript" src="/bower_components/papaparse/papaparse.js"></script>
 
 <polymer-element name="eresidae-mini-apps">
@@ -15,16 +19,51 @@
         <br />
         <paper-button raised class="inverted" on-click="{{go}}">Go!</paper-button>
         <br /><br />
-        <table>
-            <tr template repeat="{{table}}">
-                <td template repeat="{{}}" style="border: 1px solid black;">{{}}</td>
-            </tr>
+        <table id="myTable" class="tablesorter" border="1">
+            <thead>
+                <tr>
+                    <th template repeat="{{headers}}">{{}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr template repeat="{{rows}}">
+                    <td template repeat="{{}}">{{}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table id="myTable2" class="tablesorter" border="1">
+            <thead>
+                <tr>
+                    <th>A__________________</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>6</td>
+                </tr>
+                <tr>
+                    <td>9</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                </tr>
+            </tbody>
         </table>
     </template>
     <script>
         Polymer({
-            // domReady: function() {
-            // },
+            domReady: function() {
+                console.log();
+
+                $(this.$.myTable2).tablesorter();
+            },
             go: function() {
                 this.$.APIRequest.params = {
                     url: 'https://api.twitter.com/1.1/friends/list.json',
@@ -43,8 +82,13 @@
                 console.log(e.detail.response);
                 
                 var csv = Papa.unparse(e.detail.response.users);
-                
-                this.table = Papa.parse(csv).data;
+
+                var csvJSON = Papa.parse(csv).data;
+                this.headers = csvJSON[0];
+                this.rows = csvJSON.slice(1);
+
+                console.log($(this.$.myTable));
+                $(this.$.myTable).tablesorter();
             }
         });
     </script>

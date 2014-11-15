@@ -66,11 +66,6 @@
 	</template>
 	<script>
 		Polymer({
-			ready: function() {
-				//this.$.accounts.clear();
-				this.$.accounts.bindingDelegate = new PolymerExpressions();
-				this.$.accounts.model = {};
-			},
 			coreResponse: function(e) {
 				this.$.accounts.model[e.target.id] = e.detail.response;
 				this.$.accounts.model = this.$.accounts.model;

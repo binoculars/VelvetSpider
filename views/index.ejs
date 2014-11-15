@@ -17,20 +17,15 @@
         <script src="/javascripts/core-style.js"></script>
     </head>
     <body unresolved fullbleed>
-        <app-router>
-            <app-route path="/">
+        <app-router >
+            <app-route path="/" >
                 <template>
                     <eresidae-layout-default>
-                        <div vertical layout center flex>
-                            <div start flex>
-                                <span class="logo" style="font-size: 72px;">VelvetSpider</span>
-                            </div>
-                            <div center>
+                            <span class="logo" style="font-size: 72px;">VelvetSpider</span>
+                            <div horizontal layout flex center>
                                 <a is="pushstate-anchor" href="/login"><paper-button class="inverted" raised>Login</paper-button></a>
                                 <a is="pushstate-anchor" href="/signup"><paper-button class="inverted" raised>Signup</paper-button></a>
                             </div>
-                            <div end flex>&nbsp;</div>
-                        </div>
                     </eresidae-layout-default>
                 </template>
             </app-route>
