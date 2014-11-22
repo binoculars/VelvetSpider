@@ -7,21 +7,9 @@
 <polymer-element name="eresidae-navbar" noscript>
     <template>
         <style>
-            core-menu-button::shadow #button span {
-                margin: 0; /* <span> inside <core-menu-button> has a margin-left: 4px; set. This negates it so the button doesn't get pushed up. */
-            }
-            
-            .logo {
-                font-family: 'Playball', cursive; /* must include google font */
-                
-                font-weight: bold;
-                stroke-width: 0.2;
-            
-                color: #7D25AC;
-                text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
-            }
+
         </style>
-        <core-toolbar style="background-color: #fff; color: #7D25AC; box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.2);" >
+        <core-toolbar>
             <core-icon-button icon="menu"></core-icon-button>
             <span class="logo" style="font-size: 48px; text-align: center; width: 100%;">VelvetSpider</span>
             <core-menu-button icon="settings" halign="right">

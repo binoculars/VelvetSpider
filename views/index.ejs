@@ -8,28 +8,24 @@
         <link rel="import" href="/bower_components/paper-button/paper-button.html">
         <link rel="import" href="/elements/eresidae-layout-default.html">
         <link rel="import" href="/elements/eresidae-layout-toolbar.html">
+        <link rel="import" href="/elements/eresidae-mini-apps.html">
         <link rel="import" href="/elements/eresidae-profile.html">
         <link rel="import" href="/elements/eresidae-query-console.html">
         <link rel="import" href="/elements/eresidae-user-form.html">
         <link href="//fonts.googleapis.com/css?family=Varela+Round|Playball" rel="stylesheet" type="text/css">
-        <link href="/stylesheets/style.css" rel="stylesheet" type="text/css" shim-shadowdom>
+        <link href="/stylesheets/light.css" rel="stylesheet" type="text/css" shim-shadowdom>
         <script src="/javascripts/core-style.js"></script>
     </head>
     <body unresolved fullbleed>
-        <app-router>
-            <app-route path="/">
+        <app-router >
+            <app-route path="/" >
                 <template>
                     <eresidae-layout-default>
-                        <div vertical layout center flex>
-                            <div start flex>
-                                <span class="logo" style="font-size: 72px;">VelvetSpider</span>
-                            </div>
-                            <div center>
+                            <span class="logo" style="font-size: 72px;">VelvetSpider</span>
+                            <div horizontal layout flex center>
                                 <a is="pushstate-anchor" href="/login"><paper-button class="inverted" raised>Login</paper-button></a>
                                 <a is="pushstate-anchor" href="/signup"><paper-button class="inverted" raised>Signup</paper-button></a>
                             </div>
-                            <div end flex>&nbsp;</div>
-                        </div>
                     </eresidae-layout-default>
                 </template>
             </app-route>
@@ -58,9 +54,7 @@
             <app-route path="/profile">
                 <template>
                     <eresidae-layout-toolbar>
-                        <eresidae-layout-default flex>
-                            <eresidae-profile></eresidae-profile>
-                        </eresidae-layout-default>
+                        <eresidae-profile flex vertical layout></eresidae-profile>
                     </eresidae-layout-toolbar>
                 </template>
             </app-route>
@@ -68,6 +62,13 @@
                 <template>
                     <eresidae-layout-toolbar>
                         <eresidae-query-console flex></eresidae-query-console>
+                    </eresidae-layout-toolbar>
+                </template>
+            </app-route>
+            <app-route path="/mini_apps">
+                <template>
+                    <eresidae-layout-toolbar>
+                        <eresidae-mini-apps flex></eresidae-mini-apps>
                     </eresidae-layout-toolbar>
                 </template>
             </app-route>

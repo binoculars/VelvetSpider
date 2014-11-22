@@ -8,7 +8,12 @@
         "baseSite": "https://graph.facebook.com/v2.2/",
         "authorizePath": "dialog/oauth",
         "accessTokenPath": "oauth/access_token",
-        "scope": "email"
+        "scope": "email",
+        "library": {
+            "type": "passport",
+            "name": "passport-facebook",
+            "strategy": "Strategy"
+        }
     },
     "endpoints": {
         "user": {

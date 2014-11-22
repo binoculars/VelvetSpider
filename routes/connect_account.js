@@ -1,7 +1,5 @@
 module.exports = function(app, passport) {
-    var scopes = require('../models/services').getScopes();
-    
-    scopes.forEach(function(service) {
+    require('../models/services').scopes.forEach(function(service) {
         // =============================================================================
         // AUTHENTICATE (FIRST LOGIN) ==================================================
         // =============================================================================

@@ -1,0 +1,65 @@
+<link rel="import" href="/bower_components/polymer/polymer.html">
+<link rel="import" href="/bower_components/core-ajax/core-ajax.html">
+<link rel="import" href="/bower_components/paper-input/paper-input.html">
+<link rel="import" href="/bower_components/paper-button/paper-button.html">
+<script src="/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="/bower_components/jquery.tablesorter/js/jquery.tablesorter.min.js"></script>
+<script type="text/javascript" src="/bower_components/papaparse/papaparse.js"></script>
+
+<polymer-element name="eresidae-mini-apps">
+    <template>
+        <core-ajax id="APIRequest"
+                   method="GET"
+                   handleAs="json"
+                   on-core-response="[[apiCoreResponse]]"
+                   url="/api/service/twitter">
+        </core-ajax>
+        
+        <paper-input label="screen_name" id="screen_name"></paper-input>
+        <br />
+        <paper-button raised class="inverted" on-click="{{go}}">Go!</paper-button>
+        <br /><br />
+        <table id="myTable" class="tablesorter" border="1">
+            <thead>
+                <tr>
+                    <th template repeat="{{headers}}">{{}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr template repeat="{{rows}}">
+                    <td template repeat="{{}}">{{}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </template>
+    <script>
+        Polymer({
+            go: function() {
+                this.$.APIRequest.params = {
+                    url: 'https://api.twitter.com/1.1/friends/list.json',
+                    req: JSON.stringify({
+                        'screen_name': this.$.screen_name.inputValue,
+                        'count': 10
+                    })
+                };
+                
+                console.log(this.$.APIRequest.params);
+                
+                this.$.APIRequest.go();
+            },
+            
+            apiCoreResponse: function(e) {
+                console.log(e.detail.response);
+                
+                var csv = Papa.unparse(e.detail.response.users);
+
+                var csvJSON = Papa.parse(csv).data;
+                this.headers = csvJSON[0];
+                this.rows = csvJSON.slice(1);
+
+                console.log($(this.$.myTable));
+                $(this.$.myTable).tablesorter();
+            }
+        });
+    </script>
+</polymer-element>

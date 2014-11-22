@@ -27,24 +27,7 @@
                    on-core-response="{{servicesCoreResponse}}">
         </core-ajax>
 
-        <div class="services" style="background-color: #fff; box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.2);">
-            <style shim-shadowdom>
-                div.services paper-item::shadow core-icon {
-                    fill: #7D25AC;
-                    stroke: #000;
-                    stroke-width: 0.2;
-                    height: 40px;
-                    width: 40px;
-                }
-
-                div.services paper-item.core-selected::shadow  #label {
-                    text-decoration: underline;
-                }
-
-                div.services paper-item::shadow #label {
-                    color: #7D25AC;
-                }
-            </style>
+        <div class="services">
             <core-selector class="svcs" on-core-select="{{serviceSelected}}">
                 <template repeat="{{}}">
                     <paper-item icon="[[icon]]" label="[[name]]" id="[[id]]"></paper-item>
@@ -58,37 +41,8 @@
                 </template>
             </core-selector>
         </div>
-
-        <style shim-shadowdom>
-            #table {
-                background-color: #efefef;
-            }
-
-            #table > div {
-                padding: 5px;
-                overflow-y: scroll !important;
-            }
-        </style>
-
         <div id="table" class="container" horizontal layout flex>
             <div>
-                <style>
-                    .endpoints > * {
-                        color: black;
-                        padding-left: 5px;
-                        padding-right: 5px;
-                        padding-top: 10px;
-                        padding-bottom: 10px;
-                        white-space: nowrap;
-                        overflow-wrap: normal;
-                        overflow: hidden;
-                        height: inherit;
-                    }
-                    .endpoints > *.core-selected {
-                        color: #ffffff;
-                        background-color: #7D25AC;
-                    }
-                </style>
                 <core-selector class="endpoints" on-core-select="{{endpointSelected}}">
                     <template repeat="{{method in methods}}">
                         <paper-item label="[[method]]"></paper-item>
@@ -178,7 +132,7 @@
 
                         this.$.queryForm.clear();
                         this.$.queryForm.model = {
-                            endpoint: APIs[service][event.detail.item.label]
+                            endpoint: APIs[service][e.detail.item.label]
                         };
 
                         this.$.queryForm.model.endpoint.serviceID = service;

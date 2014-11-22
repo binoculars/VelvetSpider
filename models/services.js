@@ -1,31 +1,31 @@
 var fs = require('fs');
 
-var services = {};
+module.exports = {
+    services: {},
+    infos: [],
+    scopes: [],
+    authLibs: []
+};
 
 fs.readdirSync(__dirname + '/../public/javascripts/services').map(function (file) {
     var service = require('../public/javascripts/services/' + file);
-    
-    services[service.id] = service;
 
-    // servicesInfo.push({
-    //     id: service.id,
-    //     icon: service.icon,
-    //     name: service.name,
-    //     schema: file
-    // });
+    module.exports.services[service.id] = service;
+
+    module.exports.infos.push({
+         id: service.id,
+         icon: service.icon,
+         name: service.name,
+         schema: file
+    });
+
+    module.exports.scopes.push({
+        id: service.id,
+        scope: service.auth.scope
+    });
+
+    module.exports.authLibs.push({
+        id: service.id,
+        strategy: require(service.auth.library.name)[service.auth.library.strategy]
+    });
 });
-
-module.exports = {
-    getScopes: function() {
-        var scopes = [];
-        
-        Object.keys(services).forEach(function(key) {
-            scopes.push({
-              id: key,
-              scope: services[key].auth.scope
-            });
-        });
-        
-        return scopes;
-    }
-};

@@ -11,8 +11,8 @@
             <template if="{{message.length}}">
                 <h3>{{message}}</h3>
             </template>
-            <div vertical layout center flex>
-                <div vertical layout>
+            <div vertical layout flex>
+                <div style="margin-top: auto; margin-bottom: auto;">
                     <template repeat="{{fields}}">
                         <div>
                             <paper-input label="[[label]]" type="[[type]]" name="[[name]]" inputValue="{{value}}"></paper-input>
@@ -22,7 +22,7 @@
                         <paper-button id="submit" raised class="inverted" on-tap="{{submit}}" on-click="{{submit}}">{{banner}}</paper-button>
                     </div>
                 </div>
-                <form id="form" action="{{action}}" method="post" style="display: none;">
+                <form id="form" action="{{action}}" method="post" hidden>
                     <template repeat="{{fields}}">
                         <input name="[[name]]" value="{{value}}" type="[[type]]">
                     </template>

@@ -9,7 +9,7 @@ var userSchema = mongoose.Schema({
         username     : String,
         password     : String
     },
-    facebook         : {
+    facebook         : { // TODO: read this from json files
         id           : String,
         token        : String,
         email        : String,

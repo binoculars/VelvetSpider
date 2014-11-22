@@ -67,34 +67,18 @@ function setupOAuth(service) {
 }
 
 var oauths = {};
-var services = {};
-var servicesInfo = [];
-
-fs.readdir(__dirname + '/../public/javascripts/services', function(err, files) {
-    if (err)
-        console.log(err);
+var servicesModel = require('../models/services');
+var services = servicesModel.services;
     
-    files.map(function (file) {
-        var service = require('../public/javascripts/services/' + file);
-
-        services[service.id] = service;
-
-        servicesInfo.push({
-            id: service.id,
-            icon: service.icon,
-            name: service.name,
-            schema: file
-        });
-
-        if (service.auth)
-            oauths[service.id] = setupOAuth(service);
-    });
+Object.keys(services).map(function (id) {
+    if (services[id].auth)
+        oauths[id] = setupOAuth(services[id]);
 });
 
  // TODO: require user to be logged in
  // TODO: error handling for bad requests
  // TODO: error handling for bad/no user credentials
- router.get('/service/:service', function(req, res) {
+router.get('/service/:service', function(req, res) {
     console.log(req.query);
 
     var serviceID = req.params.service;
@@ -134,7 +118,7 @@ fs.readdir(__dirname + '/../public/javascripts/services', function(err, files) {
 });
 
 router.get('/listServices', function(req, res) {
-    res.send(servicesInfo);
+    res.send(servicesModel.infos);
 });
 
 module.exports = router;

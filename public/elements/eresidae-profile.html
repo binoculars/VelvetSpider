@@ -4,6 +4,7 @@
 <link rel="import" href="/bower_components/core-icons/core-icons.html">
 <link rel="import" href="/bower_components/core-icons/social-icons.html">
 <link rel="import" href="/bower_components/paper-button/paper-button.html">
+<link rel="import" href="/elements/eresidae-layout-default.html">
 
 <polymer-element name="eresidae-profile">
 	<template>
@@ -21,57 +22,50 @@
 		           id="user"
 		           on-core-response="{{coreResponse}}">
 		</core-ajax>
-
-		<div style="background-color: white; margin-left: 10%; margin-right: 10%;" flex vertical layout>
+		<eresidae-layout-default flex vertical layout>
 			<h1 style="text-align: center;">Link Accounts</h1>
 			<h3 style="text-align: center;"><a href="/query_console">Query Console</a></h3>
-			<div horizontal layout center center-justified wrap>
-				<div vertical layout style="width: 80%;">
-					<template id="accounts" repeat="[[service in services]]">
-						<div style="margin: 10px;">
-							<div class="serviceName"><core-icon icon="[[service.icon]]"></core-icon> [[service.name]]</div>
-							<hr>
-							<div horizontal layout style="width: 100%;">
-								<template if="{{ user[service.id].token }}">
-									<div flex style="word-wrap: break-word;">
-										<template bind="{{ user[service.id] }}">
-											ID - [[id]]
-											<br>
-											Token - [[token]]
-											<template if="{{refreshTokenOrTokenSecret}}">
-												<br>
-												TokenSecret - [[refreshTokenOrTokenSecret]]
-											</template>
-										</template>
-									</div>
-									<div>
-										<a href="/unlink/[[service.id]]">
-											<paper-button class="inverted" raised>Unlink</paper-button>
-										</a>
-									</div>
-								</template>
-								<template if="{{ !user[service.id].token }}">
-									<div flex>
-										<a href="/connect/[[service.id]]">
-											<paper-button class="inverted" raised>Connect</paper-button>
-										</a>
-									</div>
-								</template>
-							</div>
+			<div vertical layout style="max-width:100%;">
+				<template id="accounts" repeat="[[service in services]]">
+					<div style="margin: 10px;">
+						<div class="serviceName">
+							<core-icon icon="[[service.icon]]"></core-icon> [[service.name]]
 						</div>
-					</template>
-				</div>
+						<hr>
+						<div horizontal layout flex>
+							<template if="{{ user[service.id].token }}">
+								<div flex style="word-wrap: break-word;">
+									<template bind="{{ user[service.id] }}">
+										ID - [[id]]
+										<br>
+										Token - [[token]]
+										<template if="{{refreshTokenOrTokenSecret}}">
+											<br>
+											TokenSecret - [[refreshTokenOrTokenSecret]]
+										</template>
+									</template>
+								</div>
+								<div>
+									<a href="/unlink/[[service.id]]">
+										<paper-button class="inverted" raised>Unlink</paper-button>
+									</a>
+								</div>
+							</template>
+							<template if="{{ !user[service.id].token }}">
+								<div flex>
+									<a href="/connect/[[service.id]]">
+										<paper-button class="inverted" raised>Connect</paper-button>
+									</a>
+								</div>
+							</template>
+						</div>
+					</div>
+				</template>
 			</div>
-		</div>
+		</eresidae-layout-default>
 	</template>
-
 	<script>
 		Polymer({
-			ready: function() {
-				//this.$.accounts.clear();
-				this.$.accounts.bindingDelegate = new PolymerExpressions();
-				this.$.accounts.model = {};
-			},
 			coreResponse: function(e) {
 				this.$.accounts.model[e.target.id] = e.detail.response;
 				this.$.accounts.model = this.$.accounts.model;

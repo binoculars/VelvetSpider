@@ -1,9 +1,16 @@
-
 <link rel="import" href="/bower_components/polymer/polymer.html">
 
 <polymer-element name="eresidae-layout-default" noscript>
 	<template>
-		<div style="width: 70%; height: 100%; margin-left: auto; margin-right: auto; background-color: white; padding-top: 10px;" vertical layout center>
+		<style>
+			#defaultLayout {
+				height: 100%;
+				width: 70%;
+				margin-left: auto;
+				margin-right: auto;
+			}
+		</style>
+		<div vertical layout center flex id="defaultLayout">
 			<content></content>
 		</div>
 	</template>
