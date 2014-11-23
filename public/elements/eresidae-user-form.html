@@ -13,20 +13,16 @@
             </template>
             <div vertical layout flex>
                 <div style="margin-top: auto; margin-bottom: auto;">
-                    <template repeat="{{fields}}">
-                        <div>
+                    <form id="form" action="{{action}}" method="post">
+                        <template repeat="{{fields}}">
                             <paper-input label="[[label]]" type="[[type]]" name="[[name]]" inputValue="{{value}}"></paper-input>
-                        </div>
-                    </template>
+                            <input name="[[name]]" value="{{value}}" type="[[type]]" hidden>
+                        </template>
+                    </form>
                     <div horizontal end-justified layout>
                         <paper-button id="submit" raised class="inverted" on-tap="{{submit}}" on-click="{{submit}}">{{banner}}</paper-button>
                     </div>
                 </div>
-                <form id="form" action="{{action}}" method="post" hidden>
-                    <template repeat="{{fields}}">
-                        <input name="[[name]]" value="{{value}}" type="[[type]]">
-                    </template>
-                </form>
             </div>
             <hr style="width: 90%;">
             <div end>
