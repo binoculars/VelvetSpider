@@ -4,10 +4,13 @@ module.exports = {
     services: {},
     infos: [],
     scopes: [],
-    authLibs: []
+    authLibs: [],
+    userModels: []
 };
 
-fs.readdirSync(__dirname + '/../public/javascripts/services').map(function (file) {
+fs.readdirSync(__dirname + '/../public/javascripts/services').filter(function(file) {
+    return file.slice(-5) == '.json';
+}).map(function (file) {
     var service = require('../public/javascripts/services/' + file);
 
     module.exports.services[service.id] = service;
@@ -24,8 +27,17 @@ fs.readdirSync(__dirname + '/../public/javascripts/services').map(function (file
         scope: service.auth.scope
     });
 
-    module.exports.authLibs.push({
-        id: service.id,
-        strategy: require(service.auth.library.name)[service.auth.library.strategy]
-    });
+    if (service.auth.library) {
+        module.exports.authLibs.push({
+            id: service.id,
+            strategy: require(service.auth.library.name)[service.auth.library.strategy]
+        });
+    }
+    
+    if (service.auth.userModel) {
+        module.exports.userModels.push({
+            id: service.id,
+            userModel: service.auth.userModel
+        });
+    }
 });

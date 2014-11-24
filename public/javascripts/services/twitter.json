@@ -13,6 +13,13 @@
             "type": "passport",
             "name": "passport-twitter",
             "strategy": "Strategy"
+        },
+        "userModel": {
+            "id": "String",
+            "token": "String",
+            "displayName": "String",
+            "username": "String",
+            "refreshTokenOrTokenSecret": "String"
         }
     },
     "endpoints": {

@@ -13,6 +13,11 @@
             "type": "passport",
             "name": "passport-linkedin",
             "strategy": "Strategy"
+        },
+        "userModel": {
+            "id": "String",
+            "token": "String",
+            "refreshTokenOrTokenSecret": "String"
         }
     },
 	"customParameters": {
