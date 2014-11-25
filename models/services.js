@@ -16,16 +16,19 @@ fs.readdirSync(__dirname + '/../public/javascripts/services').filter(function(fi
     module.exports.services[service.id] = service;
 
     module.exports.infos.push({
-         id: service.id,
-         icon: service.icon,
-         name: service.name,
-         schema: file
+        id: service.id,
+        icon: service.icon,
+        name: service.name,
+        authType: service.auth.type,
+        schema: file
     });
 
-    module.exports.scopes.push({
-        id: service.id,
-        scope: service.auth.scope
-    });
+    if (service.auth.scope) {
+        module.exports.scopes.push({
+            id: service.id,
+            scope: service.auth.scope
+        });
+    }
 
     if (service.auth.library) {
         module.exports.authLibs.push({

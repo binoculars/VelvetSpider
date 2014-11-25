@@ -1,0 +1,32 @@
+{
+	"name": "GitHub",
+	"id": "github",
+	"icon": "social:post-github",
+	"auth": {
+		"type": "none"
+	},
+	"endpoints": {
+		"users/username": {
+			"name": "users/username",
+			"method": "GET",
+			"resourceURL": "https://api.github.com/users/:username",
+			"description": ["Get a single user"],
+			"urlVariables": [
+				{
+					"name": "username",
+					"replaces": ":username",
+					"description": "Username",
+					"data": {
+						"type": "String"
+					}
+				}
+			]
+		},
+		"user": {
+			"name": "user",
+			"method": "GET",
+			"resourceURL": "https://api.github.com/user",
+			"description": ["Get the authenticated user"]
+		}
+	}
+}

@@ -1,12 +1,10 @@
 var express = require('express');
 var router = express.Router();
-
 var fs = require('fs');
-
 var auth = require('../config/authLocal'); // run `cp config/auth.js config/authLocal.js` and fill out the info.
-
 var OAuth = require('oauth');
 var querystring = require('querystring');
+var request = require('request');
 
 // Wrap node-oauth
 // TODO make this its own module
@@ -66,13 +64,17 @@ function setupOAuth(service) {
     return authObj;
 }
 
-var oauths = {};
+var auths = {};
 var servicesModel = require('../models/services');
 var services = servicesModel.services;
     
 Object.keys(services).map(function (id) {
-    if (services[id].auth)
-        oauths[id] = setupOAuth(services[id]);
+    if (services[id].auth.type == 'none') {
+        auths[id] = 'none';
+    } else {
+        if (services[id].auth)
+            auths[id] = setupOAuth(services[id]);
+    }
 });
 
  // TODO: require user to be logged in
@@ -83,42 +85,59 @@ router.get('/service/:service', function(req, res) {
 
     var serviceID = req.params.service;
     var user = req.user;
-	var oauth = oauths[serviceID];
+	var auth = auths[serviceID];
     var params = JSON.parse(req.query.req);
-    var credentials = {};
-    
-	if (oauth.customParameters) {
-		Object.keys(oauth.customParameters).map(function (key) {
-			params[key] = oauth.customParameters[key];
-		});
-	}
-	
-	if (user) {
-	    if (services[serviceID].auth.version == '1.0A') {
-	        credentials = {
-	            token: user[serviceID].token,
-	            tokenSecret: user[serviceID].refreshTokenOrTokenSecret
-	        };
-	    } else if (services[serviceID].auth.version == '2.0') {
-	        credentials = {
-	            access_token: user[serviceID].token
-	        }
-	    }
-	}
 
-	oauth.rest.get(
-        req.query.url + '?' + querystring.stringify(params),
-        credentials,
-        function (e, data, resp) {
-            if (e) console.error(e);
-
-            res.send(data);
+    if (auth == 'none') {
+        request(
+            {
+                url: req.query.url + '?' + querystring.stringify(params),
+                headers: {
+                    'User-Agent': 'request'
+                }
+            },
+            function(e, resp, body) {
+                if (e)
+                    console.error(e);
+                res.send(body);
+            }
+        );
+    } else {
+        if (auth.customParameters) {
+            Object.keys(auth.customParameters).map(function (key) {
+                params[key] = auth.customParameters[key];
+            });
         }
-    );
+
+        var credentials = {};
+
+        if (user) {
+            if (services[serviceID].auth.version == '1.0A') {
+                credentials = {
+                    token: user[serviceID].token,
+                    tokenSecret: user[serviceID].refreshTokenOrTokenSecret
+                };
+            } else if (services[serviceID].auth.version == '2.0') {
+                credentials = {
+                    access_token: user[serviceID].token
+                }
+            }
+        }
+
+        auth.rest.get(
+            req.query.url + '?' + querystring.stringify(params),
+            credentials,
+            function (e, data, resp) {
+                if (e)
+                    console.error(e);
+                res.send(data);
+            }
+        );
+    }
 });
 
 router.get('/listServices', function(req, res) {
-    res.send(servicesModel.infos);
+    res.json(servicesModel.infos);
 });
 
 module.exports = router;
