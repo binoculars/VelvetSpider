@@ -1,0 +1,93 @@
+<link rel="import" href="/bower_components/polymer/polymer.html">
+<link rel="import" href="/bower_components/core-ajax/core-ajax.html">
+<link rel="import" href="/bower_components/core-item/core-item.html">
+<link rel="import" href="/bower_components/core-menu/core-menu.html">
+<link rel="import" href="/bower_components/core-menu/core-submenu.html">
+<link rel="import" href="/bower_components/core-splitter/core-splitter.html">
+<link rel="import" href="/elements/eresidae-endpoint-query-form.html">
+<link rel="import" href="/elements/eresidae-model-canvas.html">
+
+<polymer-element name="eresidae-model-builder" horizontal layout>
+	<template>
+		<!--<core-ajax auto-->
+		           <!--url="/api/listServices"-->
+		           <!--params=""-->
+		           <!--handleAs="json"-->
+		           <!--class="services"-->
+		           <!--on-core-response="{{servicesCoreResponse}}">-->
+		<!--</core-ajax>-->
+
+		<!--<div style="overflow-y: scroll;">-->
+			<!--<div class="services">-->
+				<!--<core-selector class="svcs" on-core-select="{{serviceSelected}}">-->
+					<!--<template id="servicesTemplate" repeat="{{}}">-->
+						<!--<paper-item icon="[[icon]]" label="[[name]]" id="[[id]]"></paper-item>-->
+						<!--<core-ajax auto-->
+						           <!--url="/javascripts/services/[[schema]]"-->
+						           <!--params=""-->
+						           <!--handleAs="json"-->
+						           <!--class="[[id]]"-->
+						           <!--on-core-response="{{serviceCoreResponse}}">-->
+						<!--</core-ajax>-->
+					<!--</template>-->
+				<!--</core-selector>-->
+			<!--</div>-->
+
+			<!--<core-menu>-->
+				<!--<template id="facebook-menu" repeat="{{}}">-->
+					<!--<core-item label="[[]]"></core-item>-->
+				<!--</template>-->
+			<!--</core-menu>-->
+
+			<!--<core-menu multi>-->
+				<!--<core-submenu icon="settings" label="Topics" multi>-->
+					<!--<core-item label="Topic 1"></core-item>-->
+					<!--<core-item label="Topic 2"></core-item>-->
+					<!--&lt;!&ndash;<core-submenu icon="settings" label="Topics 2" multi>&ndash;&gt;-->
+						<!--&lt;!&ndash;<core-item label="Topic 2.1"></core-item>&ndash;&gt;-->
+						<!--&lt;!&ndash;<core-item label="Topic 2.2"></core-item>&ndash;&gt;-->
+					<!--&lt;!&ndash;</core-submenu>&ndash;&gt;-->
+				<!--</core-submenu>-->
+				<!--<core-submenu icon="settings" label="Favorites" multi>-->
+					<!--<core-item label="Favorite 1"></core-item>-->
+					<!--<core-item label="Favorite 2"></core-item>-->
+					<!--<core-item label="Favorite 3"></core-item>-->
+				<!--</core-submenu>-->
+			<!--</core-menu>-->
+		<!--</div>-->
+		<!--<core-splitter direction="left"></core-splitter>-->
+		<!--<div flex vertical layout>-->
+			<!--<div>-->
+				<eresidae-model-canvas></eresidae-model-canvas>
+			<!--</div>-->
+			<!--<core-splitter direction="up"></core-splitter>-->
+			<!--<div>3</div>-->
+		<!--</div>-->
+	</template>
+	<script>
+		(function() {
+			var APIs = [];
+
+			Polymer({
+				servicesCoreResponse: function(e) {
+					//this.$.servicesTemplate.model = e.detail.response;
+				},
+				serviceCoreResponse: function(e) {
+					APIs[e.target.attributes['class'].value] = e.detail.response['endpoints'];
+
+					var endpoints = APIs[e.target.attributes['class'].value];
+
+
+
+					Object.keys(endpoints).map(function(endpoint) {
+						endpoints[endpoint].resourceURL_orig = endpoints[endpoint].resourceURL;
+
+					});
+
+					//this.$['facebook-menu'].model = Object.keys(endpoints).sort();
+
+				}
+			});
+		})();
+	</script>
+</polymer-element>
