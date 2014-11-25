@@ -1,0 +1,30 @@
+{
+    "name": "Picasa",
+	"id": "picasa",
+	"icon": "image:image",
+	"auth": {
+		"type": "none"
+	},
+	"customParameters": {
+	    "alt": "json"
+	},
+	"endpoints": {
+	    "user": {
+	        "name": "user",
+			"method": "GET",
+			"resourceURL": "https://picasaweb.google.com/data/feed/api/user/:userID",
+			"description": ["Get user feed"],
+			"docURL": "https://developers.google.com/picasa-web/docs/2.0/developers_guide_protocol",
+			"urlVariables": [
+				{
+					"name": "userID",
+					"replaces": ":userID",
+					"description": "User ID",
+					"data": {
+						"type": "String"
+					}
+				}
+			]
+	    }
+	}
+}
