@@ -83,7 +83,8 @@
                                              floatinglabel="[[ exampleValues != null ]]"
                                              label="[[ exampleValues ? 'E.g. ' + exampleValues : '']]"
                                              inputValue="{{val}}"
-                                             required="[[!optional]]">
+                                             required="[[!optional]]"
+                                             pattern="[[data.regex || '.*']]">
                                 </paper-input>
                             </div>
                             <div flex two>Description: [[description]]</div>

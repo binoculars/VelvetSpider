@@ -74,10 +74,8 @@
                     var availableServices = [];
 
                     services.forEach(function(service) {
-                        if (user[service.id]) {
-                            if (user[service.id].token) {
-                                availableServices.push(service)
-                            }
+                        if (service.authType == 'none' || (user[service.id] && user[service.id].token)) {
+                            availableServices.push(service);
                         }
                     });
 

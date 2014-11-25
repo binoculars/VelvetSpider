@@ -1,0 +1,384 @@
+{
+	"name": "GitHub",
+	"id": "github",
+	"icon": "social:post-github",
+	"auth": {
+		"type": "none"
+	},
+	"endpoints": {
+		"users/username": {
+			"name": "users/username",
+			"method": "GET",
+			"resourceURL": "https://api.github.com/users/:username",
+			"description": ["Get a single user"],
+			"docURL": "https://developer.github.com/v3/users/",
+			"urlVariables": [
+				{
+					"name": "username",
+					"replaces": ":username",
+					"description": "Username",
+					"data": {
+						"type": "String"
+					}
+				}
+			]
+		},
+		"users": {
+			"name": "users",
+			"method": "GET",
+			"resourceURL": "https://api.github.com/users",
+			"description": [
+				"Get all users",
+				"This provides a dump of every user, in the order that they signed up for GitHub.",
+				"Note: Pagination is powered exclusively by the since parameter. Use the Link header to get the URL for the next page of users."
+			],
+			"docURL": "https://developer.github.com/v3/users/",
+			"parameters": [
+				{
+					"name": "since",
+					"description": "The integer ID of the last User that you’ve seen.",
+					"optional": true,
+					"data": {
+						"type": "String",
+						"regex": "\\d+"
+					}
+				}
+			]
+		},
+		"users/username/followers": {
+			"name": "users/username/followers",
+			"method": "GET",
+			"resourceURL": "https://api.github.com/users/:username/followers",
+			"description": ["List a user’s followers"],
+			"docURL": "https://developer.github.com/v3/users/followers/",
+			"urlVariables": [
+				{
+					"name": "username",
+					"replaces": ":username",
+					"description": "Username",
+					"data": {
+						"type": "String"
+					}
+				}
+			]
+		},
+		"users/username/following": {
+			"name": "users/username/following",
+			"method": "GET",
+			"resourceURL": "https://api.github.com/users/:username/following",
+			"description": ["List who a user is following"],
+			"docURL": "https://developer.github.com/v3/users/followers/",
+			"urlVariables": [
+				{
+					"name": "username",
+					"replaces": ":username",
+					"description": "Username",
+					"data": {
+						"type": "String"
+					}
+				}
+			]
+		},
+		"users/username/following/target_user": {
+			"name": "/users/username/following/target_user",
+			"method": "GET",
+			"resourceURL": "https://api.github.com/users/:username/following/:target_user",
+			"description": ["Check if one user follows another"],
+			"docURL": "https://developer.github.com/v3/users/followers/",
+			"urlVariables": [
+				{
+					"name": "username",
+					"replaces": ":username",
+					"description": "Username",
+					"data": {
+						"type": "String"
+					}
+				},
+				{
+					"name": "target_user",
+					"replaces": ":target_user",
+					"description": "Target user",
+					"data": {
+						"type": "String"
+					}
+				}
+			]
+		},
+		"users/username/orgs": {
+			"name": "users/username/orgs",
+			"method": "GET",
+			"resourceURL": "https://api.github.com/users/:username/orgs",
+			"description": [
+				"List User Organizations",
+				"If you make an unauthenticated call, you will list all public memberships in organizations for any user. If you make an authenticated call, you will also list hidden memberships in organizations, but only for the currently authenticated user."
+			],
+			"docURL": "https://developer.github.com/v3/orgs/",
+			"urlVariables": [
+				{
+					"name": "username",
+					"replaces": ":username",
+					"description": "Username",
+					"data": {
+						"type": "String"
+					}
+				}
+			]
+		},
+		"orgs/org": {
+			"name": "orgs/org",
+			"method": "GET",
+			"resourceURL": "https://api.github.com/orgs/:org",
+			"description": ["Get an Organization"],
+			"docURL": "https://developer.github.com/v3/orgs/",
+			"urlVariables": [
+				{
+					"name": "org",
+					"replaces": ":org",
+					"description": "Organization",
+					"data": {
+						"type": "String"
+					}
+				}
+			]
+		},
+		"orgs/org/members": {
+			"name": "orgs/org/members",
+			"method": "GET",
+			"resourceURL": "https://api.github.com/orgs/:org/members",
+			"description": [
+				"Members list",
+				"List all users who are members of an organization. A member is a user that belongs to at least 1 team in the organization. If the authenticated user is also an owner of this organization then both concealed and public members will be returned."
+			],
+			"docURL": "https://developer.github.com/v3/orgs/members/",
+			"urlVariables": [
+				{
+					"name": "org",
+					"replaces": ":org",
+					"description": "Organization",
+					"data": {
+						"type": "String"
+					}
+				}
+			]
+		},
+		"orgs/org/members/username": {
+			"name": "orgs/org/members/username",
+			"method": "GET",
+			"resourceURL": "https://api.github.com/orgs/:org/members/:username",
+			"description": [
+				"Check membership",
+				"Check if a user is, publicly or privately, a member of the organization."
+			],
+			"docURL": "https://developer.github.com/v3/orgs/members/",
+			"urlVariables": [
+				{
+					"name": "org",
+					"replaces": ":org",
+					"description": "Organization",
+					"data": {
+						"type": "String"
+					}
+				},
+				{
+					"name": "username",
+					"replaces": ":username",
+					"description": "Username",
+					"data": {
+						"type": "String"
+					}
+				}
+			]
+		},
+		"orgs/org/public_members": {
+			"name": "orgs/org/public_members",
+			"method": "GET",
+			"resourceURL": "https://api.github.com/orgs/:org/public_members",
+			"description": [
+				"Public members list",
+				"Members of an organization can choose to have their membership publicized or not."
+			],
+			"docURL": "https://developer.github.com/v3/orgs/members/",
+			"urlVariables": [
+				{
+					"name": "org",
+					"replaces": ":org",
+					"description": "Organization",
+					"data": {
+						"type": "String"
+					}
+				}
+			]
+		},
+		"orgs/org/public_members/username": {
+			"name": "orgs/org/public_members/username",
+			"method": "GET",
+			"resourceURL": "https://api.github.com/orgs/:org/public_members/:username",
+			"description": [
+				"Check public membership"
+			],
+			"docURL": "https://developer.github.com/v3/orgs/members/",
+			"urlVariables": [
+				{
+					"name": "org",
+					"replaces": ":org",
+					"description": "Organization",
+					"data": {
+						"type": "String"
+					}
+				},
+				{
+					"name": "username",
+					"replaces": ":username",
+					"description": "Username",
+					"data": {
+						"type": "String"
+					}
+				}
+			]
+		},
+		"orgs/org/teams": {
+			"name": "orgs/org/teams",
+			"method": "GET",
+			"resourceURL": "https://api.github.com/orgs/:org/teams",
+			"description": [
+				"List teams"
+			],
+			"docURL": "https://developer.github.com/v3/orgs/teams/",
+			"urlVariables": [
+				{
+					"name": "org",
+					"replaces": ":org",
+					"description": "Organization",
+					"data": {
+						"type": "String"
+					}
+				}
+			]
+		},
+		"teams/id": {
+			"name": "teams/id",
+			"method": "GET",
+			"resourceURL": "https://api.github.com/teams/:id",
+			"description": [
+				"List teams"
+			],
+			"docURL": "https://developer.github.com/v3/orgs/teams/",
+			"urlVariables": [
+				{
+					"name": "id",
+					"replaces": ":id",
+					"description": "Team ID",
+					"data": {
+						"type": "Integer",
+						"regex": "\\d+"
+					}
+				}
+			]
+		},
+		"teams/id/members": {
+			"name": "teams/id/members",
+			"method": "GET",
+			"resourceURL": "https://api.github.com/teams/:id/members",
+			"description": [
+				"List team members"
+			],
+			"docURL": "https://developer.github.com/v3/orgs/teams/",
+			"urlVariables": [
+				{
+					"name": "id",
+					"replaces": ":id",
+					"description": "Team ID",
+					"data": {
+						"type": "Integer",
+						"regex": "\\d+"
+					}
+				}
+			]
+		},
+		"teams/id/memberships/username": {
+			"name": "teams/id/memberships/username",
+			"method": "GET",
+			"resourceURL": "https://api.github.com/teams/:id/memberships/:username",
+			"description": [
+				"Get team membership",
+				"In order to get a user’s membership with a team, the authenticated user must be a member of the team or an owner of the team’s organization."
+			],
+			"docURL": "https://developer.github.com/v3/orgs/teams/",
+			"urlVariables": [
+				{
+					"name": "id",
+					"replaces": ":id",
+					"description": "Team ID",
+					"data": {
+						"type": "Integer",
+						"regex": "\\d+"
+					}
+				},
+				{
+					"name": "username",
+					"replaces": ":username",
+					"description": "Username",
+					"data": {
+						"type": "String"
+					}
+				}
+			]
+		},
+		"teams/id/repos": {
+			"name": "teams/id/repos",
+			"method": "GET",
+			"resourceURL": "https://api.github.com/teams/:id/repos",
+			"description": [
+				"List team repos"
+			],
+			"docURL": "https://developer.github.com/v3/orgs/teams/",
+			"urlVariables": [
+				{
+					"name": "id",
+					"replaces": ":id",
+					"description": "Team ID",
+					"data": {
+						"type": "Integer",
+						"regex": "\\d+"
+					}
+				}
+			]
+		},
+		"teams/id/repos/owner/repo": {
+			"name": "teams/id/repos/owner/repo",
+			"method": "GET",
+			"resourceURL": "https://api.github.com/teams/:id/repos/:owner/:repo",
+			"description": [
+				"Check if a team manages a repository"
+			],
+			"docURL": "https://developer.github.com/v3/orgs/teams/",
+			"urlVariables": [
+				{
+					"name": "id",
+					"replaces": ":id",
+					"description": "Team ID",
+					"data": {
+						"type": "Integer",
+						"regex": "\\d+"
+					}
+				},
+				{
+					"name": "owner",
+					"replaces": ":owner",
+					"description": "Owner",
+					"data": {
+						"type": "String"
+					}
+				},
+				{
+					"name": "repo",
+					"replaces": ":repo",
+					"description": "Repository",
+					"data": {
+						"type": "String"
+					}
+				}
+			]
+		}
+	}
+}
