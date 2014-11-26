@@ -1,0 +1,102 @@
+<link rel="import" href="/bower_components/polymer/polymer.html">
+<link rel="import" href="/bower_components/core-ajax/core-ajax.html">
+<link rel="import" href="/bower_components/core-item/core-item.html">
+<link rel="import" href="/bower_components/core-menu/core-menu.html">
+<link rel="import" href="/bower_components/core-menu/core-submenu.html">
+<link rel="import" href="/bower_components/core-splitter/core-splitter.html">
+<link rel="import" href="/elements/eresidae-endpoint-query-form.html">
+
+<script src="/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="/bower_components/jquery-ui/jquery-ui.min.js"></script>
+
+<polymer-element name="eresidae-model-canvas" flex vertical layout>
+	<template>
+
+
+		<style>
+			/**
+			 * Author: @joostkiens
+			 * Licensed under the MIT license
+			 */
+			#graph {
+				background:
+					linear-gradient(-90deg, rgba(0,0,0,.05) 1px, transparent 1px),
+					linear-gradient(rgba(0,0,0,.05) 1px, transparent 1px),
+					linear-gradient(-90deg, rgba(0, 0, 0, .04) 1px, transparent 1px),
+					linear-gradient(rgba(0,0,0,.04) 1px, transparent 1px),
+					linear-gradient(transparent 3px, #f2f2f2 3px, #f2f2f2 98px, transparent 98px),
+					linear-gradient(-90deg, #aaa 1px, transparent 1px),
+					linear-gradient(-90deg, transparent 3px, #f2f2f2 3px, #f2f2f2 98px, transparent 98px),
+					linear-gradient(#aaa 1px, transparent 1px),
+					#f2f2f2
+					repeat;
+				background-size:
+					10px 10px,
+					10px 10px,
+					100px 100px,
+					100px 100px,
+					100px 100px,
+					100px 100px,
+					100px 100px,
+					100px 100px;
+
+				/*margin: 0;*/
+				/*position: relative;*/
+				/*width: 100%;*/
+
+
+			}
+
+			#boxContainer {
+				position: relative;
+				/*top: 0;*/
+				/*bottom: auto;*/
+				width: 100%;
+				height: 100%;
+			}
+
+			.model-box .banner {
+				background-color: #7D25AC;
+				color: #fff;
+
+			}
+
+			.model-box .body {
+				background-color: #fff;
+				color: #000;
+			}
+
+		</style>
+
+		<!--<core-drag-drop></core-drag-drop>-->
+
+		<div id="graph" flex>
+			<div id="boxContainer">
+				<span>test</span>
+
+				<div style="width: 250px;" class="model-box" id="dm">
+					<div class="banner">Title</div>
+					<div class="body">Text</div>
+				</div>
+			</div>
+		</div>
+	</template>
+	<script>
+
+
+
+		Polymer({
+			domReady: function() {
+
+				$(this.$.dm).draggable({
+					containment: '#graph',
+					refreshPositions: true,
+					scroll: false,
+					handle: '.banner',
+					cursor: 'move'
+				});
+
+			}
+		});
+	</script>
+</polymer-element>

@@ -9,6 +9,7 @@
         <link rel="import" href="/elements/eresidae-layout-default.html">
         <link rel="import" href="/elements/eresidae-layout-toolbar.html">
         <link rel="import" href="/elements/eresidae-mini-apps.html">
+        <link rel="import" href="/elements/eresidae-model-builder.html">
         <link rel="import" href="/elements/eresidae-profile.html">
         <link rel="import" href="/elements/eresidae-query-console.html">
         <link rel="import" href="/elements/eresidae-user-form.html">
@@ -62,6 +63,13 @@
                 <template>
                     <eresidae-layout-toolbar>
                         <eresidae-query-console flex></eresidae-query-console>
+                    </eresidae-layout-toolbar>
+                </template>
+            </app-route>
+            <app-route path="/model_builder">
+                <template>
+                    <eresidae-layout-toolbar>
+                        <eresidae-model-builder flex></eresidae-model-builder>
                     </eresidae-layout-toolbar>
                 </template>
             </app-route>
