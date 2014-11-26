@@ -1,0 +1,44 @@
+{
+    "name": "Open Science Framework",
+	"id": "openscienceframework",
+	"icon": "extension",
+	"auth": {
+		"type": "none"
+	},
+	"endpoints": {
+	    "project/<pid>": {
+	        "name": "project/<pid>",
+	        "method": "GET",
+	        "resourceURL": "https://osf.io/api/v1/project/<pid>",
+			"description": ["Get project"],
+			"docURL": "https://github.com/CenterForOpenScience/osf.io/blob/develop/website/routes.py",
+			"urlVariables": [
+				{
+					"name": "pid",
+					"replaces": "<pid>",
+					"description": "Project ID",
+					"data": {
+						"type": "String"
+					}
+				}
+			]
+	    },
+	    "profile/<uid>": {
+	        "name": "profile/<uid>",
+	        "method": "GET",
+	        "resourceURL": "https://osf.io/api/v1/profile/<uid>",
+			"description": ["Get user profile"],
+			"docURL": "https://github.com/CenterForOpenScience/osf.io/blob/develop/website/routes.py",
+			"urlVariables": [
+				{
+					"name": "uid",
+					"replaces": "<uid>",
+					"description": "User ID",
+					"data": {
+						"type": "String"
+					}
+				}
+			]
+	    }
+	}
+}
