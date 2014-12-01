@@ -53,9 +53,14 @@
 							</template>
 							<template if="{{ !user[service.id].token }}">
 								<div flex>
-									<a href="/connect/[[service.id]]">
-										<paper-button class="inverted" raised>Connect</paper-button>
-									</a>
+									<template if="{{ service.authType == 'none' }}">
+										<span>No Auth Required</span>
+									</template>
+									<template if="{{ service.authType == 'oauth' }}">
+										<a href="/connect/[[service.id]]">
+											<paper-button class="inverted" raised>Connect</paper-button>
+										</a>
+									</template>
 								</div>
 							</template>
 						</div>
