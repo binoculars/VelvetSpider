@@ -4,6 +4,7 @@
 <link rel="import" href="/bower_components/core-menu/core-menu.html">
 <link rel="import" href="/bower_components/core-menu/core-submenu.html">
 <link rel="import" href="/bower_components/core-splitter/core-splitter.html">
+<link rel="import" href="/bower_components/paper-input/paper-input.html">
 <link rel="import" href="/elements/eresidae-endpoint-query-form.html">
 
 <script src="/bower_components/jquery/dist/jquery.min.js"></script>
@@ -55,15 +56,31 @@
 				height: 100%;
 			}
 
+			.model-box {
+				border: 1px solid black;
+				border-radius: 3%;
+				box-shadow: rgba(0, 0, 0, 0.5) 4px 4px 2px;
+				display: inline-block;
+			}
+
+			.model-box.ui-draggable-dragging {
+				box-shadow: rgba(0, 0, 0, 0.5) 8px 8px 4px;
+			}
+
+			.model-box * {
+				padding: 5px;
+				border-radius: inherit;
+			}
+
 			.model-box .banner {
 				background-color: #7D25AC;
 				color: #fff;
-
 			}
 
 			.model-box .body {
 				background-color: #fff;
 				color: #000;
+				min-height: 100px;
 			}
 
 		</style>
@@ -72,11 +89,12 @@
 
 		<div id="graph" flex>
 			<div id="boxContainer">
-				<span>test</span>
-
-				<div style="width: 250px;" class="model-box" id="dm">
+				<div class="model-box" id="dm">
 					<div class="banner">Title</div>
-					<div class="body">Text</div>
+					<div class="body">
+						<span>Text</span>
+						<paper-input></paper-input>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -87,13 +105,18 @@
 
 		Polymer({
 			domReady: function() {
-
+				var dm = this.$.dm;
 				$(this.$.dm).draggable({
 					containment: '#graph',
 					refreshPositions: true,
 					scroll: false,
 					handle: '.banner',
-					cursor: 'move'
+					cursor: 'move',
+					stop: function(e) {
+						var style = e.target.style;
+						style.left = (parseInt(style.left) + 4) + 'px';
+						style.top = (parseInt(style.top) + 4) + 'px';
+					}
 				});
 
 			}
