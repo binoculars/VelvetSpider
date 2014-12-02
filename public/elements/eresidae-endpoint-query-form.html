@@ -11,7 +11,7 @@
 <polymer-element name="eresidae-endpoint-query-form" attributes="model">
     <template>
         <template bind="{{model}}">
-            <h1>[[method]] <a href="[[docURL]]">[[name]]</a></h1>
+            <h1>[[method]] <a href="{{docURL}}" target="_blank">[[name]]</a></h1>
             <h3>Description:</h3>
             <template repeat="[[description]]">
                 <p>[[]]</p>
