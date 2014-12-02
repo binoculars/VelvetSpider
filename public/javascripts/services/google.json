@@ -1,0 +1,65 @@
+{
+    "name": "Google",
+    "id": "google",
+    "icon": "social:post-gplus",
+    "auth": {
+        "type": "oauth",
+        "version": "2.0",
+        "baseSite": "https://accounts.google.com/",
+        "authorizePath": "o/oauth2/auth",
+        "accessTokenPath": "o/oauth2/token",
+        "scope": "email",
+        "library": {
+            "type": "passport",
+            "name": "passport-google-oauth",
+            "strategy": "OAuth2Strategy"
+        },
+        "userModel": {
+            "id": "String",
+            "token": "String",
+            "refreshTokenOrTokenSecret": "String"
+        }
+    },
+    "endpoints": {
+        "search": {
+            "name": "search",
+            "method": "GET",
+            "resourceURL": "https://www.googleapis.com/plus/v1/people",
+            "description": ["Search all public profiles."],
+            "parameters": [
+                {
+                    "name": "query",
+                    "description": "Specify a query string for full text search of public text in all profiles.",
+                    "optional": false,
+                    "data": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "name": "language",
+                    "description": "Specify the preferred language to search with. See search language codes for available values.",
+                    "optional": true,
+                    "data": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "name": "maxResults",
+                    "description": "The maximum number of people to include in the response, which is used for paging. For any response, the actual number returned might be less than the specified maxResults. Acceptable values are 1 to 50, inclusive. (Default: 25)",
+                    "optional": true,
+                    "data": {
+                        "type": "unsigned integer"
+                    }
+                },
+                {
+                    "name": "pageToken",
+                    "description": "The continuation token, which is used to page through large result sets. To get the next page of results, set this parameter to the value of \"nextPageToken\" from the previous response. This token can be of any length.",
+                    "optional": true,
+                    "data": {
+                        "type": "string"
+                    }
+                }
+            ]
+        }
+    }
+}
