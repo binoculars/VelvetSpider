@@ -75,7 +75,7 @@
                 <h3>Parameters:</h3>
                 <div vertical layout>
                     <template repeat="{{parameters}}">
-                        <div horizontal layout style="padding: 3px;">
+                        <div horizontal layout style="padding: 3px;" hidden?="[[constant]]">
                             <div flex>[[name]]:</div>
                             <div flex two>
                                 <paper-input name="[[name]]"
@@ -84,7 +84,8 @@
                                              label="[[ exampleValues ? 'E.g. ' + exampleValues : '']]"
                                              inputValue="{{val}}"
                                              required="[[!optional]]"
-                                             pattern="[[data.regex || '.*']]">
+                                             pattern="[[data.regex || '.*']]"
+                                             disabled?="[[constant]]">
                                 </paper-input>
                             </div>
                             <div flex two>Description: [[description]]</div>
