@@ -30,7 +30,7 @@
             "method": "GET",
             "resourceURL": "https://api.flickr.com/services/rest/",
             "docURL": "https://www.flickr.com/services/api/flickr.photos.search.html",
-            "TODO": "Fill out the rest of the parameters"
+            "TODO": "Fill out the rest of the parameters",
             "parameters": [
                 {
                     "name": "method",
