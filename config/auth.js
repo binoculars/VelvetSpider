@@ -7,6 +7,10 @@ module.exports = {
         "consumerKey": "your_consumer_key_here",
         "consumerSecret": "your_client_secret_here"
     },
+    "foursquare": {
+        "clientID": "your_secret_clientID_here",
+        "clientSecret": "your_client_secret_here"
+    },
     "google" : {
         "clientID": "your_secret_clientID_here",
         "clientSecret": "your_client_secret_here"

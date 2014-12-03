@@ -1,0 +1,55 @@
+{
+    "name": "Foursquare",
+    "id": "foursquare",
+    "icon": "check",
+    "auth": {
+        "type": "oauth",
+        "version": "2.0",
+        "baseSite": "https://foursquare.com/",
+        "authorizePath": "oauth2/authorize",
+        "accessTokenPath": "oauth2/access_token",
+        "scope": "none",
+        "library": {
+            "type": "passport",
+            "name": "passport-foursquare",
+            "strategy": "Strategy"
+        },
+        "userModel": {
+            "id": "String",
+            "token": "String",
+            "refreshTokenOrTokenSecret": "String"
+        }
+    },
+    "endpoints": {
+        "venues/explore": {
+            "name": "venues/explore",
+            "method": "GET",
+            "resourceURL": "https://api.foursquare.com/v2/venues/explore",
+            "description": [
+                "Returns a list of recommended venues near the current location.",
+                "If authenticated, the method will potentially personalize the ranking based on you and your friends. If you do not authenticate, you will not get this personalization."
+            ],
+            "docURL": "https://developer.foursquare.com/docs/venues/explore",
+            "parameters": [
+                {
+                    "name": "ll",
+                    "optional": true,
+                    "exampleValues": "44.3,37.2",
+                    "description": "required unless near is provided. Latitude and longitude of the user's location.",
+                    "data": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "name": "near",
+                    "optional": true,
+                    "exampleValues": "Chicago, IL",
+                    "description": "required unless ll is provided. A string naming a place in the world. If the near string is not geocodable, returns a failed_geocode error. Otherwise, searches within the bounds of the geocode and adds a geocode object to the response.",
+                    "data": {
+                        "type": "string"
+                    }
+                }
+            ]
+        }
+    }
+}
