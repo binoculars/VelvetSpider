@@ -49,6 +49,9 @@ function setupOAuth(service) {
                 null // Custom Headers
             );
 
+            if (service.auth.accessTokenName)
+                authObj.auth.setAccessTokenName(service.auth.accessTokenName);
+
             authObj.rest = {
                 get: function(url, credentials, callback) {
                     authObj.auth.get(

@@ -8,6 +8,7 @@
         "baseSite": "https://foursquare.com/",
         "authorizePath": "oauth2/authorize",
         "accessTokenPath": "oauth2/access_token",
+        "accessTokenName": "oauth_token",
         "scope": "none",
         "library": {
             "type": "passport",
@@ -20,6 +21,9 @@
             "refreshTokenOrTokenSecret": "String"
         }
     },
+    "customParameters": {
+		"v": "20141203"
+	},
     "endpoints": {
         "venues/explore": {
             "name": "venues/explore",
