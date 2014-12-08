@@ -23,6 +23,7 @@
     "x2js": "*",
     "vkbeautify-wrapper": "*",
     "app-router": "~2.0.2",
-    "papaparse": "~3.1.4"
+    "papaparse": "~3.1.4",
+    "leaflet-map": "~0.3.1"
   }
 }
