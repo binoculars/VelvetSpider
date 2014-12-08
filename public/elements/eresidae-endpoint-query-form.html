@@ -25,20 +25,23 @@
             <template if="{{urlVariables.length > 0}}">
                 <h3>URL Path Variables:</h3>
                 <div vertical layout>
-                    <template id="urlVars" repeat="{{var in urlVariables}}">
+                    <template id="urlVars" repeat="{{urlVariables}}">
                         <div horizontal layout style="padding: 3px;">
-                            <div flex>[[var.name]]:</div>
-                            <div flex two>
-                                <paper-input name="[[var.name]]"
-                                             replaces="[[var.replaces]]"
-                                             class="urlVariable"
-                                             floatinglabel="[[ var.exampleValues != null ]]"
-                                             label="[[ var.exampleValues ? 'E.g. ' + var.exampleValues : '']]"
-                                             inputValue="{{var.val}}"
-                                             required="true"
-                                             pattern="[[var.data.regex || '.*']]"
-                                             on-input="{{urlVariableInput}}">
-                                </paper-input>
+                            <div flex>[[name]]:</div>
+                            <div flex two style="padding-left: 5px; padding-right: 5px;">
+                                <paper-input-decorator label="[[ exampleValues ? 'E.g. ' + exampleValues : '']]"
+                                                       floatingLabel="[[ exampleValues != null ]]"
+                                                       value="{{val}}"
+                                                       isInvalid="true">
+                                    <input is="core-input"
+                                           name="[[name]]"
+                                           replaces="[[replaces]]"
+                                           value="{{val}}"
+                                           class="urlVariable"
+                                           on-input="{{urlVariableInput}}"
+                                           required="true"
+                                           pattern="[[data.regex || '.*']]"/>
+                                </paper-input-decorator>
                             </div>
                             <div flex two>Description: [[var.description]]</div>
                         </div>
@@ -77,16 +80,21 @@
                     <template repeat="{{parameters}}">
                         <div horizontal layout style="padding: 3px;" hidden?="[[constant]]">
                             <div flex>[[name]]:</div>
-                            <div flex two>
-                                <paper-input name="[[name]]"
-                                             class="parameter"
-                                             floatinglabel="[[ exampleValues != null ]]"
-                                             label="[[ exampleValues ? 'E.g. ' + exampleValues : '']]"
-                                             inputValue="{{val}}"
-                                             required="[[!optional]]"
-                                             pattern="[[data.regex || '.*']]"
-                                             disabled?="[[constant]]">
-                                </paper-input>
+                            <div flex two style="padding-left: 5px; padding-right: 5px;">
+                                <paper-input-decorator label="[[ exampleValues ? 'E.g. ' + exampleValues : '']]"
+                                                       floatingLabel="[[ exampleValues != null ]]"
+                                                       value="{{val}}"
+                                                       isInvalid="[[!optional]]"
+                                                       disabled?="[[constant]]">
+                                    <input is="core-input"
+                                           name="[[name]]"
+                                           class="parameter"
+                                           value="{{val}}"
+                                           on-input="{{changeAction}}"
+                                           pattern="[[data.regex || '.*']]"
+                                           required="[[!optional]]"
+                                           disabled?="[[constant]]"/>
+                                </paper-input-decorator>
                             </div>
                             <div flex two>Description: [[description]]</div>
                         </div>
@@ -130,13 +138,17 @@
                     xml: ''
                 };
             },
+            changeAction: function(e) {
+                e.path[0].parentElement.isInvalid = !e.path[0].validity.valid;
+            },
             urlVariableInput: function(e) {
-                var urlVariableInputs = this.shadowRoot.querySelectorAll('paper-input.urlVariable');
+                this.changeAction(e);
+                var urlVariableInputs = this.shadowRoot.querySelectorAll('.urlVariable');
                 var resourceURL = this.model.resourceURL_orig;
 
                 [].map.call(urlVariableInputs, function(input) {
-                    if (!input.invalid) {
-                        resourceURL = resourceURL.replace(input.attributes['replaces'].value, encodeURIComponent(input.inputValue));
+                    if (input.validity.valid) {
+                        resourceURL = resourceURL.replace(input.attributes['replaces'].value, encodeURIComponent(input.value));
                     }
                 });
 
@@ -155,14 +167,14 @@
                 this.model.fieldSelectorsURLString = (fsString.length) ? ':(' + fsString.replace(/^,/, '') + ')' : '';
             },
             submitAPIRequest: function(e) {
-                var paramInputs = this.shadowRoot.querySelectorAll('paper-input.parameter');
+                var paramInputs = this.shadowRoot.querySelectorAll('.parameter');
                 var requestParams = {};
                 var valid = true;
 
                 [].map.call(paramInputs, function(input) {
                     if (!input.invalid) {
-                        if (input.inputValue) {
-                            requestParams[input.attributes['name'].value] = input.inputValue;
+                        if (input.value) {
+                            requestParams[input.attributes['name'].value] = input.value;
                         }
                     } else {
                         valid = false;
