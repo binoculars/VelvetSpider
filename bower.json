@@ -17,9 +17,9 @@
     "tests"
   ],
   "dependencies": {
-    "polymer": "Polymer/polymer#~0.4.0",
-    "core-elements": "Polymer/core-elements#~0.4.0",
-    "paper-elements": "Polymer/paper-elements#~0.4.0",
+    "polymer": "Polymer/polymer#^0.5.1",
+    "core-elements": "Polymer/core-elements#^0.5.1",
+    "paper-elements": "Polymer/paper-elements#^0.5.1",
     "x2js": "*",
     "vkbeautify-wrapper": "*",
     "app-router": "~2.0.2",
@@ -28,6 +28,11 @@
   },
   "resolutions": {
     "core-component-page": "^0.5.0",
+    "jquery-ui": "~1.11.2",
+    "jquery": "~2.1.1",
+    "jquery.tablesorter": "~2.18.3",
+    "core-component-page": "^0.5.0",
+    "polymer": "^0.5.1",
     "core-ajax": "^0.5.0",
     "core-animated-pages": "^0.5.0",
     "core-animation": "^0.5.0",
@@ -75,6 +80,7 @@
     "core-toolbar": "^0.5.0",
     "core-tooltip": "^0.5.0",
     "paper-fab": "^0.5.0",
+    "paper-icon-button": "^0.5.0",
     "paper-button": "^0.5.0",
     "paper-ripple": "^0.5.0",
     "font-roboto": "^0.5.0",
@@ -84,7 +90,6 @@
     "paper-checkbox": "^0.5.0",
     "paper-dialog": "^0.5.0",
     "paper-dropdown-menu": "^0.5.0",
-    "paper-icon-button": "^0.5.0",
     "paper-input": "^0.5.0",
     "paper-item": "^0.5.0",
     "paper-menu-button": "^0.5.0",
@@ -94,7 +99,6 @@
     "paper-slider": "^0.5.0",
     "paper-tabs": "^0.5.0",
     "paper-toast": "^0.5.0",
-    "paper-toggle-button": "^0.5.0",
-    "polymer": "^0.5.0"
+    "paper-toggle-button": "^0.5.0"
   }
 }

@@ -1,28 +1,57 @@
 <link rel="import" href="/bower_components/polymer/polymer.html">
+<link rel="import" href="/bower_components/core-dropdown/core-dropdown.html">
+<link rel="import" href="/bower_components/core-icon/core-icon.html">
 <link rel="import" href="/bower_components/core-icon-button/core-icon-button.html">
 <link rel="import" href="/bower_components/core-menu-button/core-menu-button.html">
 <link rel="import" href="/bower_components/core-toolbar/core-toolbar.html">
 <link rel="import" href="/bower_components/paper-item/paper-item.html">
 
-<polymer-element name="eresidae-navbar" noscript>
+<polymer-element name="eresidae-navbar">
     <template>
         <style>
-
+            .logo {
+                font-size: 48px;
+                text-align: center;
+                width: 100%;
+            }
         </style>
         <core-toolbar>
             <core-icon-button icon="menu"></core-icon-button>
-            <span class="logo" style="font-size: 48px; text-align: center; width: 100%;">VelvetSpider</span>
-            <core-menu-button icon="settings" halign="right">
-                <paper-item icon="account-box" label="Profile">
-                   <a href="/profile"></a>
-                </paper-item>
-                <paper-item icon="query-builder" label="Query Console">
-                    <a href="/query_console"></a>
-                </paper-item>
-                <paper-item icon="exit-to-app" label="Log out">
-                    <a href="/logout"></a>
-                </paper-item>
+            <span class="logo">VelvetSpider</span>
+            <core-menu-button halign="right">
+                <core-icon-button icon="settings"></core-icon-button>
+                <core-dropdown class="dropdown" halign="right" valign="top">
+                    <template repeat="{{menuItems}}">
+                        <a href="{{path}}">
+                            <paper-item>
+                                <core-icon icon="{{icon}}"></core-icon>
+                                <span>&nbsp;{{text}}</span>
+                            </paper-item>
+                        </a>
+                    </template>
+                </core-dropdown>
             </core-menu-button>
         </core-toolbar>
     </template>
+    <script>
+        Polymer({
+            menuItems: [
+                {
+                    path: "/profile",
+                    icon: "account-box",
+                    text: "Profile"
+                },
+                {
+                    path: "/query_console",
+                    icon: "query-builder",
+                    text: "Query Console"
+                },
+                {
+                    path: "/logout",
+                    icon: "exit-to-app",
+                    text: "Log out"
+                }
+            ]
+        });
+    </script>
 </polymer-element>

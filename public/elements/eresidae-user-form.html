@@ -6,17 +6,34 @@
 
 <polymer-element name="eresidae-user-form">
     <template>
+        <style>
+            h1 {
+                text-align: center;
+            }
+
+            hr {
+                width: 90%;
+            }
+
+            .auto-vert-margins {
+                margin-top: auto;
+                margin-bottom: auto;
+            }
+        </style>
         <eresidae-layout-default>
-            <h1 style="text-align: center;"><core-icon icon="input"></core-icon> [[banner]]</h1>
+            <h1><core-icon icon="input"></core-icon> [[banner]]</h1>
             <template if="{{message.length}}">
                 <h3>{{message}}</h3>
             </template>
             <div vertical layout flex>
-                <div style="margin-top: auto; margin-bottom: auto;">
+                <div class="auto-vert-margins" vertical layout>
                     <form id="form" action="{{action}}" method="post">
                         <template repeat="{{fields}}">
-                            <paper-input label="[[label]]" type="[[type]]" name="[[name]]" inputValue="{{value}}"></paper-input>
-                            <input name="[[name]]" value="{{value}}" type="[[type]]" hidden>
+                            <div>
+                                <paper-input-decorator label="[[label]]" floatingLabel="[[label]]" value="{{value}}">
+                                    <input is="core-input" name="[[name]]" value="{{value}}" type="[[type]]">
+                                </paper-input-decorator>
+                            </div>
                         </template>
                     </form>
                     <div horizontal end-justified layout>
@@ -24,7 +41,7 @@
                     </div>
                 </div>
             </div>
-            <hr style="width: 90%;">
+            <hr>
             <div end>
                 <p>{{altMsg}} <a href="{{altHref}}">{{altLink}}</a></p>
                 <p>Or go <a href="/">home</a>.</p>
