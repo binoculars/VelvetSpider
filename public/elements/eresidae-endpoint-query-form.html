@@ -78,20 +78,22 @@
                 <h3>Parameters:</h3>
                 <div vertical layout>
                     <template repeat="{{parameters}}">
-                        <div horizontal layout style="padding: 3px;">
+                        <div horizontal layout style="padding: 3px;" hidden?="[[constant]]">
                             <div flex>[[name]]:</div>
                             <div flex two style="padding-left: 5px; padding-right: 5px;">
                                 <paper-input-decorator label="[[ exampleValues ? 'E.g. ' + exampleValues : '']]"
                                                        floatingLabel="[[ exampleValues != null ]]"
                                                        value="{{val}}"
-                                                       isInvalid="[[!optional]]">
+                                                       isInvalid="[[!optional]]"
+                                                       disabled?="[[constant]]">
                                     <input is="core-input"
                                            name="[[name]]"
                                            class="parameter"
                                            value="{{val}}"
                                            on-input="{{changeAction}}"
                                            pattern="[[data.regex || '.*']]"
-                                           required="[[!optional]]"/>
+                                           required="[[!optional]]"
+                                           disabled?="[[constant]]"/>
                                 </paper-input-decorator>
                             </div>
                             <div flex two>Description: [[description]]</div>

@@ -128,4 +128,6 @@ body {
 
 * /deep/ eresidae-layout-default::shadow > div {
 	background-color: #fff;
+	box-shadow: 25px 0px 50px 0px rgba(0, 0, 0, 0.5),
+			    -25px 0px 50px 0px rgba(0, 0, 0, 0.5);
 }
