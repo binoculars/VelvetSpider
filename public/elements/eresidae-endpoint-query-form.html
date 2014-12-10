@@ -111,12 +111,18 @@
             <div>
                 <h1>Response</h1>
 
+                <h2>Headers</h2>
+                <prettify-element id="respHeaders"
+                                  style="tab-size: 2;"
+                                  text="{{responseHeaders}}">
+                </prettify-element>
+                    
+                <h2>Body</h2>
                 <paper-tabs id="responseFormat" selected="0" on-core-select="{{responseFormatCoreSelect}}">
                     <paper-tab>JSON</paper-tab>
                     <paper-tab>XML</paper-tab>
                 </paper-tabs>
-
-                <prettify-element id="resp"
+                <prettify-element id="respBody"
                                   style="tab-size: 2;"
                                   text="{{responseTextFormatted}}">
                 </prettify-element>
@@ -134,6 +140,7 @@
         Polymer({
             ready: function() {
                 this.respText = {
+                    headers: '',
                     json: '',
                     xml: ''
                 };
@@ -197,8 +204,13 @@
             apiCoreResponse: function(e) {
                 console.log(e.detail.response);
 
-                this.respText.json = JSON.stringify(e.detail.response, null, '\t');
-                this.respText.xml = vkbeautify.xml(this.x2js.json2xml_str(e.detail.response), '\t');
+                this.respText.headers = JSON.stringify(e.detail.response.headers, null, '\t');
+                this.model.responseHeaders = this.respText.headers;
+                
+                var jsonBody = (typeof e.detail.response.body == 'string') ? JSON.parse(e.detail.response.body) : e.detail.response.body;
+                this.respText.json = JSON.stringify(jsonBody, null, '\t');
+                this.respText.xml = vkbeautify.xml(this.x2js.json2xml_str(jsonBody), '\t');
+                
                 this.shadowRoot.querySelector('#responseFormat').selected = 0;
                 this.shadowRoot.querySelector('#responseFormat').dispatchEvent(new Event('core-select'));
             },
@@ -209,6 +221,7 @@
                     this.model.responseTextFormatted = this.respText.xml;
             },
             respText: {
+                headers: '',
                 json: '',
                 xml: ''
             },
