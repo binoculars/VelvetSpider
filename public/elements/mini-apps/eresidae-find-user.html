@@ -28,14 +28,31 @@
             <div horizontal layout flex>
                 <div flex>{{name}}</div>
                 <div flex>{{value}}</div>
-                <div flex>{{res}}</div>
+                <div flex>
+                    <template if="{{ id == 'github' }}">
+                        <template repeat="{{ res.body.items }}">
+                            <a href="{{url}}"><img src="{{avatar_url}}" style="width: 50px; height: 50px;"> {{login}}</a><br>
+                        </template>
+                    </template>
+                    <template if="{{ id == 'google' }}">
+                        <template repeat="{{ res.body.items }}">
+                            <a href="{{url}}"><img src="{{image.url}}"> {{displayName}}</a><br>
+                        </template>
+                    </template>
+                    <template if="{{ id == 'instagram' }}">
+                        <template repeat="{{ res.body.data }}">
+                            <a href="//instagram.com/{{username}}"><img src="{{profile_picture}}" style="width: 50px; height: 50px;"> {{full_name}}</a><br>
+                        </template>
+                    </template>
+                </div>
             </div>
             <core-ajax
                 url="{{api}}"
                 params="{{params}}"
                 handleAs="json"
                 on-core-response="{{apiResponse}}"
-                class="api">
+                class="api"
+                response={{res}}>
             </core-ajax>
             
         </template>
@@ -57,48 +74,42 @@
                     if (this.services[i].parameter) {
                         var req = {};
                         req[this.services[i].parameter] = this.val;
-                        
-                        
-                        
                         this.services[i].params.req = JSON.stringify(req);
-                        
-                        console.log(this.services[i].params.req);
                     }
-                    
-                    //console.log(this.services[i].params);
                 }
             },
             
             services: [
                 {
+                    "id": "github",
                     "name": "GitHub",
-                    "url": "https://api.github.com/users/:username",
-                    "replaces": ":username",
-                    "api": "/api/service/github"
+                    "api": "/api/service/github",
+                    "url": "https://api.github.com/search/users",
+                    "parameter": "q"
                 },
                 {
+                    "id": "google",
                     "name": "Google+",
+                    "api": "/api/service/google",
                     "url": "https://www.googleapis.com/plus/v1/people",
-                    "parameter": "query",
-                    "api": "/api/service/google"
+                    "parameter": "query"
+                },
+                {
+                    "id": "instagram",
+                    "name": "Instagram",
+                    "api": "/api/service/instagram",
+                    "url": "https://api.instagram.com/v1/users/search",
+                    "parameter": "q"
                 }
             ],
             
             apiResponse: function(e) {
-                // this.services = e.detail.response;
-                
-                
                 console.log(e.detail.response);
-                // console.log(this.services);
+                e.detail.response.body = JSON.parse(e.detail.response.body);
             },
             
             go: function() {
-                var apis = this.shadowRoot.querySelectorAll('.api');
-                
                 [].map.call(this.shadowRoot.querySelectorAll('.api'), function(api) {
-                    
-                    console.log(api.params.req)
-                    
                     api.go();
                 });
             }
