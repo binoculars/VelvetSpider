@@ -1,6 +1,5 @@
 var express = require('express');
 var router = express.Router();
-var fs = require('fs');
 var auth = require('../config/authLocal'); // run `cp config/auth.js config/authLocal.js` and fill out the info.
 var OAuth = require('oauth');
 var querystring = require('querystring');
@@ -108,7 +107,11 @@ router.get('/service/:service', function(req, res) {
             function(e, resp, body) {
                 if (e)
                     console.error(e);
-                res.send(body);
+                    
+                res.json({
+                    headers: e ? {statusCode: e.statusCode} : resp.headers,
+                    body: e ? e.data : body
+                });
             }
         );
     } else {
@@ -123,7 +126,7 @@ router.get('/service/:service', function(req, res) {
             } else if (services[serviceID].auth.version == '2.0') {
                 credentials = {
                     access_token: user[serviceID].token
-                }
+                };
             }
         }
 
@@ -133,7 +136,11 @@ router.get('/service/:service', function(req, res) {
             function (e, data, resp) {
                 if (e)
                     console.error(e);
-                res.send(data);
+                
+                res.json({
+                    headers: e ? {statusCode: e.statusCode} : resp.headers,
+                    body: e ? e.data : data
+                });
             }
         );
     }
