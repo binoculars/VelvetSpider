@@ -1,0 +1,107 @@
+<link rel="import" href="/bower_components/polymer/polymer.html">
+<link rel="import" href="/bower_components/core-ajax/core-ajax.html">
+<link rel="import" href="/bower_components/core-input/core-input.html">
+<link rel="import" href="/bower_components/paper-button/paper-button.html">
+<link rel="import" href="/bower_components/paper-input/paper-input-decorator.html">
+
+<polymer-element name="eresidae-find-user">
+    <template>
+        <core-ajax auto
+                   url="/api/listServices"
+                   params=""
+                   handleAs="json"
+                   class="services"
+                   on-core-response="{{servicesCoreResponse}}">
+        </core-ajax>
+        <paper-input-decorator label="[[ exampleValues ? 'E.g. ' + exampleValues : '']]"
+                               floatingLabel="[[ exampleValues != null ]]"
+                               value="{{val}}"
+                               isInvalid="true">
+            <input is="core-input"
+                   value="{{val}}"
+                   on-input="{{usernameInput}}"
+                   required="true"/>
+        </paper-input-decorator>
+        
+        
+        <template repeat="{{services}}">
+            <div horizontal layout flex>
+                <div flex>{{name}}</div>
+                <div flex>{{value}}</div>
+                <div flex>{{res}}</div>
+            </div>
+            <core-ajax
+                url="{{api}}"
+                params="{{params}}"
+                handleAs="json"
+                on-core-response="{{apiResponse}}"
+                class="api">
+            </core-ajax>
+            
+        </template>
+        
+        <paper-button raised class="inverted" on-click="{{go}}">Go!</paper-button>
+    </template>
+    <script>
+        Polymer({
+            usernameInput: function() {
+                for (var i = 0; i < this.services.length; i++) {
+                    
+                    this.services[i].value = this.services[i].replaces ? this.services[i].url.replace(this.services[i].replaces, this.val) : this.services[i].url;
+                    
+                    this.services[i].params = {
+                        url: this.services[i].value,
+                        req: '{}'
+                    };
+                    
+                    if (this.services[i].parameter) {
+                        var req = {};
+                        req[this.services[i].parameter] = this.val;
+                        
+                        
+                        
+                        this.services[i].params.req = JSON.stringify(req);
+                        
+                        console.log(this.services[i].params.req);
+                    }
+                    
+                    //console.log(this.services[i].params);
+                }
+            },
+            
+            services: [
+                {
+                    "name": "GitHub",
+                    "url": "https://api.github.com/users/:username",
+                    "replaces": ":username",
+                    "api": "/api/service/github"
+                },
+                {
+                    "name": "Google+",
+                    "url": "https://www.googleapis.com/plus/v1/people",
+                    "parameter": "query",
+                    "api": "/api/service/google"
+                }
+            ],
+            
+            apiResponse: function(e) {
+                // this.services = e.detail.response;
+                
+                
+                console.log(e.detail.response);
+                // console.log(this.services);
+            },
+            
+            go: function() {
+                var apis = this.shadowRoot.querySelectorAll('.api');
+                
+                [].map.call(this.shadowRoot.querySelectorAll('.api'), function(api) {
+                    
+                    console.log(api.params.req)
+                    
+                    api.go();
+                });
+            }
+        });
+    </script>
+</polymer-element>
