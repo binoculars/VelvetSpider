@@ -4,7 +4,7 @@ body {
     font-family: 'Varela Round', sans-serif;
 }
 
-* /deep/ div.services paper-item::shadow core-icon,
+* /deep/ div.services core-icon,
 * /deep/ .serviceName core-icon {
     fill: #7D25AC;
     stroke: #000;
@@ -77,12 +77,17 @@ body {
     box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.2);
 }
 
-* /deep/ div.services paper-item.core-selected::shadow  #label {
-    text-decoration: underline;
+* /deep/ div.services paper-item span {
+    color: #7D25AC;
 }
 
-* /deep/ div.services paper-item::shadow #label {
-    color: #7D25AC;
+* /deep/ div.services paper-item.core-selected {
+    border-top: 1px solid #000;
+    border-bottom: 1px solid #000;
+}
+
+* /deep/ div.services paper-item.core-selected span {
+    text-decoration: underline;
 }
 
 * /deep/ #table {
@@ -96,10 +101,6 @@ body {
 
 * /deep/ .endpoints > * {
     color: black;
-    padding-left: 5px;
-    padding-right: 5px;
-    padding-top: 10px;
-    padding-bottom: 10px;
     white-space: nowrap;
     overflow-wrap: normal;
     overflow: hidden;
@@ -117,10 +118,20 @@ body {
     box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.2);
 }
 
-* /deep/ core-menu-button::shadow #button span {
-    margin: 0; /* <span> inside <core-menu-button> has a margin-left: 4px; set. This negates it so the button doesn't get pushed up. */
+* /deep/ core-toolbar core-dropdown {
+    border: 1px solid #000;
+}
+
+* /deep/ core-toolbar paper-item {
+    color: #000;
 }
 
 * /deep/ eresidae-layout-default::shadow > div {
 	background-color: #fff;
+	box-shadow: 25px 0px 50px 0px rgba(0, 0, 0, 0.5),
+			    -25px 0px 50px 0px rgba(0, 0, 0, 0.5);
+}
+
+* /deep/ .prettyprint {
+    margin: 0;
 }

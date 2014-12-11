@@ -1,0 +1,106 @@
+{
+	"name": "Panoramio",
+	"id": "panoramio",
+	"icon": "social:public",
+	"auth": {
+		"type": "none"
+	},
+	"endpoints": {
+		"get_panoramas": {
+			"name": "get_panoramas",
+			"method": "GET",
+			"resourceURL": "http://www.panoramio.com/map/get_panoramas.php",
+			"description": [
+				"Get panoramas"
+			],
+			"docURL": "http://www.panoramio.com/api/data/api.html",
+			"parameters": [
+				{
+					"name": "set",
+					"description": "public (popular photos), full (all photos), or user ID number",
+					"optional": false,
+					"data": {
+						"type": "String",
+						"regex": "public|full|\\d+"
+					}
+				},
+				{
+					"name": "from",
+					"description": "",
+					"optional": false,
+					"data": {
+						"type": "Integer",
+						"regex": "\\d+"
+					}
+				},
+				{
+					"name": "to",
+					"description": "",
+					"optional": false,
+					"data": {
+						"type": "Integer",
+						"regex": "\\d+"
+					}
+				},
+				{
+					"name": "minx",
+					"description": "minimum longitude",
+					"optional": false,
+					"data": {
+						"type": "Float",
+						"range": [-180, 180],
+						"regex": "^-?(180|((1[0-7]|\\d)?\\d)(\\.\\d+)?)$"
+					}
+				},
+				{
+					"name": "miny",
+					"description": "minimum latitude",
+					"optional": false,
+					"data": {
+						"type": "Float",
+						"range": [-90, 90],
+						"regex": "^-?(90|([0-8]?\\d)(\\.\\d+)?)$"
+					}
+				},
+				{
+					"name": "maxx",
+					"description": "maximum longitude",
+					"optional": false,
+					"data": {
+						"type": "Float",
+						"range": [-180, 180],
+						"regex": "^-?(180|(1[0-7]|\\d)?\\d)(\\.\\d+)?$"
+					}
+				},
+				{
+					"name": "maxy",
+					"description": "maximum latitude",
+					"optional": false,
+					"data": {
+						"type": "Float",
+						"range": [-90, 90],
+						"regex": "^-?(90|([0-8]?\\d)(\\.\\d+)?)$"
+					}
+				},
+				{
+					"name": "size",
+					"description": "original, medium (default value), small, thumbnail, square, mini_square",
+					"optional": true,
+					"data": {
+						"type": "Enumeration",
+						"regex": "original|medium|small|thumbnail|square|mini_square"
+					}
+				},
+				{
+					"name": "mapfilter",
+					"description": "",
+					"optional": false,
+					"data": {
+						"type": "Boolean",
+						"regex": "true|false"
+					}
+				}
+			]
+		}
+	}
+}

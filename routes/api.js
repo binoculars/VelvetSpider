@@ -1,6 +1,5 @@
 var express = require('express');
 var router = express.Router();
-var fs = require('fs');
 var auth = require('../config/authLocal'); // run `cp config/auth.js config/authLocal.js` and fill out the info.
 var OAuth = require('oauth');
 var querystring = require('querystring');
@@ -70,7 +69,10 @@ var services = servicesModel.services;
     
 Object.keys(services).map(function (id) {
     if (services[id].auth.type == 'none') {
-        auths[id] = 'none';
+        auths[id] = {
+            type: services[id].auth.type,
+            customParameters: services[id].customParameters
+        };
     } else {
         if (services[id].auth)
             auths[id] = setupOAuth(services[id]);
@@ -87,8 +89,14 @@ router.get('/service/:service', function(req, res) {
     var user = req.user;
 	var auth = auths[serviceID];
     var params = JSON.parse(req.query.req);
+    
+    if (auth.customParameters) {
+        Object.keys(auth.customParameters).map(function (key) {
+            params[key] = auth.customParameters[key];
+        });
+    }
 
-    if (auth == 'none') {
+    if (auth.type == 'none') {
         request(
             {
                 url: req.query.url + '?' + querystring.stringify(params),
@@ -99,16 +107,14 @@ router.get('/service/:service', function(req, res) {
             function(e, resp, body) {
                 if (e)
                     console.error(e);
-                res.send(body);
+                    
+                res.json({
+                    headers: e ? {statusCode: e.statusCode} : resp.headers,
+                    body: e ? e.data : body
+                });
             }
         );
     } else {
-        if (auth.customParameters) {
-            Object.keys(auth.customParameters).map(function (key) {
-                params[key] = auth.customParameters[key];
-            });
-        }
-
         var credentials = {};
 
         if (user) {
@@ -120,7 +126,7 @@ router.get('/service/:service', function(req, res) {
             } else if (services[serviceID].auth.version == '2.0') {
                 credentials = {
                     access_token: user[serviceID].token
-                }
+                };
             }
         }
 
@@ -130,7 +136,11 @@ router.get('/service/:service', function(req, res) {
             function (e, data, resp) {
                 if (e)
                     console.error(e);
-                res.send(data);
+                
+                res.json({
+                    headers: e ? {statusCode: e.statusCode} : resp.headers,
+                    body: e ? e.data : data
+                });
             }
         );
     }

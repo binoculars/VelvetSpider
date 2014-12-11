@@ -1,0 +1,51 @@
+{
+    "name": "Flickr",
+    "id": "flickr",
+    "icon": "image:image",
+    "auth": {
+        "type": "oauth",
+        "version": "1.0A",
+        "requestTokenURL": "https://www.flickr.com/services/oauth/request_token",
+        "accessTokenURL": "https://www.flickr.com/services/oauth/access_token",
+        "signatureMethod": "HMAC-SHA1",
+        "scope": "none",
+        "library": {
+            "type": "passport",
+            "name": "passport-flickr",
+            "strategy": "Strategy"
+        },
+        "userModel": {
+            "id": "String",
+            "token": "String",
+            "refreshTokenOrTokenSecret": "String"
+        }
+    },
+    "customParameters": {
+		"format": "json",
+		"nojsoncallback": 1
+	},
+    "endpoints": {
+        "flickr.photos.search": {
+            "name": "flickr.photos.search",
+            "method": "GET",
+            "resourceURL": "https://api.flickr.com/services/rest/",
+            "docURL": "https://www.flickr.com/services/api/flickr.photos.search.html",
+            "TODO": "Fill out the rest of the parameters",
+            "parameters": [
+                {
+                    "name": "method",
+                    "val": "flickr.photos.search",
+                    "constant": true
+                },
+                {
+                    "name": "user_id",
+                    "optional": true,
+                    "description": "The NSID of the user who's photo to search. If this parameter isn't passed then everybody's public photos will be searched. A value of \"me\" will search against the calling user's photos for authenticated calls.",
+                    "data": {
+                        "type": "string"
+                    }
+                }
+            ]
+        }
+    }
+}

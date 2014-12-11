@@ -1,6 +1,8 @@
 <link rel="import" href="/bower_components/polymer/polymer.html">
 <link rel="import" href="/bower_components/core-ajax/core-ajax.html">
+<link rel="import" href="/bower_components/core-icon/core-icon.html">
 <link rel="import" href="/bower_components/core-icon-button/core-icon-button.html">
+<link rel="import" href="/bower_components/core-icons/image-icons.html">
 <link rel="import" href="/bower_components/core-icons/social-icons.html">
 <link rel="import" href="/bower_components/core-menu/core-menu.html">
 <link rel="import" href="/bower_components/core-menu-button/core-menu-button.html">
@@ -28,9 +30,12 @@
         </core-ajax>
 
         <div class="services">
-            <core-selector class="svcs" on-core-select="{{serviceSelected}}">
+            <core-selector class="svcs" on-core-select="{{serviceSelected}}" selectedAttribute="">
                 <template repeat="{{}}">
-                    <paper-item icon="[[icon]]" label="[[name]]" id="[[id]]"></paper-item>
+                    <paper-item id="[[id]]">
+                        <core-icon icon="[[icon]]"></core-icon>&nbsp;
+                        <span>[[name]]</span>
+                    </paper-item>
                     <core-ajax auto
                                url="/javascripts/services/[[schema]]"
                                params=""
@@ -43,9 +48,9 @@
         </div>
         <div id="table" class="container" horizontal layout flex>
             <div>
-                <core-selector class="endpoints" on-core-select="{{endpointSelected}}">
+                <core-selector class="endpoints" on-core-select="{{endpointSelected}}" selectedAttribute="">
                     <template repeat="{{method in methods}}">
-                        <paper-item label="[[method]]"></paper-item>
+                        <paper-item label="[[method]]">[[method]]</paper-item>
                     </template>
                 </core-selector>
             </div>
@@ -130,9 +135,8 @@
 
                         this.$.queryForm.clear();
                         this.$.queryForm.model = {
-                            endpoint: APIs[service][e.detail.item.label]
+                            endpoint: APIs[service][e.detail.item.getAttribute('label')]
                         };
-
                         this.$.queryForm.model.endpoint.serviceID = service;
                     }
                 },

@@ -1,0 +1,334 @@
+{
+    "name": "Google",
+    "id": "google",
+    "icon": "social:post-gplus",
+    "auth": {
+        "type": "oauth",
+        "version": "2.0",
+        "baseSite": "https://accounts.google.com/",
+        "authorizePath": "o/oauth2/auth",
+        "accessTokenPath": "o/oauth2/token",
+        "scope": [
+            "https://www.googleapis.com/auth/userinfo.email",
+            "https://www.googleapis.com/auth/youtube.readonly"
+        ],
+        "library": {
+            "type": "passport",
+            "name": "passport-google-oauth",
+            "strategy": "OAuth2Strategy"
+        },
+        "userModel": {
+            "id": "String",
+            "token": "String",
+            "refreshTokenOrTokenSecret": "String"
+        }
+    },
+    "endpoints": {
+        "plus.people.search": {
+            "name": "plus.people.search",
+            "method": "GET",
+            "resourceURL": "https://www.googleapis.com/plus/v1/people",
+            "description": [
+                "Search all public profiles.",
+                "For large result sets, results are paginated. For the most up-to-date search results, do not use a pageToken older than five minutes. Instead, restart pagination by repeating the original request (omitting pageToken).",
+                "To search activities, see activities search."
+            ],
+            "docURL": "https://developers.google.com/+/api/latest/people/search",
+            "parameters": [
+                {
+                    "name": "query",
+                    "description": "Specify a query string for full text search of public text in all profiles.",
+                    "optional": false,
+                    "data": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "name": "language",
+                    "description": "Specify the preferred language to search with. See search language codes for available values.",
+                    "optional": true,
+                    "data": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "name": "maxResults",
+                    "description": "The maximum number of people to include in the response, which is used for paging. For any response, the actual number returned might be less than the specified maxResults. Acceptable values are 1 to 50, inclusive. (Default: 25)",
+                    "optional": true,
+                    "data": {
+                        "type": "unsigned integer"
+                    }
+                },
+                {
+                    "name": "pageToken",
+                    "description": "The continuation token, which is used to page through large result sets. To get the next page of results, set this parameter to the value of \"nextPageToken\" from the previous response. This token can be of any length.",
+                    "optional": true,
+                    "data": {
+                        "type": "string"
+                    }
+                }
+            ]
+        },
+        "youtube.search.list": {
+            "name": "youtube.search.list",
+            "method": "GET",
+            "resourceURL": "https://www.googleapis.com/youtube/v3/search",
+            "description": ["Returns a collection of search results that match the query parameters specified in the API request. By default, a search result set identifies matching video, channel, and playlist resources, but you can also configure queries to only retrieve a specific type of resource."],
+            "docURL": "https://developers.google.com/youtube/v3/docs/search/list",
+            "parameters": [
+                {
+                    "name": "part",
+                    "description": "The part parameter specifies a comma-separated list of one or more search resource properties that the API response will include. Set the parameter value to snippet.",
+                    "optional": false,
+                    "data": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "name": "forContentOwner",
+                    "description": "This parameter can only be used in a properly authorized request. Note: This parameter is intended exclusively for YouTube content partners. The forContentOwner parameter restricts the search to only retrieve resources owned by the content owner specified by the onBehalfOfContentOwner parameter. The user must be authenticated using a CMS account linked to the specified content owner and onBehalfOfContentOwner must be provided.",
+                    "optional": true,
+                    "data": {
+                        "type": "boolean",
+                        "regex": "^(true|false)$"
+                    }
+                },
+                {
+                    "name": "forMine",
+                    "description": "This parameter can only be used in a properly authorized request. The forMine parameter restricts the search to only retrieve videos owned by the authenticated user. If you set this parameter to true, then the type parameter's value must also be set to video.",
+                    "optional": true,
+                    "data": {
+                        "type": "boolean",
+                        "regex": "^(true|false)$"
+                    }
+                },
+                {
+                    "name": "relatedToVideoId",
+                    "description": "The relatedToVideoId parameter retrieves a list of videos that are related to the video that the parameter value identifies. The parameter value must be set to a YouTube video ID and, if you are using this parameter, the type parameter must be set to video.",
+                    "optional": true,
+                    "data": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "name": "channelId",
+                    "description": "The channelId parameter indicates that the API response should only contain resources created by the channel",
+                    "optional": true,
+                    "data": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "name": "channelType",
+                    "description": "The channelType parameter lets you restrict a search to a particular type of channel. Acceptable values are:\nany – Return all channels.\nshow – Only retrieve shows.",
+                    "optional": true,
+                    "data": {
+                        "type": "string",
+                        "regex": "^(any|show)$"
+                    }
+                },
+                {
+                    "name": "eventType",
+                    "description": "The eventType parameter restricts a search to broadcast events. If you specify a value for this parameter, you must also set the type parameter's value to video.\n\nAcceptable values are:\ncompleted – Only include completed broadcasts.\nlive – Only include active broadcasts.\nupcoming – Only include upcoming broadcasts.",
+                    "optional": true,
+                    "data": {
+                        "type": "string",
+                        "regex": "^(completed|live|upcoming)$"
+                    }
+                },
+                {
+                    "name": "location",
+                    "description": "The location parameter, in conjunction with the locationRadius parameter, defines a circular geographic area and also restricts a search to videos that specify, in their metadata, a geographic location that falls within that area. The parameter value is a string that specifies latitude/longitude coordinates e.g. (37.42307,-122.08427).\n\nThe location parameter value identifies the point at the center of the area.\nThe locationRadius parameter specifies the maximum distance that the location associated with a video can be from that point for the video to still be included in the search results.\nThe API returns an error if your request specifies a value for the location parameter but does not also specify a value for the locationRadius parameter.",
+                    "optional": true,
+                    "data": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "name": "locationRadius",
+                    "description": "The locationRadius parameter, in conjunction with the location parameter, defines a circular geographic area.\n\nThe parameter value must be a floating point number followed by a measurement unit. Valid measurement units are m, km, ft, and mi. For example, valid parameter values include 1500m, 5km, 10000ft, and 0.75mi. The API does not support locationRadius parameter values larger than 1000 kilometers.\n\nNote: See the definition of the location parameter for more information.",
+                    "optional": true,
+                    "data": {
+                        "type": "string",
+                        "regex": "^\\d+(\\.\\d+)?(m|km|ft|mi)$"
+                    }
+                },
+                {
+                    "name": "maxResults",
+                    "description": "The maxResults parameter specifies the maximum number of items that should be returned in the result set. Acceptable values are 0 to 50, inclusive. The default value is 5.",
+                    "optional": true,
+                    "data": {
+                        "type": "unsigned integer",
+                        "range": [0, 50],
+                        "regex": "^(50|[1-4]?\\d)$"
+                    }
+                },
+                {
+                    "name": "onBehalfOfContentOwner",
+                    "description": "This parameter can only be used in a properly authorized request. Note: This parameter is intended exclusively for YouTube content partners.\n\nThe onBehalfOfContentOwner parameter indicates that the request's authorization credentials identify a YouTube CMS user who is acting on behalf of the content owner specified in the parameter value. This parameter is intended for YouTube content partners that own and manage many different YouTube channels. It allows content owners to authenticate once and get access to all their video and channel data, without having to provide authentication credentials for each individual channel. The CMS account that the user authenticates with must be linked to the specified YouTube content owner.",
+                    "optional": true,
+                    "data": {
+                         "type": "string"
+                    }
+                },
+                {
+                    "name": "order",
+                    "description": "The order parameter specifies the method that will be used to order resources in the API response. The default value is relevance.\n\nAcceptable values are:\ndate – Resources are sorted in reverse chronological order based on the date they were created.\nrating – Resources are sorted from highest to lowest rating.\nrelevance – Resources are sorted based on their relevance to the search query. This is the default value for this parameter.\ntitle – Resources are sorted alphabetically by title.\nvideoCount – Channels are sorted in descending order of their number of uploaded videos.\nviewCount – Resources are sorted from highest to lowest number of views.",
+                    "optional": true,
+                    "data": {
+                         "type": "string",
+                         "regex": "^(date|rating|relevance|title|videoCount|viewCount)$"
+                    }
+                },
+                {
+                    "name": "pageToken",
+                    "description": "The pageToken parameter identifies a specific page in the result set that should be returned. In an API response, the nextPageToken and prevPageToken properties identify other pages that could be retrieved.",
+                    "optional": true,
+                    "data": {
+                         "type": "string"
+                    }
+                },
+                {
+                    "name": "publishedAfter",
+                    "description": "The publishedAfter parameter indicates that the API response should only contain resources created after the specified time. The value is an RFC 3339 formatted date-time value (1970-01-01T00:00:00Z).",
+                    "optional": true,
+                    "data": {
+                         "type": "datetime",
+                         "regex": "^\\d{4}(\\-\\d{2}){2}T\\d{2}(:\\d{2}){2}Z$"
+                    }
+                },
+                {
+                    "name": "publishedBefore",
+                    "description": "The publishedBefore parameter indicates that the API response should only contain resources created before the specified time. The value is an RFC 3339 formatted date-time value (1970-01-01T00:00:00Z).",
+                    "optional": true,
+                    "data": {
+                         "type": "datetime",
+                         "regex": "^\\d{4}(\\-\\d{2}){2}T\\d{2}(:\\d{2}){2}Z$"
+                    }
+                },
+                {
+                    "name": "q",
+                    "description": "The q parameter specifies the query term to search for.\n\nYour request can also use the Boolean NOT (-) and OR (|) operators to exclude videos or to find videos that are associated with one of several search terms. For example, to search for videos matching either \"boating\" or \"sailing\", set the q parameter value to boating|sailing. Similarly, to search for videos matching either \"boating\" or \"sailing\" but not \"fishing\", set the q parameter value to boating|sailing -fishing. Note that the pipe character must be URL-escaped when it is sent in your API request. The URL-escaped value for the pipe character is %7C.",
+                    "optional": true,
+                    "data": {
+                         "type": "string"
+                    }
+                },
+                {
+                    "name": "regionCode",
+                    "description": "The regionCode parameter instructs the API to return search results for the specified country. The parameter value is an ISO 3166-1 alpha-2 country code.",
+                    "optional": true,
+                    "data": {
+                         "type": "string"
+                    }
+                },
+                {
+                    "name": "safeSearch",
+                    "description": "The safeSearch parameter indicates whether the search results should include restricted content as well as standard content.\n\nAcceptable values are:\nmoderate – YouTube will filter some content from search results and, at the least, will filter content that is restricted in your locale. Based on their content, search results could be removed from search results or demoted in search results. This is the default parameter value.\nnone – YouTube will not filter the search result set.\nstrict – YouTube will try to exclude all restricted content from the search result set. Based on their content, search results could be removed from search results or demoted in search results.",
+                    "optional": true,
+                    "data": {
+                         "type": "string",
+                         "regex": "^(moderate|none|strict)$"
+                    }
+                },
+                {
+                    "name": "topicId",
+                    "description": "The topicId parameter indicates that the API response should only contain resources associated with the specified topic. The value identifies a Freebase topic ID.",
+                    "optional": true,
+                    "data": {
+                         "type": "string"
+                    }
+                },
+                {
+                    "name": "type",
+                    "description": "The type parameter restricts a search query to only retrieve a particular type of resource. The value is a comma-separated list of resource types. The default value is video,channel,playlist.\n\nAcceptable values are:\nchannel\nplaylist\nvideo",
+                    "optional": true,
+                    "data": {
+                         "type": "string",
+                         "regex": "^(channel|playlist|video)$"
+                    }
+                },
+                {
+                    "name": "videoCaption",
+                    "description": "The videoCaption parameter indicates whether the API should filter video search results based on whether they have captions. If you specify a value for this parameter, you must also set the type parameter's value to video.\n\nAcceptable values are:\nany – Do not filter results based on caption availability.\nclosedCaption – Only include videos that have captions.\nnone – Only include videos that do not have captions.",
+                    "optional": true,
+                    "data": {
+                         "type": "string",
+                         "regex": "^(any|closedCaption|none)$"
+                    }
+                },
+                {
+                    "name": "videoCategoryId",
+                    "description": "The videoCategoryId parameter filters video search results based on their category. If you specify a value for this parameter, you must also set the type parameter's value to video.",
+                    "optional": true,
+                    "data": {
+                         "type": "string"
+                    }
+                },
+                {
+                    "name": "videoDefinition",
+                    "description": "The videoDefinition parameter lets you restrict a search to only include either high definition (HD) or standard definition (SD) videos. HD videos are available for playback in at least 720p, though higher resolutions, like 1080p, might also be available. If you specify a value for this parameter, you must also set the type parameter's value to video.\n\nAcceptable values are:\nany – Return all videos, regardless of their resolution.\nhigh – Only retrieve HD videos.\nstandard – Only retrieve videos in standard definition.",
+                    "optional": true,
+                    "data": {
+                         "type": "string",
+                         "regex": "^(any|high|standard)$"
+                    }
+                },
+                {
+                    "name": "videoDimension",
+                    "description": "The videoDimension parameter lets you restrict a search to only retrieve 2D or 3D videos. If you specify a value for this parameter, you must also set the type parameter's value to video.\n\nAcceptable values are:\n2d – Restrict search results to exclude 3D videos.\n3d – Restrict search results to only include 3D videos.\nany – Include both 3D and non-3D videos in returned results. This is the default value.",
+                    "optional": true,
+                    "data": {
+                         "type": "string",
+                         "regex": "^(2d|3d|any)$"
+                    }
+                },
+                {
+                    "name": "videoDuration",
+                    "description": "The videoDuration parameter filters video search results based on their duration. If you specify a value for this parameter, you must also set the type parameter's value to video.\n\nAcceptable values are:\nany – Do not filter video search results based on their duration. This is the default value.\nlong – Only include videos longer than 20 minutes.\nmedium – Only include videos that are between four and 20 minutes long (inclusive).\nshort – Only include videos that are less than four minutes long.",
+                    "optional": true,
+                    "data": {
+                         "type": "string",
+                         "regex": "^(any|long|medium|short)$"
+                    }
+                },
+                {
+                    "name": "videoEmbeddable",
+                    "description": "The videoEmbeddable parameter lets you to restrict a search to only videos that can be embedded into a webpage. If you specify a value for this parameter, you must also set the type parameter's value to video.\n\nAcceptable values are:\nany – Return all videos, embeddable or not.\ntrue – Only retrieve embeddable videos.",
+                    "optional": true,
+                    "data": {
+                         "type": "string",
+                         "regex": "^(any|true)$"
+                    }
+                },
+                {
+                    "name": "videoLicense",
+                    "description": "The videoLicense parameter filters search results to only include videos with a particular license. YouTube lets video uploaders choose to attach either the Creative Commons license or the standard YouTube license to each of their videos. If you specify a value for this parameter, you must also set the type parameter's value to video.\n\nAcceptable values are:\nany – Return all videos, regardless of which license they have, that match the query parameters.\ncreativeCommon – Only return videos that have a Creative Commons license. Users can reuse videos with this license in other videos that they create. Learn more.\nyoutube – Only return videos that have the standard YouTube license.",
+                    "optional": true,
+                    "data": {
+                         "type": "string",
+                         "regex": "^(any|creativeCommon|youtube)$"
+                    }
+                },
+                {
+                    "name": "videoSyndicated",
+                    "description": "The videoSyndicated parameter lets you to restrict a search to only videos that can be played outside youtube.com. If you specify a value for this parameter, you must also set the type parameter's value to video.\n\nAcceptable values are:\nany – Return all videos, syndicated or not.\ntrue – Only retrieve syndicated videos.",
+                    "optional": true,
+                    "data": {
+                         "type": "string",
+                         "regex": "^(any|true)$"
+                    }
+                },
+                {
+                    "name": "videoType",
+                    "description": "The videoType parameter lets you restrict a search to a particular type of videos. If you specify a value for this parameter, you must also set the type parameter's value to video.\n\nAcceptable values are:\nany – Return all videos.\nepisode – Only retrieve episodes of shows.\nmovie – Only retrieve movies.",
+                    "optional": true,
+                    "data": {
+                         "type": "string",
+                         "regex": "^(any|episode|movie)$"
+                    }
+                }
+            ]
+        }
+    }
+}
