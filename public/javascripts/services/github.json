@@ -255,6 +255,43 @@
 				}
 			]
 		},
+		"search/users": {
+			"name": "search/users",
+			"method": "GET",
+			"resourceURL": "https://api.github.com/search/users",
+			"description": [
+				"Find users via various criteria. (This method returns up to 100 results per page.)"
+			],
+			"docURL": "https://developer.github.com/v3/search/#search-users",
+			"parameters": [
+				{
+					"name": "q",
+					"description": "The search terms.",
+					"optional": true,
+					"data": {
+						"type": "String"
+					}
+				},
+				{
+					"name": "sort",
+					"description": "The sort field. Can be followers, repositories, or joined. Default: results are sorted by best match.",
+					"optional": true,
+					"data": {
+						"type": "String",
+						"regex": "^(followers|repositories|joined)$"
+					}
+				},
+				{
+					"name": "order",
+					"description": "The sort order if sort parameter is provided. One of asc or desc. Default: desc.",
+					"optional": true,
+					"data": {
+						"type": "String",
+						"regex": "^(a|de)sc$"
+					}
+				}
+			]
+		},
 		"teams/id": {
 			"name": "teams/id",
 			"method": "GET",
