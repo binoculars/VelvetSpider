@@ -47,7 +47,7 @@
                 </div>
             </div>
             <core-ajax
-                url="{{api}}"
+                url="/api/service/[[id]]"
                 params="{{params}}"
                 handleAs="json"
                 on-core-response="{{apiResponse}}"
@@ -83,21 +83,18 @@
                 {
                     "id": "github",
                     "name": "GitHub",
-                    "api": "/api/service/github",
                     "url": "https://api.github.com/search/users",
                     "parameter": "q"
                 },
                 {
                     "id": "google",
                     "name": "Google+",
-                    "api": "/api/service/google",
                     "url": "https://www.googleapis.com/plus/v1/people",
                     "parameter": "query"
                 },
                 {
                     "id": "instagram",
                     "name": "Instagram",
-                    "api": "/api/service/instagram",
                     "url": "https://api.instagram.com/v1/users/search",
                     "parameter": "q"
                 }
