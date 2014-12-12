@@ -44,6 +44,11 @@
                             <a href="//instagram.com/{{username}}"><img src="{{profile_picture}}" style="width: 50px; height: 50px;"> {{full_name}}</a><br>
                         </template>
                     </template>
+                    <template if="{{ id == 'twitter' }}">
+                        <template repeat="{{ res.body }}">
+                            <a href="//twitter.com/{{screen_name}}"><img src="{{profile_image_url_https}}" style="width: 50px; height: 50px;"> {{name}}</a><br>
+                        </template>
+                    </template>
                 </div>
             </div>
             <core-ajax
@@ -96,6 +101,12 @@
                     "id": "instagram",
                     "name": "Instagram",
                     "url": "https://api.instagram.com/v1/users/search",
+                    "parameter": "q"
+                },
+                {
+                    "id": "twitter",
+                    "name": "Twitter",
+                    "url": "https://api.twitter.com/1.1/users/search.json",
                     "parameter": "q"
                 }
             ],
