@@ -8,7 +8,7 @@
         "requestTokenURL": "https://api.linkedin.com/uas/oauth/requestToken",
         "accessTokenURL": "https://api.linkedin.com/uas/oauth/accessToken",
         "signatureMethod": "HMAC-SHA1",
-        "scope": "",
+        "scope": "r_network",
         "library": {
             "type": "passport",
             "name": "passport-linkedin",
@@ -277,6 +277,20 @@
             "description": [
                 "Retrieve a company by universal-name"
             ]
+        },
+        "people-search": {
+            "resourceURL": "https://api.linkedin.com/v1/people-search",
+            "name": "people-search",
+            "docURL": "",
+            "parameters": [
+                {
+                    "name": "keywords",
+                    "optional": true,
+                    "description": "Members who have all the keywords anywhere in their profile. Use this field when you don't know how to more accurately map the input to a more specific parameter. (Don't forget to URL encode this data.)"
+                }
+            ],
+            "method": "GET",
+            "description": ["Requires vetted API registration."]
         }
     }
 }
