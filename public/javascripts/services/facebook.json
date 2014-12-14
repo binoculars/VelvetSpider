@@ -83,6 +83,48 @@
                 }
             ],
             "parameters": []
+        },
+        "search": {
+            "name": "search",
+            "method": "GET",
+            "resourceURL": "https://graph.facebook.com/search",
+            "description": "You can search over many public objects in the social graph with the /search endpoint.",
+            "docURL": "https://developers.facebook.com/docs/graph-api/using-graph-api/v2.2#search",
+            "parameters": [
+                {
+                    "name": "q",
+                    "description": "Query",
+                    "optional": true,
+                    "data": {
+                        "type": "String"
+                    }
+                },
+                {
+                    "name": "type",
+                    "description": "Search type",
+                    "optional": true,
+                    "data": {
+                        "type": "String",
+                        "regex": "^(user|page|event|group|place|location|placetopic|ad_.+)$"
+                    }
+                },
+                {
+                    "name": "center",
+                    "description": "Coordinates used with place or location type.",
+                    "optional": true,
+                    "data": {
+                        "type": "String"
+                    }
+                },
+                {
+                    "name": "distance",
+                    "description": "Distance used with place or location type.",
+                    "optional": true,
+                    "data": {
+                        "type": "String"
+                    }
+                }
+            ]
         }
     }
 }
