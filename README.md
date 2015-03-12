@@ -20,7 +20,6 @@ Installation
 git clone https://github.com/binoculars/VelvetSpider.git VelvetSpider
 cd VelvetSpider
 npm install
-bower install
 ```
 * Configure tokens and database
 ```sh
