@@ -10,7 +10,6 @@ var MongoStore = require('connect-mongo')(session);
 var passport = require('passport');
 var flash = require('connect-flash');
 
-var routes = require('./routes/index');
 //var users = require('./routes/users');
 var api = require('./routes/api');
 var dbconfig = require('./config/databaseLocal');  // `cp config/database.js config/databaseLocal.js` and edit
@@ -51,13 +50,13 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 
-app.use(express.static(path.join(__dirname, 'public')));
 app.use('/bower_components', express.static(path.join(__dirname, 'bower_components')));
 app.use('/test', express.static(path.join(__dirname, 'test', 'static')));
 app.use('/api', api);
 require('./routes/local-auth')(app, passport); // load our routes and pass in our app and fully configured passport
 require('./routes/connect_account')(app, passport);
-app.use('*', routes);  
+app.use(express.static(path.join(__dirname, 'public')));
+app.use('*', require('./routes/index'));
 
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {
