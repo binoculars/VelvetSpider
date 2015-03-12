@@ -1,7 +1,7 @@
 {
     "name": "Instagram",
     "id": "instagram",
-    "icon": "social:post-instagram",
+    "icon": "social-post:instagram",
     "auth": {
         "type": "oauth",
         "version": "2.0",

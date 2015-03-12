@@ -1,7 +1,7 @@
 {
     "name": "Google",
     "id": "google",
-    "icon": "social:post-gplus",
+    "icon": "social-post:gplus",
     "auth": {
         "type": "oauth",
         "version": "2.0",

@@ -1,7 +1,7 @@
 {
     "name": "Twitter",
     "id": "twitter",
-    "icon": "social:post-twitter",
+    "icon": "social-post:twitter",
     "auth": {
         "type": "oauth",
         "version": "1.0A",

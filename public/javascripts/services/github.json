@@ -1,7 +1,7 @@
 {
 	"name": "GitHub",
 	"id": "github",
-	"icon": "social:post-github",
+	"icon": "social-post:github",
 	"auth": {
 		"type": "none"
 	},

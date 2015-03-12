@@ -1,7 +1,7 @@
 {
     "name": "LinkedIn",
     "id": "linkedin",
-    "icon": "social:post-linkedin",
+    "icon": "social-post:linkedin",
     "auth": {
         "type": "oauth",
         "version": "1.0A",
