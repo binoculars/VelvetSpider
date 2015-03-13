@@ -13,8 +13,8 @@
                    class="services"
                    on-core-response="{{servicesCoreResponse}}">
         </core-ajax>
-        <paper-input-decorator label="[[ exampleValues ? 'E.g. ' + exampleValues : '']]"
-                               floatingLabel="[[ exampleValues != null ]]"
+        <paper-input-decorator label="Search Query"
+                               floatingLabel="true"
                                value="{{val}}"
                                isInvalid="true">
             <input is="core-input"
@@ -22,53 +22,63 @@
                    on-input="{{usernameInput}}"
                    required="true"/>
         </paper-input-decorator>
-        
-        
-        <template repeat="{{services}}">
-            <div horizontal layout flex>
-                <div flex>{{name}}</div>
-                <div flex>{{value}}</div>
-                <div flex>
-                    <template if="{{ id == 'github' }}">
-                        <template repeat="{{ res.body.items }}">
-                            <a href="{{url}}"><img src="{{avatar_url}}" style="width: 50px; height: 50px;"> {{login}}</a><br>
+
+        <style>
+            #services-table > div > div {
+                border: 1px solid black;
+                padding: 5px;
+            }
+
+            #services-table > div:nth-of-type(even) {
+                background-color: #FFF;
+            }
+        </style>
+
+        <div id="services-table">
+            <template repeat="{{services}}">
+                <div horizontal layout flex>
+                    <div flex>{{name}}</div>
+                    <div flex>{{value}}</div>
+                    <div flex>
+                        <template if="{{ id == 'github' }}">
+                            <template repeat="{{ res.body.items }}">
+                                <a href="{{url}}"><img src="{{avatar_url}}" style="width: 50px; height: 50px;"> {{login}}</a><br>
+                            </template>
                         </template>
-                    </template>
-                    <template if="{{ id == 'google' }}">
-                        <template repeat="{{ res.body.items }}">
-                            <a href="{{url}}"><img src="{{image.url}}"> {{displayName}}</a><br>
+                        <template if="{{ id == 'google' }}">
+                            <template repeat="{{ res.body.items }}">
+                                <a href="{{url}}"><img src="{{image.url}}"> {{displayName}}</a><br>
+                            </template>
                         </template>
-                    </template>
-                    <template if="{{ id == 'instagram' }}">
-                        <template repeat="{{ res.body.data }}">
-                            <a href="//instagram.com/{{username}}"><img src="{{profile_picture}}" style="width: 50px; height: 50px;"> {{full_name}}</a><br>
+                        <template if="{{ id == 'instagram' }}">
+                            <template repeat="{{ res.body.data }}">
+                                <a href="//instagram.com/{{username}}"><img src="{{profile_picture}}" style="width: 50px; height: 50px;"> {{full_name}}</a><br>
+                            </template>
                         </template>
-                    </template>
-                    <template if="{{ id == 'twitter' }}">
-                        <template repeat="{{ res.body }}">
-                            <a href="//twitter.com/{{screen_name}}"><img src="{{profile_image_url_https}}" style="width: 50px; height: 50px;"> {{name}}</a><br>
+                        <template if="{{ id == 'twitter' }}">
+                            <template repeat="{{ res.body }}">
+                                <a href="//twitter.com/{{screen_name}}"><img src="{{profile_image_url_https}}" style="width: 50px; height: 50px;"> {{name}}</a><br>
+                            </template>
                         </template>
-                    </template>
+                    </div>
                 </div>
-            </div>
-            <core-ajax
-                url="/api/service/[[id]]"
-                params="{{params}}"
-                handleAs="json"
-                on-core-response="{{apiResponse}}"
-                class="api"
-                response={{res}}>
-            </core-ajax>
-            
-        </template>
-        
+                <core-ajax
+                    url="/api/service/[[id]]"
+                    params="{{params}}"
+                    handleAs="json"
+                    on-core-response="{{apiResponse}}"
+                    class="api"
+                    response={{res}}>
+                </core-ajax>
+            </template>
+        </div>
+        <br/>
         <paper-button raised class="inverted" on-click="{{go}}">Go!</paper-button>
     </template>
     <script>
         Polymer({
-            usernameInput: function() {
+            usernameInput: function(e) {
                 for (var i = 0; i < this.services.length; i++) {
-                    
                     this.services[i].value = this.services[i].replaces ? this.services[i].url.replace(this.services[i].replaces, this.val) : this.services[i].url;
                     
                     this.services[i].params = {
@@ -81,9 +91,10 @@
                         req[this.services[i].parameter] = this.val;
                         this.services[i].params.req = JSON.stringify(req);
                     }
+
+                    e.path[0].parentElement.isInvalid = !e.path[0].validity.valid; // TODO: call this as a web component like paper-input
                 }
             },
-            
             services: [
                 {
                     "id": "github",
@@ -110,12 +121,10 @@
                     "parameter": "q"
                 }
             ],
-            
             apiResponse: function(e) {
                 console.log(e.detail.response);
                 e.detail.response.body = JSON.parse(e.detail.response.body);
             },
-            
             go: function() {
                 [].map.call(this.shadowRoot.querySelectorAll('.api'), function(api) {
                     api.go();
