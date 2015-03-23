@@ -49,6 +49,7 @@ module.exports = function(app, passport) {
             user[req.params.service].token = undefined;
 
             user.save(function(err) {
+                if (err) console.log(err);
                 res.redirect('/profile');
             });
         });

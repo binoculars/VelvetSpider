@@ -20,6 +20,14 @@ app.set('hostname', process.env.C9_HOSTNAME || 'localhost');
 app.set('port', process.env.PORT || 3000);
 app.set('baseURL', process.env.baseURL || 'http://' + app.get('hostname') + ':' + app.get('port'));
 
+mongoose.connection.on('open', function (ref) {
+    console.log('Connected to mongo server.');
+});
+mongoose.connection.on('error', function (err) {
+    console.log('Could not connect to mongo server!');
+    console.log(err);
+});
+
 mongoose.connect(dbconfig.url);
 
 require('./config/passport')(app, passport); // pass passport for configuration
@@ -30,7 +38,7 @@ app.set('view engine', 'ejs');
 
 // required for passport
 app.use(session({
-    secret: 'ilovescotchscotchyscotchscotch', // session secret
+    secret: process.env.SESSION_SECRET, // session secret
     //name: cookie_name,
     store: new MongoStore({  // connect-mongo session store
         url: dbconfig.url
