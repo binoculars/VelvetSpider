@@ -1,5 +1,7 @@
 VelvetSpider
 ===========
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/binoculars/VelvetSpider.svg)](https://greenkeeper.io/)
 VelvetSpider is a web application that provides a common query interface and single API to multiple APIs across different services. Services are configured via drop-in schemas in JSON format.
 
 Why the name?
